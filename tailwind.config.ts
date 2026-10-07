@@ -9,7 +9,8 @@ const config: Config = {
         canvas: "var(--surface-page)",
         subtle: "var(--surface-subtle)",
         raised: "var(--surface-raised)",
-        line: "var(--line-subtle)",
+        line: "var(--border-subtle)",
+        control: "var(--border-control)",
         ink: "var(--text-primary)",
         muted: "var(--text-secondary)",
         action: "var(--brand-action-blue)",
@@ -30,6 +31,7 @@ const config: Config = {
         sm: "var(--radius-sm)",
         md: "var(--radius-md)",
         lg: "var(--radius-lg)",
+        xl: "var(--radius-xl)",
       },
       boxShadow: {
         sm: "var(--shadow-sm)",
@@ -38,6 +40,7 @@ const config: Config = {
       },
       maxWidth: {
         measure: "68ch",
+        page: "var(--container)",
       },
     },
   },

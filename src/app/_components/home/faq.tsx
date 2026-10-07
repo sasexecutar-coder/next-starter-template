@@ -4,10 +4,10 @@ import { FAQ } from "@/content/faq";
 
 export function Faq() {
   return (
-    <section aria-labelledby="faq" className="border-t border-line py-16 sm:py-24">
+    <section aria-labelledby="faq" className="page-block border-t border-line">
       <Container>
         <SectionHeader id="faq" eyebrow="Perguntas frequentes" title="Limites, segurança e dúvidas." />
-        <div className="mt-10 max-w-3xl divide-y divide-line border-y border-line">
+        <div className="mt-12 max-w-3xl divide-y divide-line border-y border-line">
           {FAQ.map((item) => (
             <details key={item.q} className="group py-4">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-lg font-medium">

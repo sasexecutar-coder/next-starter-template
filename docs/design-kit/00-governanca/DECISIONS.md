@@ -49,6 +49,12 @@ Registro canônico do pacote **RC-DESIGN-KIT-001**. Cada decisão tem origem (`p
 | D-22 | **Cérebro 3D HOME-BRAIN-001: a fonte de verdade é a v1** (`04-handoff/brain-home/brain-home-v1.html`): superfície anatômica + partículas, anéis orbitais, marcadores clicáveis, card de detalhe, pontos, pausa/reset, movimento reduzido. A v2 oca (`prototipos/brain-home-v2.html`, `brain-hollow.js`) fica SUPERADA. Anatomia: OpenNeuro ds006128 (CC0), procedência em `brain-home/PROVENIENCIA.md`. Implementação: `src/lib/brain/brain-scene.ts` (porte 1:1) + `src/app/_components/brain/brain-stage.tsx`; os assets servidos são copiados do kit com hash conferido (`scripts/sync-brain-assets.mjs`) | PROJECT_DECISION |
 | D-23 | **Acento do cérebro**: índigo da v1 `#6E72F0` (forte `#4F53D9`, suave `#E4E6FF`), restrito ao componente do cérebro e ao Hero que o contém (tokens `--brain-*`). `#6E72F0` só como marcador, borda ou traço (3,9:1); texto em índigo usa `#4F53D9` (5,9:1). Aprovação visual G2 pendente | PROJECT_DECISION |
 | D-24 | **Home**: o bloco 03 (Mapa) passa a fazer parte do Hero, como na composição da v1 (eyebrow, título, cérebro + card, controles, passos Entenda/Estruture/Execute). O header ganha o CTA "Começar agora" da v1; a busca da v1 não entra (GAP-018) | PROJECT_DECISION |
+| D-25 | **Estrutura global = handoff de arquitetura UX** (`04-handoff/blog-ux/`), com cores e fontes do kit. Espaçamento em múltiplos de 8 (12 como exceção): 96 entre blocos, 48 entre grupos, 32 entre itens, 24 dentro de componentes, 8–16 dentro de grupos. Raios 4/8/12/16. Gutter 32 (mobile) / 48 (≥ 640), container 1120. Header 72, sub-nav 52. Botões 40/18 e 36/16 com área de toque ≥ 44; botão de ícone 40×40. **Substitui a escala, os raios e a densidade do Nocturne (D-13 revista)**. A serif da referência não é adotada (D-03 mantida) | PROJECT_DECISION |
+| D-26 | **Menu L1 completo**: Blog (Início, Artigos, Guias, Vídeos), Mapas, Ferramentas, e Assets (Loja/Oficina), Programa Executar, Comunidade e Entrar como "Em breve" (visíveis, não clicáveis, `aria-disabled`). Mobile: menu em tela cheia; desktop: itens ativos em linha e os "Em breve" agrupados em "Mais" para a barra não quebrar. O header recolhe ao rolar para baixo e volta ao rolar para cima. Sub-nav L2 só no Blog | PROJECT_DECISION |
+| D-27 | **Taxonomia do blog** (`src/content/taxonomy.ts`): Tipo (Artigo, Guia, Asset, Vídeo); Pilar editorial (3 vagas, nomes GAP); Frente do Programa (Executar App, Consultoria e serviços, Marketplace, Comunidade, Schola.ai — proposta a validar); Situação do leitor (GAP). Filtros e valores sem post ficam ocultos | PROJECT_DECISION |
+| D-28 | **Correções do handoff aplicadas**: borda de controle `#85847F` (≥ 3:1), texto meta em 14 px, busca e botão de filtro com a mesma altura (44), ilustração do card em célula própria do grid | PROJECT_DECISION |
+| D-29 | **CTA primário único**: "Começar agora" (`/mapas`, da v1) no header desktop e no pé do menu mobile, ao lado do contorno "Fale conosco" (Em breve) | PROJECT_DECISION |
+| D-30 | **Carrossel**: setas desabilitadas nas pontas (sem loop), sem avanço automático; 1 item sem controles; > 7 itens com contador | PROJECT_DECISION |
 
 ## Precedência de tokens (resolve GAP-002)
 
@@ -91,8 +97,13 @@ Em conflito: registrar valores, fontes e decisão aqui; nunca escolher silencios
 | GAP-015 | ABERTO | Aprovação visual G2 do cérebro: índigo `#6E72F0` e textos dos cards (rascunho) | Revisar e aprovar | D-21/D-23 marcadas como aprovadas; `draft: false` |
 | GAP-016 | ABERTO | Medições G3 em aparelhos reais (FPS em 375/768/1440). Em 375px o cérebro fica pequeno e rótulos podem se sobrepor (comportamento da v1) | Medir e ajustar a composição mobile | Registro de FPS por aparelho e layout mobile aprovado |
 | GAP-017 | ABERTO | Peso do modelo: GLB 9,47 MB sem compressão (o parser próprio não lê meshopt/Draco) | Gerar malha mais leve (grade 1,6 mm) ou trocar o parser | Download do cérebro ≤ 3 MB |
-| GAP-018 | ABERTO | Busca do header (presente no mockup da v1) | Definir busca (ex.: índice estático) | Busca funcional |
+| GAP-018 | PARCIAL | Busca do header (mockup da v1). O hub `/artigos` tem busca no cliente; não há busca global no header | Decidir se a busca global entra | Busca global ou decisão de mantê-la só no hub |
+| GAP-019 | ABERTO | Nomes dos 3 pilares editoriais (D-27) | Definir nomes | `PILLARS` com label; filtro e seletor ativos |
+| GAP-020 | ABERTO | Valores de "Situação do leitor" (público: autônomos com dificuldade de autogestão) | Definir com o público | `USE_CASES` preenchido |
+| GAP-021 | ABERTO | Destinos de Assets (Loja/Oficina), Programa Executar, Comunidade, Entrar e "Fale conosco" | Fornecer URLs ou criar páginas | Itens com `status: "LIVE"` em `src/lib/site.ts` |
+| GAP-022 | ABERTO | Ilustrações dos cards (handoff: só no primeiro ou em todos) | Decidir e produzir (D-11) | Campo `illustration` preenchido |
+| GAP-023 | ABERTO | Confirmar no navegador os tamanhos e pesos estimados do handoff e o header que recolhe ao rolar | Revisão visual | Aprovação registrada |
 
 ## Condição de retomada
 
-Fase 1 e cérebro 3D (D-22) aplicados no site. A próxima rodada começa por GAP-015 (aprovação G2), GAP-006, GAP-007 e GAP-010 (conteúdo) e GAP-011 (ferramentas).
+Fase 1, cérebro 3D (D-22) e arquitetura UX global (D-25…D-30) aplicados no site. A próxima rodada começa por GAP-015 (aprovação G2), GAP-019/GAP-020 (taxonomia), GAP-021 (destinos do menu) e o conteúdo (GAP-006, GAP-007, GAP-010).

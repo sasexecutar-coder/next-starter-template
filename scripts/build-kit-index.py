@@ -13,6 +13,8 @@ ADDED_SOURCES = {
     "01-referencias/design-systems/nocturne/": ("Arquivo.zip/nocturne-02c4ffae-3abc-4626-b190-1a7caf3c77c7/", "D-13"),
     "04-handoff/prototipos/brain-home-v2.html": ("Arquivo.zip/Brain Home v2 2.html", "D-20; D-21"),
     "04-handoff/brain-home/": ("Arquivo_2.zip/", "D-22"),
+    "04-handoff/blog-ux/capturas/": ("Arch_.zip/Arch /", "D-25"),
+    "04-handoff/blog-ux/handoff-arquitetura-ux-blog.md": ("Untitled.md (anexo: Handoff — Arquitetura de telas e UX flow do blog)", "D-25"),
 }
 # Arquivos renomeados ao entrar no kit (destino → nome original no ZIP)
 RENAMED = {
@@ -22,6 +24,7 @@ RENAMED = {
 # Status especiais (D-22): v1 é a fonte de verdade do cérebro; a v2 oca fica superada
 STATUS = {
     "04-handoff/brain-home/brain-home-v1.html": "SOT",
+    "04-handoff/blog-ux/handoff-arquitetura-ux-blog.md": "SOT",
     "04-handoff/prototipos/brain-home-v2.html": "SUPERADO",
     "04-handoff/brain-home/brain-hollow.js": "SUPERADO",
 }

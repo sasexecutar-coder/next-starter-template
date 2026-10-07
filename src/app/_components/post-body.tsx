@@ -8,7 +8,7 @@ export function PostBody({ content }: Props) {
   return (
     <div
       className={`mx-auto ${markdownStyles["markdown"]}`}
-      style={{ marginTop: "var(--ed-sp-title-to-body)" }}
+      style={{ marginTop: "var(--space-12)" }}
       dangerouslySetInnerHTML={{ __html: content }}
     />
   );

@@ -1,5 +1,5 @@
 import Footer from "@/app/_components/footer";
-import Header from "@/app/_components/header";
+import { SiteHeader } from "@/app/_components/site-header";
 import { SITE } from "@/lib/site";
 import type { Metadata } from "next";
 import { DM_Mono, DM_Sans, Inter } from "next/font/google";
@@ -30,7 +30,7 @@ export default function RootLayout({
         <a href="#conteudo" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 btn btn-primary">
           Pular para o conteúdo
         </a>
-        <Header />
+        <SiteHeader />
         <div id="conteudo" className="min-h-screen">
           {children}
         </div>

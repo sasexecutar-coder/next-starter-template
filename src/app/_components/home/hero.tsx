@@ -49,7 +49,7 @@ export function Hero() {
         backgroundPosition: "center top",
       }}
     >
-      <Container className="pt-14 text-center">
+      <Container className="pt-16 text-center">
         <p className="inline-flex items-center gap-[18px] text-[13px] font-medium uppercase tracking-[0.28em] text-muted before:h-[30px] before:w-[3px] before:bg-[var(--brain-accent)] before:content-[''] after:h-[30px] after:w-[3px] after:bg-[var(--brain-accent)] after:content-['']">
           Mapa interativo
         </p>
@@ -70,8 +70,8 @@ export function Hero() {
       <Container className="pt-2">
         <BrainStage functions={FUNCTIONS} variant="home" />
       </Container>
-      <Container className="pb-20">
-        <ol className="grid gap-10 border-t border-line pt-8 md:grid-cols-3 md:gap-0">
+      <Container className="pb-24 pt-12">
+        <ol className="grid gap-12 border-t border-line pt-8 md:grid-cols-3 md:gap-0">
           {STEPS.map((st, i) => (
             <li key={st.n} className={`grid content-start gap-2.5 ${i > 0 ? "md:border-l md:border-line md:pl-9" : ""} md:pr-9`}>
               <span className="mb-3.5 grid h-16 w-16 place-items-center rounded-[10px] bg-subtle">

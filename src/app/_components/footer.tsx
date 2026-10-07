@@ -4,8 +4,8 @@ import { SITE } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="mt-24 border-t border-line bg-subtle">
-      <Container className="grid gap-6 py-12 md:grid-cols-[1fr_2fr]">
+    <footer className="border-t border-line bg-subtle">
+      <Container className="grid gap-8 py-16 md:grid-cols-[1fr_2fr]">
         <div>
           <Wordmark />
           <p className="mt-2 text-sm text-muted">{SITE.description}</p>

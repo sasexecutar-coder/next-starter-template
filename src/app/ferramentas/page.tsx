@@ -21,7 +21,7 @@ export default function FerramentasPage() {
     <main>
       {/* 01 HERO */}
       <section className="border-b border-line">
-        <Container className="py-14 sm:py-20">
+        <Container className="pb-16 pt-16">
           <p className="eyebrow mb-5">Ferramentas</p>
           <h1 className="max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
             Do risco observado à próxima ação.
@@ -30,10 +30,10 @@ export default function FerramentasPage() {
       </section>
 
       {/* 02 COMO FUNCIONA */}
-      <section aria-labelledby="como-funciona" className="py-16">
+      <section aria-labelledby="como-funciona" className="page-block">
         <Container>
           <SectionHeader id="como-funciona" title="Como funciona" />
-          <ol className="mt-8 grid gap-4 md:grid-cols-3">
+          <ol className="mt-12 grid gap-8 md:grid-cols-3">
             {TOOL_STEPS.map((s) => (
               <li key={s.n} className="card-feature">
                 <span className="font-mono text-sm text-action">{s.n}</span>
@@ -46,14 +46,14 @@ export default function FerramentasPage() {
       </section>
 
       {/* 03 CATÁLOGO */}
-      <section aria-labelledby="catalogo" className="border-t border-line py-16">
+      <section aria-labelledby="catalogo" className="page-block border-t border-line">
         <Container>
           <SectionHeader
             id="catalogo"
             title="Catálogo de ferramentas"
             lead="As ferramentas estão em preparação. Cada uma será publicada quando o fluxo e o tratamento de dados estiverem prontos."
           />
-          <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {TOOLS.map((t) => (
               <li key={t.id} className="card-feature">
                 <div className="flex items-start justify-between gap-3">
@@ -68,14 +68,14 @@ export default function FerramentasPage() {
       </section>
 
       {/* 04 EXECUÇÃO DA FERRAMENTA */}
-      <section aria-labelledby="execucao" className="border-t border-line py-16">
+      <section aria-labelledby="execucao" className="page-block border-t border-line">
         <Container>
           <SectionHeader
             id="execucao"
             title="Como cada ferramenta é usada"
             lead="Toda ferramenta segue as mesmas três telas."
           />
-          <ol className="mt-8 grid gap-4 md:grid-cols-3">
+          <ol className="mt-12 grid gap-8 md:grid-cols-3">
             {TOOL_SCREENS.map((s, i) => (
               <li key={s.n} className="card-micro" style={{ padding: "1.25rem" }}>
                 <p className="font-mono text-xs uppercase tracking-wider text-muted">{s.n}</p>
@@ -97,7 +97,7 @@ export default function FerramentasPage() {
       </section>
 
       {/* 05 PRIVACIDADE / LIMITES */}
-      <section aria-labelledby="privacidade" className="border-t border-line py-16">
+      <section aria-labelledby="privacidade" className="page-block border-t border-line">
         <Container>
           <SectionHeader id="privacidade" title="Privacidade e limites" />
           <div className="mt-6 max-w-measure space-y-3 text-muted">

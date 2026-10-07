@@ -3,9 +3,9 @@ import Container from "../container";
 
 export function FinalCta() {
   return (
-    <section aria-labelledby="cta-final" className="py-16 sm:py-24">
+    <section aria-labelledby="cta-final" className="page-block">
       <Container>
-        <div className="rounded-lg bg-indigo px-6 py-12 text-white sm:px-12">
+        <div className="rounded-xl bg-indigo px-6 py-12 text-white sm:px-12">
           <h2 id="cta-final" className="max-w-xl text-3xl font-semibold leading-tight sm:text-4xl">
             Comece pelo mapa ou por uma ferramenta.
           </h2>

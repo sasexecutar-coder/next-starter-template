@@ -8,6 +8,7 @@ author:
   picture: "/assets/blog/authors/default.svg"
 ogImage:
   url: "/assets/blog/chatgpt-sites/cover.jpg"
+type: "artigo"
 ---
 
 O **Sites** é um recurso do ChatGPT que cria, hospeda, refina e compartilha sites, aplicativos web e jogos. A ideia é sair de um pedido em linguagem natural, ou de um projeto que você já tem, para uma página publicada, sem montar um processo de deploy à parte. Este texto é um resumo, escrito com as minhas palavras, da documentação oficial. Para detalhes e valores atuais, consulte sempre a fonte.

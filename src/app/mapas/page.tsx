@@ -18,7 +18,7 @@ export default function MapasPage() {
     <main>
       {/* 01 HERO */}
       <section className="border-b border-line">
-        <Container className="py-14 sm:py-20">
+        <Container className="pb-16 pt-16">
           <p className="eyebrow mb-5">Mapas</p>
           <h1 className="max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
             Entenda sua execução no mapa.
@@ -50,14 +50,14 @@ export default function MapasPage() {
       </section>
 
       {/* 06 RISCOS RELACIONADOS */}
-      <section aria-labelledby="riscos-relacionados" className="border-t border-line py-16">
+      <section aria-labelledby="riscos-relacionados" className="page-block border-t border-line">
         <Container>
           <SectionHeader
             id="riscos-relacionados"
             title="Riscos relacionados"
             lead="As ligações entre cada função e os riscos RC-01 a RC-09 serão publicadas com as fichas de risco."
           />
-          <ul className="mt-8 flex flex-wrap gap-2">
+          <ul className="mt-12 flex flex-wrap gap-2">
             {RISKS.map((r) => (
               <li key={r.id} className="card-micro flex items-center gap-3">
                 <span className="font-mono text-sm font-medium">{r.id}</span>
@@ -69,17 +69,17 @@ export default function MapasPage() {
       </section>
 
       {/* 07 RELAÇÕES */}
-      <section aria-labelledby="relacoes" className="border-t border-line py-16">
+      <section aria-labelledby="relacoes" className="page-block border-t border-line">
         <Container>
           <SectionHeader id="relacoes" title="Relações" lead="Como uma demanda chega a um impacto — e onde o controle entra." />
-          <div className="mt-8">
+          <div className="mt-12">
             <RelationChain />
           </div>
         </Container>
       </section>
 
       {/* 08 FONTES / LIMITES */}
-      <section aria-labelledby="fontes" className="border-t border-line py-16">
+      <section aria-labelledby="fontes" className="page-block border-t border-line">
         <Container>
           <SectionHeader id="fontes" title="Fontes e limites" />
           <div className="mt-6 max-w-measure space-y-3 text-muted">
