@@ -246,8 +246,9 @@ export default async function StoryboardPage() {
 
       {/* 06 CARDS */}
       <Frame id="cards" n={6} title="Painel, callout e card de recurso" file="src/app/_components/ui/{panel,callout}.tsx · blog/resource-card.tsx" rules={[
-        "Tokens do Brain Home v2 (D-32): painel com borda 1 e 4 marcas de canto; callout tracejado com colchetes.",
-        "O painel é o único card do site; em hover/foco a borda e as marcas acendem na cor da marca.",
+        "Cards usam só a borda fina (D-32 revista): marcas de canto ficam exclusivamente no painel do cérebro, para não poluir cards pequenos.",
+        "Callout tracejado com colchetes (Brain Home v2) para destaques de orientação.",
+        "O painel é o único card do site; em hover/foco a borda acende na cor da marca.",
         "Callout = destaque de orientação (ex.: “Como ler este mapa”). Faixas laterais marrons não existem mais.",
         "Card de recurso: link único no título (área toda clicável), faixa de topo de 44, descrição em 3 linhas.",
       ]}>
@@ -256,9 +257,9 @@ export default async function StoryboardPage() {
             <p className="text-lg font-medium leading-snug">{f.difficulty}</p>
             <Eyebrow className="mt-3">{f.name}</Eyebrow>
           </Panel>
-          <Panel tone="subtle" ticks={false}>
-            <Eyebrow>Sem marcas</Eyebrow>
-            <p className="mt-2 text-muted">Variante sutil, para listas densas e chips de relação.</p>
+          <Panel tone="subtle">
+            <Eyebrow>Sutil</Eyebrow>
+            <p className="mt-2 text-muted">Variante sobre a superfície sutil, para listas densas e chips de relação.</p>
           </Panel>
           <Callout title="Como ler este mapa">
             <ul className="list-disc pl-6">
@@ -305,7 +306,7 @@ export default async function StoryboardPage() {
         "Ao abrir, o foco vai para o painel, sem anel visível (ref. f05); Tab entra no primeiro item, Esc fecha e devolve o foco.",
         "Item atual em azul da marca, com aria-current. Itens sem página: “Em breve”, não clicáveis.",
       ]}>
-        <Panel className="max-w-sm !p-0" ticks={false}>
+        <Panel className="max-w-sm !p-0">
           <ul className="px-6">
             {["Blog", "Mapas", "Ferramentas"].map((l, i) => (
               <li key={l} className={`flex min-h-[76px] items-center justify-between border-b border-line text-lg ${i === 1 ? "font-medium text-action-text" : ""}`}>
@@ -436,7 +437,7 @@ function Frame({ id, n, title, file, rules, children }: { id: string; n: number;
     <Section divider id={id} eyebrow={String(n).padStart(2, "0")} title={title} lead={<code className="meta">{file}</code>}>
       <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
         <div className="min-w-0">{children}</div>
-        <Panel as="aside" tone="subtle" ticks={false} aria-label={`Regras de uso: ${title}`}>
+        <Panel as="aside" tone="subtle" aria-label={`Regras de uso: ${title}`}>
           <h3 className="font-display font-semibold">Regras de uso</h3>
           <ul className="mt-3 grid gap-2 text-sm text-muted">
             {rules.map((r) => (

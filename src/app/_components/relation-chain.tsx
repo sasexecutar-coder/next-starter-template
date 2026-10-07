@@ -12,7 +12,7 @@ export function RelationChain() {
     <ol className="flex flex-wrap items-center gap-x-2 gap-y-3" aria-label="Cadeia de relações">
       {RELATION_CHAIN.map((step, i) => (
         <li key={step} className="flex items-center gap-2">
-          <Panel compact ticks={false} className={`font-medium ${ACCENT[step] ?? ""}`}>
+          <Panel compact className={`font-medium ${ACCENT[step] ?? ""}`}>
             <span className="mr-2 font-mono text-xs text-action-text">{String(i + 1).padStart(2, "0")}</span>
             {step}
           </Panel>

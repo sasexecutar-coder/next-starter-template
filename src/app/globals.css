@@ -359,7 +359,7 @@
     color: var(--action-text);
   }
 
-  /* Painel (D-32, tokens do Brain Home v2): borda 1, 4 marcas de canto de 10 px */
+  /* Painel (D-32 revista): borda 1, raio 2, sem marcas de canto (só o painel do cérebro as usa) */
   .panel {
     position: relative;
     background: var(--surface-raised);
@@ -373,30 +373,6 @@
   .panel-compact {
     padding: var(--space-3) var(--space-4);
   }
-  .panel > .tick {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    border: 1px solid var(--border-strong);
-    background: var(--surface-raised);
-    pointer-events: none;
-  }
-  .panel > .tick:nth-of-type(1) {
-    left: -5px;
-    top: -5px;
-  }
-  .panel > .tick:nth-of-type(2) {
-    right: -5px;
-    top: -5px;
-  }
-  .panel > .tick:nth-of-type(3) {
-    left: -5px;
-    bottom: -5px;
-  }
-  .panel > .tick:nth-of-type(4) {
-    right: -5px;
-    bottom: -5px;
-  }
   .panel-interactive {
     transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
   }
@@ -404,10 +380,6 @@
   .panel-interactive:focus-within {
     border-color: var(--action-text);
     box-shadow: var(--shadow-card-raised);
-  }
-  .panel-interactive:hover > .tick,
-  .panel-interactive:focus-within > .tick {
-    border-color: var(--action-text);
   }
 
   /* Callout (D-32, v2): linha tracejada de 1 px e colchetes sólidos de 12 × 2 na cor da marca */
