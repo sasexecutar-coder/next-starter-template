@@ -52,6 +52,7 @@
 		"lint": "next lint",
 		"preview": "npm run sync:brain && opennextjs-cloudflare build && opennextjs-cloudflare preview",
 		"start": "next start",
-		"sync:brain": "node scripts/sync-brain-assets.mjs"
+		"sync:brain": "node scripts/sync-brain-assets.mjs",
+		"audit:ds": "node scripts/ds-audit.mjs"
 	}
 }

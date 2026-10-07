@@ -12,10 +12,10 @@ type Props = {
 };
 
 // Cabeçalho de artigo (handoff): categoria → H1 → data, centrados; imagem 16:9 de largura total, raio 16.
-// Espaçamento: 40 até a categoria, 24 entre categoria/H1/data/imagem, 48 até o corpo.
+// Espaçamento (D-34): --block-y até a categoria, 24 entre categoria/H1/data/imagem, --stack-section até o corpo.
 export function PostHeader({ title, coverImage, date, excerpt, type }: Props) {
   return (
-    <header className="pt-10 text-center">
+    <header className="text-center">
       <p className="inline-flex items-center gap-2 font-display text-[16px] font-semibold text-ink">
         <TypeIcon type={type} />
         {typeLabel(type)}
@@ -32,7 +32,7 @@ export function PostHeader({ title, coverImage, date, excerpt, type }: Props) {
       <p className="mt-6 text-[16px] text-muted">
         <time dateTime={date}>{shortDate(date)}</time>
       </p>
-      <div className="relative mx-auto mt-6 aspect-video w-full max-w-4xl overflow-hidden rounded-xl bg-[#dddcd2]">
+      <div className="relative mx-auto mt-6 aspect-video w-full max-w-4xl overflow-hidden rounded-xl bg-subtle">
         <Image src={coverImage} alt="" fill sizes="(max-width: 896px) 100vw, 896px" className="object-cover" priority />
       </div>
     </header>

@@ -14,68 +14,61 @@ def ratio(a, b):
     return (la + 0.05) / (lb + 0.05)
 
 CANVAS = "#fffdfa"; SUBTLE = "#f4f3f0"
-CALLOUT = blend("#cbd4ff", CANVAS, 0.48); ATTN_SOFT = blend("#ffe659", CANVAS, 0.40)
-PAIRS = [
-    ("Texto primário sobre canvas", "#000000", CANVAS, "text"),
-    ("Texto secundário #545454 sobre canvas", "#545454", CANVAS, "text"),
-    ("Texto secundário sobre superfície sutil", "#545454", SUBTLE, "text"),
-    ("Link/ação #2D5CE6 sobre canvas", "#2d5ce6", CANVAS, "text"),
-    ("Link/ação #2D5CE6 sobre superfície sutil", "#2d5ce6", SUBTLE, "text"),
-    ("Branco sobre botão #2D5CE6", "#ffffff", "#2d5ce6", "text"),
-    ("Branco sobre hover #1F46BF", "#ffffff", "#1f46bf", "text"),
-    ("Branco sobre eyebrow #545454", "#ffffff", "#545454", "text"),
-    ("Branco sobre indigo #0E025D", "#ffffff", "#0e025d", "text"),
-    ("Indigo sobre branco (botão do CTA final)", "#0e025d", "#ffffff", "text"),
-    ("Preto sobre callout (#CBD4FF 48% no canvas)", "#000000", CALLOUT, "text"),
-    ("Preto sobre chip de atenção #FFE659", "#000000", "#ffe659", "text"),
-    ("Ink de atenção #8A5A00 sobre canvas", "#8a5a00", CANVAS, "text"),
-    ("Preto sobre fundo de atenção 40% (/mapas)", "#000000", ATTN_SOFT, "text"),
-    ("Amarelo #FFE659 sobre canvas (proibido como texto/linha)", "#ffe659", CANVAS, "non-text"),
-    ("Vermelho risco #FF0000 sobre canvas (borda)", "#ff0000", CANVAS, "non-text"),
-    ("Verde solução #00BF63 sobre canvas (borda)", "#00bf63", CANVAS, "non-text"),
-    ("Borda #2D5CE6 do botão secundário sobre canvas", "#2d5ce6", CANVAS, "non-text"),
-    # Estrutura do handoff de UX (D-25, D-28): bordas de controle e estados
-    ("Borda de controle #85847F sobre canvas", "#85847f", CANVAS, "non-text"),
-    ("Borda de controle #85847F sobre card #F4F3F0", "#85847f", SUBTLE, "non-text"),
-    ("Borda de controle #85847F sobre branco", "#85847f", "#ffffff", "non-text"),
-    ("Dot ativo #000 sobre canvas", "#000000", CANVAS, "non-text"),
-    ("Dot inativo #85847F sobre canvas", "#85847f", CANVAS, "non-text"),
-    ("Texto 'Em breve' #545454 sobre #F4F3F0", "#545454", SUBTLE, "text"),
-    ("Placeholder da busca #545454 sobre branco", "#545454", "#ffffff", "text"),
-    ("Contador branco sobre #000 (badge de filtros)", "#ffffff", "#000000", "text"),
-    # Cérebro 3D (D-23): índigo restrito ao componente
-    ("Texto da pílula selecionada #4F53D9 sobre branco", "#4f53d9", "#ffffff", "text"),
-    ("Texto da pílula #000 sobre branco 94%", "#000000", "#ffffff", "text"),
-    ("Marcador #6E72F0 sobre canvas (não textual)", "#6e72f0", CANVAS, "non-text"),
-    ("Borda do card selecionado #6E72F0 sobre branco", "#6e72f0", "#ffffff", "non-text"),
-    ("Índigo #6E72F0 como texto (proibido; só marcador)", "#6e72f0", "#ffffff", "text-proibido"),
-]
 
-rows, fails = [], 0
-for name, fg, bg, kind in PAIRS:
-    r = ratio(fg, bg); need = 4.5 if kind.startswith("text") else 3.0
-    if kind == "text-proibido":
-        status = "PASS" if r >= need else "não usar como texto (registrado em D-23)"
-    elif r >= need: status = "PASS"
-    elif kind == "text": status = "FAIL"; fails += 1
-    else: status = "abaixo de 3:1 — só decorativo, nunca único portador de significado"
-    rows.append(f"| {name} | `{fg}` | `{bg}` | {r:.2f}:1 | {kind} ≥ {need}:1 | {status} |")
+# Temas (D-33): só os neutros mudam; a marca fica.
+THEMES = {
+    "Atual (marca)": dict(page=CANVAS, subtle=SUBTLE, raised="#ffffff", text="#000000", muted="#545454", action="#2d5ce6", control="#85847f", strong="#cbcbcb", brain_text="#4f53d9"),
+    "Claro (blog-starter)": dict(page="#ffffff", subtle="#fafafa", raised="#ffffff", text="#171717", muted="#333333", action="#2d5ce6", control="#85847f", strong="#cccccc", brain_text="#4f53d9"),
+    "Noite (blog-starter)": dict(page="#0f172a", subtle="#1e293b", raised="#1e293b", text="#ededed", muted="#94a3b8", action="#8fa9ff", control="#94a3b8", strong="#475569", brain_text="#a3a8f5"),
+}
+
+def theme_pairs(t):
+    return [
+        ("Texto primário sobre fundo", t["text"], t["page"], "text"),
+        ("Texto primário sobre superfície", t["text"], t["subtle"], "text"),
+        ("Texto secundário sobre fundo", t["muted"], t["page"], "text"),
+        ("Texto secundário sobre superfície/painel", t["muted"], t["raised"], "text"),
+        ("Texto secundário sobre superfície sutil", t["muted"], t["subtle"], "text"),
+        ("Marca como texto (eyebrow, link, negrito, ativo) sobre fundo", t["action"], t["page"], "text"),
+        ("Marca como texto sobre painel", t["action"], t["raised"], "text"),
+        ("Marca como texto sobre superfície sutil", t["action"], t["subtle"], "text"),
+        ("Branco sobre botão primário #2D5CE6", "#ffffff", "#2d5ce6", "text"),
+        ("Branco sobre hover #1F46BF", "#ffffff", "#1f46bf", "text"),
+        ("Branco sobre índigo #0E025D (bloco final)", "#ffffff", "#0e025d", "text"),
+        ("Preto sobre chip GAP #FFE659", "#000000", "#ffe659", "text"),
+        ("Rótulo do cérebro sobre painel", t["brain_text"], t["raised"], "text"),
+        ("Borda de controle sobre fundo", t["control"], t["page"], "non-text"),
+        ("Borda de controle sobre painel", t["control"], t["raised"], "non-text"),
+        ("Colchete/segmento da marca sobre fundo", t["action"], t["page"], "non-text"),
+        ("Botão primário #2D5CE6 sobre fundo", "#2d5ce6", t["page"], "non-text"),
+        ("Marcador #6E72F0 sobre fundo", "#6e72f0", t["page"], "non-text"),
+        ("Vermelho risco #FF0000 sobre painel (borda)", "#ff0000", t["raised"], "non-text"),
+        ("Verde solução #00BF63 sobre painel (borda)", "#00bf63", t["raised"], "non-text"),
+    ]
+
+sections, fails = [], 0
+for tname, t in THEMES.items():
+    rows = []
+    for name, fg, bg, kind in theme_pairs(t):
+        r = ratio(fg, bg); need = 4.5 if kind == "text" else 3.0
+        if r >= need: status = "PASS"
+        elif kind == "text": status = "FAIL"; fails += 1
+        else: status = "abaixo de 3:1 — só decorativo, com rótulo em texto ao lado"
+        rows.append(f"| {name} | `{fg}` | `{bg}` | {r:.2f}:1 | {kind} ≥ {need}:1 | {status} |")
+    sections.append(f"## {tname}\n\n| Par | Frente | Fundo | Razão | Requisito | Resultado |\n|---|---|---|---|---|---|\n" + "\n".join(rows))
 
 md = f"""# Relatório de contraste — tokens aplicados no site
 
-Gerado por `scripts/contrast-report.py` (Fase 1). Fórmula WCAG 2.x de luminância relativa: texto normal exige 4,5:1; elementos não textuais exigem 3:1.
+Gerado por `scripts/contrast-report.py`. Fórmula WCAG 2.x de luminância relativa: texto normal exige 4,5:1; elementos não textuais exigem 3:1. Um bloco por tema (D-33).
 
-| Par | Frente | Fundo | Razão | Requisito | Resultado |
-|---|---|---|---|---|---|
-{chr(10).join(rows)}
-
+{chr(10).join(s + chr(10) for s in sections)}
 Pares de texto reprovados: **{fails}**.
 
 Observações:
-- `#FFE659` não é usado como texto nem como linha isolada sobre o creme (D-01); aparece só como fundo de chip, com texto preto.
-- Vermelho e verde semânticos aparecem como borda na cadeia de relações, sempre com o rótulo em texto preto; a cor nunca é o único portador do significado.
-- `#6E72F0` (índigo do cérebro, D-23) aparece só como marcador, borda e traço; texto no índigo usa `#4F53D9`.
-- O fundo do callout é `#CBD4FF` a 48% composto sobre o canvas (`{CALLOUT}`).
+- `#FFE659` só aparece como fundo do chip GAP, com texto preto (D-35); nunca como texto ou linha.
+- Vermelho e verde semânticos aparecem como borda na cadeia de relações, sempre com o rótulo em texto; a cor nunca é o único portador do significado.
+- `#6E72F0` (índigo do cérebro, D-23) aparece só como marcador, borda e traço; texto no índigo usa `#4F53D9` (`#A3A8F5` no Noite).
+- No Noite, a marca como texto usa `#8FA9FF` (tom claro de `#2D5CE6`); o botão continua `#2D5CE6` com texto branco.
 """
 open("docs/design-kit/07-validacao/contrast-report.md", "w").write(md)
-print("\n".join(rows)); print("FAILS", fails)
+print(md[-1500:]); print("FAILS", fails)

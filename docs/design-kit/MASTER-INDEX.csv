@@ -1,5 +1,5 @@
 id,titulo,caminho,tipo,versao,status,depende_de,aplica_a,fonte,evidencia
-RC-KIT-GOV-001,DECISIONS.md,00-governanca/DECISIONS.md,md,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,9021e0436cdfe5283ae168ed31eb004a65c9d0281b38ba99fd6c376d62454c99
+RC-KIT-GOV-001,DECISIONS.md,00-governanca/DECISIONS.md,md,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,c602cb484eac9b819a4789a6e24bfbbf57c3370ff4f4ee4004c808534012f12d
 RC-KIT-GOV-002,MAPPING.json,00-governanca/MAPPING.json,json,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,AUTORREFERENTE
 RC-KIT-FILE-034,_adherence.oxlintrc.json,01-referencias/design-systems/nocturne/_adherence.oxlintrc.json,json,A DEFINIR,PRESERVADO,,01-referencias,Arquivo.zip/nocturne-02c4ffae-3abc-4626-b190-1a7caf3c77c7/_adherence.oxlintrc.json,06186bb46f06c0fa5afd27543508082248de52d249988265ce294511a684923d
 RC-KIT-FILE-035,_ds_bundle.js,01-referencias/design-systems/nocturne/_ds_bundle.js,js,A DEFINIR,PRESERVADO,,01-referencias,Arquivo.zip/nocturne-02c4ffae-3abc-4626-b190-1a7caf3c77c7/_ds_bundle.js,aceb66bfea8c86f6ebf519525c4669e2d6bda22791fdf24db8f2cff09deabfb0
@@ -75,7 +75,8 @@ RC-KIT-FILE-018,Storyboard de componentes e handoff de uso.html,04-handoff/story
 RC-KIT-FILE-032,MDX EXEMPLO.md,05-exemplos/mdx-exemplo.md,md,A DEFINIR,PRESERVADO,,05-exemplos,MDX EXEMPLO.md,1943b2ceff3d59d5f73635f00aa341087e8cdba564ef3f383aca6ab229b8cc36
 RC-KIT-FILE-020,TUTOTIAL.md,06-operacao/tutorial.md,md,A DEFINIR,PRESERVADO,,06-operacao,TUTOTIAL.md,eecb80f84a1b2da5ca4f0d0c464ba4486bd78e88aa6214cad2bbd8666a126680
 RC-KIT-FILE-033,risco-cognitivo-reading-flow-v1.audit.yaml,07-validacao/auditorias/risco-cognitivo-reading-flow-v1.audit.yaml,yaml,A DEFINIR,PRESERVADO,,07-validacao,risco-cognitivo-reading-flow-v1.audit.yaml,3faf8020aef0adf951ae4b5e8b6a765e291e8368fca3d33c00f1803d25610136
-RC-KIT-GOV-003,contrast-report.md,07-validacao/contrast-report.md,md,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,5e67d6cd9610f27064693057f7e2bfe95cde2cd87de8bb7233be4ccf3f7b368f
+RC-KIT-GOV-003,contrast-report.md,07-validacao/contrast-report.md,md,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,2e1d415a11b7ccf449d30101e17f465735a63c69456201bf2bdb6d432ff80910
+RC-KIT-GOV-007,ds-audit.md,07-validacao/ds-audit.md,md,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,59e7f619d9627205f3fbade6058739b03f7fe372f58310b499320a62971959dc
 RC-KIT-GOV-004,verification.json,07-validacao/verification.json,json,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,AUTORREFERENTE
 RC-KIT-GOV-005,MASTER-INDEX.csv,MASTER-INDEX.csv,csv,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,AUTORREFERENTE
-RC-KIT-GOV-006,README.md,README.md,md,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,fce1f3c3ff80ac6f74bfc1878b022497604aa89710c99bbe019358a175083f6f
+RC-KIT-GOV-006,README.md,README.md,md,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,d82948edaf66c18e0a70e528cf920e0a8ff6ba3aa722e90e18ecc9cc2b0803e5

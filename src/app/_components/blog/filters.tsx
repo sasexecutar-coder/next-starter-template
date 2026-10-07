@@ -2,6 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from "react";
 import type { Term } from "@/content/taxonomy";
+import { Button } from "../ui/button";
 
 export type Selection = Record<string, string[]>;
 export type Group = { key: string; label: string; terms: Term[] };
@@ -51,10 +52,10 @@ function FilterGroup({ group, defaultOpen, value, onChange }: { group: Group; de
               />
               <span
                 aria-hidden="true"
-                className="grid h-5 w-5 shrink-0 place-items-center rounded-sm border border-control bg-raised peer-checked:border-ink peer-checked:bg-ink peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--brand-action-blue)]"
+                className="grid h-5 w-5 shrink-0 place-items-center rounded-sm border border-control bg-raised peer-checked:border-action peer-checked:bg-action peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--action-text)]"
               >
                 {checked && (
-                  <svg viewBox="0 0 24 24" className="h-4 w-4 text-white" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4 text-on-dark" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round">
                     <path d="m5 12 5 5 9-10" />
                   </svg>
                 )}
@@ -155,19 +156,18 @@ export function FilterDrawer({
           <FilterGroups groups={groups} value={pending} onChange={setPending} />
         </div>
         <div className="grid grid-cols-2 gap-3 pt-6" style={{ paddingBottom: "calc(env(safe-area-inset-bottom) + 24px)" }}>
-          <button type="button" className="btn btn-md btn-secondary" disabled={n === 0} onClick={() => setPending({})}>
+          <Button variant="secondary" size="md" disabled={n === 0} onClick={() => setPending({})}>
             Limpar
-          </button>
-          <button
-            type="button"
-            className="btn btn-md btn-primary"
+          </Button>
+          <Button
+            size="md"
             onClick={() => {
               onApply(pending);
               close();
             }}
           >
             Aplicar{n ? ` (${n})` : ""}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

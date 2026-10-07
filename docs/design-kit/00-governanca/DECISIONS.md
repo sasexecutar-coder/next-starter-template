@@ -56,10 +56,23 @@ Registro canônico do pacote **RC-DESIGN-KIT-001**. Cada decisão tem origem (`p
 | D-29 | **CTA primário único**: "Começar agora" (`/mapas`, da v1) no header desktop e no pé do menu mobile, ao lado do contorno "Fale conosco" (Em breve) | PROJECT_DECISION |
 | D-30 | **Carrossel**: setas desabilitadas nas pontas (sem loop), sem avanço automático; 1 item sem controles; > 7 itens com contador | PROJECT_DECISION |
 
+## Decisões de aplicação (padronização transversal)
+
+Origem: feedback com 13 capturas (`Arquivo.zip`). Diagnóstico: as regras D-01…D-30 estavam registradas, mas cada página as aplicava com classes próprias (74 desvios na primeira auditoria, `07-validacao/ds-audit.md`). A partir daqui, cada regra vive num único componente em `src/app/_components/ui/`, e o storyboard `/storyboard` mostra esse componente vivo.
+
+| ID | Decisão | Origem |
+|---|---|---|
+| D-31 | **CTA único em azul**: toda ação de navegação ou conversão usa o `<Button variant="primary">` (`#2D5CE6`), inclusive no bloco final índigo. O contorno fica só para ações utilitárias (limpar, "Em breve", ação secundária ao lado de um primário). Revoga os botões brancos e de contorno usados como CTA | PROJECT_DECISION |
+| D-32 | **Cards e cérebro com os tokens do Brain Home v2** (`04-handoff/prototipos/brain-home-v2.html`): painel com borda 1, raio 2 e 4 marcas de canto de 10 px (`<Panel>`, card de recurso); callout com linha tracejada e colchetes de 12 × 2 (`<Callout>`, callout editorial, "Como ler este mapa"); no cérebro, marcador em círculo de 36 com ícone (alvo 44), callout automático por orientação e painel com linhas `pick`. A **cena** continua a da v1 (D-22 mantida). Acento: índigo no cérebro (D-23), azul da marca no resto do site. Raio do card passa de 16 para 2 (`--radius-xs`) | PROJECT_DECISION |
+| D-33 | **Três temas para teste** (`data-theme` em `<html>`, salvo em `localStorage` `rc-theme`, sem flash): **Atual** = marca (padrão, intermediária); **Claro** = tokens do blog-starter (`#FFFFFF`, accent-1 `#FAFAFA`, accent-2 `#EAEAEA`, accent-7 `#333`, texto `#171717`); **Noite** = tokens do blog-starter (`slate-900` `#0F172A`, `slate-800` `#1E293B`, `slate-400` `#94A3B8`, foreground `#EDEDED`). Só os neutros mudam; o azul da marca fica, com tom claro `#8FA9FF` para texto no Noite. Seletor no rodapé e no storyboard | PROJECT_DECISION + EXISTING_PROJECT_TOKEN |
+| D-34 | **Ritmo como distância entre blocos** (corrige a leitura de D-25): 96 entre blocos no desktop (≥ 768) e 64 no mobile, aplicado como metade em cima e metade embaixo de cada `<Section>` (`--block-y` 48/32), para que blocos vizinhos somem exatamente a regra (antes somavam 192). Cabeçalho → conteúdo 48 (32 abaixo de 640); itens 32; dentro de componentes 24; grupos 8–16. Espaçamentos fora da escala são reprovados por `npm run audit:ds` | PROJECT_DECISION |
+| D-35 | **Cor da marca nos destaques**: eyebrow mono em azul (sem fundo cinza); negrito do artigo em azul; citação com fio fino em cima e embaixo e segmento azul de 48 × 4 centrado; estados ativos (menu, sub-nav, seletor, pontos do carrossel, checkbox) em azul. O amarelo de atenção fica restrito ao chip GAP, que não quebra linha | PROJECT_DECISION |
+| D-36 | **Cérebro sem pausa, reset nem switch de movimento**: o movimento segue só `prefers-reduced-motion`; ficam as dicas e os pontos. Menu mobile com transição de 320 ms (fade + 12 px, linhas em cascata) e foco no painel ao abrir, sem anel visível; seletor de categoria próprio que abre sempre para baixo | PROJECT_DECISION |
+
 ## Precedência de tokens (resolve GAP-002)
 
 1. **Global:** BRAND-COLOR-SYSTEM + D-01…D-04. Tokens `--brand-*`, `--semantic-*`, `--attention-*`, `--text-*`, `--surface-*` em `src/app/globals.css`.
-2. **Estrutura:** Nocturne (D-13). Tokens `--space-*`, `--radius-*`, `--shadow-*` e estados.
+2. **Estrutura:** handoff de arquitetura UX (D-25, ritmo D-34) e tokens v2 de card (D-32). Tokens `--space-*`, `--block-y`, `--stack-*`, `--radius-*`, `--shadow-*` e estados. Temas: D-33.
 3. **Superfície "artigo":** handoff editorial §11 (`--ed-*`) para escala, ritmo e medida. Os slots `{{BRAND_…}}` são preenchidos assim:
 
 | Slot editorial | Valor aplicado | Fonte |
@@ -67,8 +80,8 @@ Registro canônico do pacote **RC-DESIGN-KIT-001**. Cada decisão tem origem (`p
 | paper | `#FFFDFA` | BRAND-COLOR-SYSTEM (canvas) |
 | ink / heading | `#000000` | text-primary |
 | label | `#545454` | text-secondary |
-| link | `#2D5CE6` | ação (D-01) |
-| callout-head | `#0E025D` + texto branco | eyebrow/callout alternativo |
+| link / strong | `#2D5CE6` (`#8FA9FF` no Noite) | ação (D-01, D-35) |
+| callout | callout v2: tracejado + colchetes na cor da marca | D-32 (substitui a faixa índigo) |
 | callout-bg | `#CBD4FF` a 48% | brand-light-blue-soft |
 | rule | `#ECECEC` | brand-light-gray |
 
@@ -91,7 +104,7 @@ Em conflito: registrar valores, fontes e decisão aqui; nunca escolher silencios
 | GAP-009 | RESOLVIDO | Lista canônica = 4 funções da v1 (D-05 atualizada) | — | D-05 atualizado |
 | GAP-010 | ABERTO | Artigos da série (00–04) não escritos | Publicar em `_posts/` | `slug` preenchido em `src/content/series.ts` |
 | GAP-011 | ABERTO | Ferramentas funcionais (Fase 2) e texto de privacidade definitivo | Especificar fluxo e tratamento de dados | Ferramenta com as 3 telas + exportação PDF |
-| GAP-012 | ABERTO | Paleta do modo escuro (D-19) | Aprovar paleta | Tokens `.dark` com contraste verificado |
+| GAP-012 | PARCIAL | Paleta escura: tema "Noite" em teste com os tokens do blog-starter (D-33) | Escolher o tema definitivo após o teste | Tema aprovado e seletor de teste removido ou mantido |
 | GAP-013 | ABERTO | Nocturne veio sem `theme.json`, `components/`, `foundations/` e `templates/` citados no readme | Enviar se forem necessários | Referência completa |
 | GAP-014 | ABERTO | Depoimentos e métricas próprias (D-07, D-10) | Coletar com fonte, permissão e data | Bloco reativado |
 | GAP-015 | ABERTO | Aprovação visual G2 do cérebro: índigo `#6E72F0` e textos dos cards (rascunho) | Revisar e aprovar | D-21/D-23 marcadas como aprovadas; `draft: false` |
@@ -102,8 +115,9 @@ Em conflito: registrar valores, fontes e decisão aqui; nunca escolher silencios
 | GAP-020 | ABERTO | Valores de "Situação do leitor" (público: autônomos com dificuldade de autogestão) | Definir com o público | `USE_CASES` preenchido |
 | GAP-021 | ABERTO | Destinos de Assets (Loja/Oficina), Programa Executar, Comunidade, Entrar e "Fale conosco" | Fornecer URLs ou criar páginas | Itens com `status: "LIVE"` em `src/lib/site.ts` |
 | GAP-022 | ABERTO | Ilustrações dos cards (handoff: só no primeiro ou em todos) | Decidir e produzir (D-11) | Campo `illustration` preenchido |
+| GAP-024 | ABERTO | Tema padrão definitivo entre Atual, Claro e Noite (D-33) e se o seletor fica visível para o público | Testar e decidir | D-33 atualizada |
 | GAP-023 | ABERTO | Confirmar no navegador os tamanhos e pesos estimados do handoff e o header que recolhe ao rolar | Revisão visual | Aprovação registrada |
 
 ## Condição de retomada
 
-Fase 1, cérebro 3D (D-22) e arquitetura UX global (D-25…D-30) aplicados no site. A próxima rodada começa por GAP-015 (aprovação G2), GAP-019/GAP-020 (taxonomia), GAP-021 (destinos do menu) e o conteúdo (GAP-006, GAP-007, GAP-010).
+Fase 1, cérebro 3D (D-22), arquitetura UX global (D-25…D-30) e padronização transversal (D-31…D-36, storyboard em `/storyboard`, `npm run audit:ds` sem violações) aplicados no site. A próxima rodada começa por GAP-024 (tema definitivo), GAP-015 (aprovação G2), GAP-019/GAP-020 (taxonomia), GAP-021 (destinos do menu) e o conteúdo (GAP-006, GAP-007, GAP-010).

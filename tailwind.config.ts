@@ -14,6 +14,9 @@ const config: Config = {
         ink: "var(--text-primary)",
         muted: "var(--text-secondary)",
         action: "var(--brand-action-blue)",
+        "action-text": "var(--action-text)",
+        "on-dark": "var(--text-on-dark)",
+        strong: "var(--border-strong)",
         "action-strong": "var(--brand-action-blue-strong)",
         indigo: "var(--brand-dark-indigo)",
         "light-blue": "var(--brand-light-blue)",
@@ -28,6 +31,7 @@ const config: Config = {
         mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
       borderRadius: {
+        xs: "var(--radius-xs)",
         sm: "var(--radius-sm)",
         md: "var(--radius-md)",
         lg: "var(--radius-lg)",

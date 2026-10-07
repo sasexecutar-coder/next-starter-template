@@ -1,5 +1,7 @@
 import Footer from "@/app/_components/footer";
 import { SiteHeader } from "@/app/_components/site-header";
+import { themeScript } from "@/app/_components/theme-toggle";
+import { buttonClass } from "@/app/_components/ui/button";
 import { SITE } from "@/lib/site";
 import type { Metadata } from "next";
 import { DM_Mono, DM_Sans, Inter } from "next/font/google";
@@ -25,9 +27,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang={SITE.locale} className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang={SITE.locale} className={`${display.variable} ${body.variable} ${mono.variable}`} suppressHydrationWarning>
       <body className="bg-canvas text-ink">
-        <a href="#conteudo" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 btn btn-primary">
+        {/* D-33: aplica o tema salvo antes da pintura. Fica no <body> (e não no <head>) porque o runtime
+            insere <script> de chunks no <head> antes da hidratação e desalinharia o elemento. */}
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <a href="#conteudo" className={buttonClass("primary", "lg", "sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50")}>
           Pular para o conteúdo
         </a>
         <SiteHeader />

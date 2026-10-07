@@ -8,7 +8,7 @@ import csv, hashlib, json, os, re, sys
 BASE = "docs/design-kit"
 MAPPING = f"{BASE}/00-governanca/MAPPING.json"
 SELF_REF = {"MASTER-INDEX.csv", "00-governanca/MAPPING.json", "07-validacao/verification.json"}
-GENERATED = {"README.md", "00-governanca/DECISIONS.md", "07-validacao/contrast-report.md"}
+GENERATED = {"README.md", "00-governanca/DECISIONS.md", "07-validacao/contrast-report.md", "07-validacao/ds-audit.md"}
 ADDED_SOURCES = {
     "01-referencias/design-systems/nocturne/": ("Arquivo.zip/nocturne-02c4ffae-3abc-4626-b190-1a7caf3c77c7/", "D-13"),
     "04-handoff/prototipos/brain-home-v2.html": ("Arquivo.zip/Brain Home v2 2.html", "D-20; D-21"),

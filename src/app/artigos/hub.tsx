@@ -7,6 +7,9 @@ import { FILTER_GROUPS, PILLARS, TYPES } from "@/content/taxonomy";
 import { Carousel } from "@/app/_components/blog/carousel";
 import { FilterDrawer, FilterGroups, countSelected, type Group, type Selection } from "@/app/_components/blog/filters";
 import { ResourceCard } from "@/app/_components/blog/resource-card";
+import { CategorySelect } from "@/app/_components/blog/category-select";
+import { Button } from "@/app/_components/ui/button";
+import { Panel } from "@/app/_components/ui/panel";
 
 const KEYS = FILTER_GROUPS.map((g) => g.key);
 
@@ -76,59 +79,36 @@ export function Hub({ posts }: { posts: PostSummary[] }) {
 
   return (
     <>
-      {/* L3: seletor de categoria (select nativo, estilizado como card) */}
-      <div className="mt-12">
-        <label htmlFor="categoria" className="sr-only">
-          Categoria
-        </label>
-        <div className="relative max-w-sm">
-          <select
-            id="categoria"
-            value={category}
-            onChange={(e) => {
-              const v = e.target.value;
-              update({ ...selection, tipo: v.startsWith("tipo:") ? [v.slice(5)] : [] });
-            }}
-            className="h-11 w-full appearance-none rounded-xl border border-control bg-raised pl-4 pr-12 text-[16px] text-ink"
-          >
-            <option value="">Todos os recursos</option>
-            <optgroup label="Pilares editoriais">
-              {PILLARS.map((p, i) => (
-                <option key={p.id} value={`pilar:${p.id}`} disabled>
-                  {p.label ?? `Pilar ${i + 1} — em preparação`}
-                </option>
-              ))}
-            </optgroup>
-            <optgroup label="Tipos">
-              {TYPES.map((t) => (
-                <option key={t.id} value={`tipo:${t.id}`}>
-                  {t.label}
-                </option>
-              ))}
-            </optgroup>
-          </select>
-          <svg viewBox="0 0 24 24" className="pointer-events-none absolute right-4 top-1/2 h-5 w-5 -translate-y-1/2" fill="none" stroke="currentColor" strokeWidth={1.5} aria-hidden="true">
-            <path d="m6 9 6 6 6-6" />
-          </svg>
-        </div>
+      {/* L3: seletor de categoria (listbox próprio, abre para baixo — f12) */}
+      <div>
+        <CategorySelect
+          label="Categoria"
+          value={category}
+          onChange={(v) => update({ ...selection, tipo: v.startsWith("tipo:") ? [v.slice(5)] : [] })}
+          options={[
+            { value: "", label: "Todos os recursos" },
+            ...PILLARS.map((p, i) => ({ value: `pilar:${p.id}`, label: p.label ?? `Pilar ${i + 1} — em preparação`, disabled: !p.label, group: "Pilares editoriais" })),
+            ...TYPES.map((t) => ({ value: `tipo:${t.id}`, label: t.label, group: "Tipos" })),
+          ]}
+        />
       </div>
 
       {/* Destaques (só sem filtros e sem busca) */}
       {!q && n === 0 && (
-        <div className="mt-12">
+        <div className="stack-section">
           <Carousel posts={featured} />
         </div>
       )}
 
       {/* L4: busca + filtro */}
-      <div className="mt-24 grid gap-12 lg:grid-cols-[280px_1fr] lg:gap-8">
+      <div className="stack-section grid gap-12 lg:grid-cols-[280px_1fr] lg:gap-8">
         {/* Desktop: filtros numa barra lateral fixa de 280 */}
         <aside aria-label="Filtros" className="hidden lg:block">
           <h2 className="border-b border-line pb-4 font-display text-xl font-semibold">Filtrar</h2>
           <FilterGroups groups={groups} value={selection} onChange={(s) => update(s)} />
-          <button type="button" className="btn btn-md btn-secondary mt-6 w-full" disabled={n === 0} onClick={() => update({})}>
+          <Button variant="secondary" size="md" className="mt-6 w-full" disabled={n === 0} onClick={() => update({})}>
             Limpar filtros
-          </button>
+          </Button>
         </aside>
 
         <div>
@@ -157,7 +137,7 @@ export function Hub({ posts }: { posts: PostSummary[] }) {
                   update(selection, e.target.value.trim());
                 }}
                 placeholder="Buscar recursos"
-                className="h-11 w-full rounded-xl border border-control bg-raised pl-11 pr-11 text-[16px] text-ink placeholder:text-muted focus:border-ink focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand-action-blue)] [&::-webkit-search-cancel-button]:hidden"
+                className="h-11 w-full rounded-xl border border-control bg-raised pl-12 pr-12 text-[16px] text-ink placeholder:text-muted focus:border-action-text focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--action-text)] [&::-webkit-search-cancel-button]:hidden"
               />
               {draftQ && (
                 <button
@@ -175,10 +155,10 @@ export function Hub({ posts }: { posts: PostSummary[] }) {
                 </button>
               )}
             </div>
-            <button
+            <Button
+              variant="icon"
               ref={filterBtn}
-              type="button"
-              className="btn-icon relative h-11 w-11 lg:hidden"
+              className="h-11 w-11 lg:hidden"
               aria-label={n ? `Filtros (${n} ativos)` : "Filtros"}
               aria-haspopup="dialog"
               onClick={() => setDrawer(true)}
@@ -188,8 +168,8 @@ export function Hub({ posts }: { posts: PostSummary[] }) {
                 <circle cx="16" cy="7" r="2" />
                 <circle cx="10" cy="17" r="2" />
               </svg>
-              {n > 0 && <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-ink px-1 text-xs text-white">{n}</span>}
-            </button>
+              {n > 0 && <span className="absolute -right-1 -top-1 grid h-5 min-w-5 place-items-center rounded-full bg-action px-1 text-xs text-on-dark">{n}</span>}
+            </Button>
           </form>
 
           <h2 className="sr-only">Todos os recursos</h2>
@@ -206,19 +186,20 @@ export function Hub({ posts }: { posts: PostSummary[] }) {
               ))}
             </ul>
           ) : (
-            <div className="mt-4 rounded-xl border border-line bg-subtle p-6">
+            <Panel tone="subtle" className="mt-4">
               <p className="text-[16px] text-ink">Nenhum resultado para esses filtros.</p>
-              <button
-                type="button"
-                className="btn btn-md btn-secondary mt-4"
+              <Button
+                variant="secondary"
+                size="md"
+                className="mt-4"
                 onClick={() => {
                   setDraftQ("");
                   update({}, "");
                 }}
               >
                 Limpar filtros
-              </button>
-            </div>
+              </Button>
+            </Panel>
           )}
         </div>
       </div>
