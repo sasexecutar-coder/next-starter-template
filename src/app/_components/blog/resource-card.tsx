@@ -4,7 +4,6 @@ import { ptBR } from "date-fns/locale";
 import type { PostSummary } from "@/interfaces/post";
 import { PROGRAMS, termLabel, typeLabel } from "@/content/taxonomy";
 import { TypeIcon } from "./type-icon";
-import { Ticks } from "../ui/panel";
 
 type Props = {
   post: PostSummary;
@@ -18,7 +17,7 @@ export function shortDate(iso: string) {
 }
 
 // Card de recurso (handoff, D-25 + painel v2, D-32): padding 24, faixa de topo de 44, link único no título,
-// marcas de canto do painel que acendem na cor da marca no hover/foco.
+// borda fina que acende na cor da marca no hover/foco (sem marcas de canto, D-32 revista).
 // A ilustração tem célula própria no grid e nunca cobre o texto (corrige o defeito da referência).
 export function ResourceCard({ post, variant = "list", headingLevel = "h3" }: Props) {
   const H = headingLevel;
@@ -28,7 +27,6 @@ export function ResourceCard({ post, variant = "list", headingLevel = "h3" }: Pr
     <article
       className={`panel panel-interactive group flex flex-col !p-0 hover:-translate-y-0.5 focus-within:-translate-y-0.5 motion-reduce:transform-none ${featured ? "h-[395px]" : ""}`}
     >
-      <Ticks />
       {/* Faixa de topo: tipo e data */}
       <div className="flex h-11 shrink-0 items-center justify-between border-b border-line px-6 text-[14px]">
         <span className="flex items-center gap-2 text-ink">

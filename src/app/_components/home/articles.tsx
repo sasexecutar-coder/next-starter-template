@@ -32,7 +32,7 @@ export function Articles({ posts }: { posts: PostSummary[] }) {
               </h3>
               <p className="mt-1 text-[14px] text-muted">{s.topics.join(" · ")}</p>
             </div>
-            {s.status === "GAP" && <Chip variant="gap" />}
+            {s.status === "GAP" && <Chip variant="gap" className="justify-self-start sm:justify-self-end" />}
           </li>
         ))}
       </ol>

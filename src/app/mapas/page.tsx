@@ -42,7 +42,7 @@ export default function MapasPage() {
       >
         <ul className="flex flex-wrap gap-2">
           {RISKS.map((r) => (
-            <Panel as="li" compact ticks={false} key={r.id} className="flex items-center gap-3">
+            <Panel as="li" compact key={r.id} className="flex items-center gap-3">
               <span className="font-mono text-sm font-medium">{r.id}</span>
               {r.status === "GAP" && <Chip variant="gap" />}
             </Panel>

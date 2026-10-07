@@ -50,7 +50,7 @@ export default function FerramentasPage() {
       <Section divider id="execucao" title="Como cada ferramenta é usada" lead="Toda ferramenta segue as mesmas três telas.">
         <ol className="grid gap-8 md:grid-cols-3">
           {TOOL_SCREENS.map((s, i) => (
-            <Panel as="li" tone="subtle" ticks={false} key={s.n}>
+            <Panel as="li" tone="subtle" key={s.n}>
               <Eyebrow>{s.n}</Eyebrow>
               <h3 className="mt-2 text-lg font-semibold">{s.role}</h3>
               <ul className="mt-3 space-y-1 text-muted">

@@ -41,6 +41,11 @@ const RULES = [
     test: (line, file) => !file.startsWith(UI) && /\bcard-(feature|micro)\b/.test(line),
   },
   {
+    id: "ticks",
+    why: "marcas de canto só no painel do cérebro (D-32 revista)",
+    test: (line, file) => !file.includes("_components/brain/") && /<Ticks\b|\bticks[=\s{]|className=[^>]*\btick\b/.test(line),
+  },
+  {
     id: "select",
     why: "<select> nativo: use CategorySelect (abre para baixo)",
     test: (line) => /<select\b/.test(line),
