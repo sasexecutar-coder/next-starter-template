@@ -4,7 +4,7 @@ import { RelationChain } from "../relation-chain";
 
 export function HowItWorks() {
   return (
-    <section aria-labelledby="como-funciona" className="border-t border-line py-16 sm:py-24">
+    <section aria-labelledby="como-funciona" className="page-block border-t border-line">
       <Container>
         <SectionHeader
           id="como-funciona"

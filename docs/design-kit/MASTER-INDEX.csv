@@ -1,5 +1,5 @@
 id,titulo,caminho,tipo,versao,status,depende_de,aplica_a,fonte,evidencia
-RC-KIT-GOV-001,DECISIONS.md,00-governanca/DECISIONS.md,md,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,a61f58e42dc47c248cfe3def74f8b31f1836c05f931c3884706ff9887f925a3c
+RC-KIT-GOV-001,DECISIONS.md,00-governanca/DECISIONS.md,md,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,9021e0436cdfe5283ae168ed31eb004a65c9d0281b38ba99fd6c376d62454c99
 RC-KIT-GOV-002,MAPPING.json,00-governanca/MAPPING.json,json,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,AUTORREFERENTE
 RC-KIT-FILE-034,_adherence.oxlintrc.json,01-referencias/design-systems/nocturne/_adherence.oxlintrc.json,json,A DEFINIR,PRESERVADO,,01-referencias,Arquivo.zip/nocturne-02c4ffae-3abc-4626-b190-1a7caf3c77c7/_adherence.oxlintrc.json,06186bb46f06c0fa5afd27543508082248de52d249988265ce294511a684923d
 RC-KIT-FILE-035,_ds_bundle.js,01-referencias/design-systems/nocturne/_ds_bundle.js,js,A DEFINIR,PRESERVADO,,01-referencias,Arquivo.zip/nocturne-02c4ffae-3abc-4626-b190-1a7caf3c77c7/_ds_bundle.js,aceb66bfea8c86f6ebf519525c4669e2d6bda22791fdf24db8f2cff09deabfb0
@@ -33,6 +33,20 @@ RC-KIT-FILE-031,ESQUERMAS PLAIN TXT.md,03-editorial/arquitetura/esquemas-editori
 RC-KIT-FILE-029,BLOCKS-CONTRAT.md,03-editorial/contratos/blocks-contract.md,md,A DEFINIR,PRESERVADO,,03-editorial,BLOCKS-CONTRAT.md,0846be1a809279a553bb56d7b25095f6b2c3907c8cbd7c77a300c153431d990c
 RC-KIT-FILE-023,MDX_CONTRACT.md,03-editorial/contratos/mdx-contract.md,md,A DEFINIR,PRESERVADO,,03-editorial,MDX_CONTRACT.md,c86010b48ec1daa59181aa49ec631f82fc2d9dc5274a5ec137d5d9bdd291db30
 RC-KIT-FILE-027,LEITURA CONGTIVA.md,03-editorial/leitura/leitura-cognitiva.md,md,A DEFINIR,PRESERVADO,,03-editorial,LEITURA CONGTIVA.md,4863c816fef5165bf382106fd1e86a291d33e64a90aceb05961e18413c7a9ae1
+RC-KIT-FILE-061,IMG_1892.PNG,04-handoff/blog-ux/capturas/IMG_1892.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1892.PNG,8937dcf60427826877291980bb3de8fb0759f668358b9b4ba04a7086ae03855c
+RC-KIT-FILE-062,IMG_1893.PNG,04-handoff/blog-ux/capturas/IMG_1893.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1893.PNG,aff66d929c3c165f367f2e63d8251a284a8374df886efa5b664b014db353260f
+RC-KIT-FILE-063,IMG_1894.PNG,04-handoff/blog-ux/capturas/IMG_1894.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1894.PNG,d4708b1e7adadd2da3df5dd06927f76a4f93f59f6d66f552a341923cdf4fb801
+RC-KIT-FILE-064,IMG_1895.PNG,04-handoff/blog-ux/capturas/IMG_1895.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1895.PNG,4a504cd26cb56fa0d290f0735f611fd7429f380fd13dab44f55929003bafe0ea
+RC-KIT-FILE-065,IMG_1896.PNG,04-handoff/blog-ux/capturas/IMG_1896.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1896.PNG,985f0fd6414b71af16a5eef546b287e0942811673401d41d9a2aa0295b7c8ce4
+RC-KIT-FILE-066,IMG_1897.PNG,04-handoff/blog-ux/capturas/IMG_1897.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1897.PNG,21ef1765e4b1c68cb03b332ba526432e8cea3c8ca2f7b3c207a39722e0e34dba
+RC-KIT-FILE-067,IMG_1898.PNG,04-handoff/blog-ux/capturas/IMG_1898.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1898.PNG,d196718c677966bbc45e93749f05978e7eb0ab0747f0066b5dc1daebd170a72d
+RC-KIT-FILE-068,IMG_1899.PNG,04-handoff/blog-ux/capturas/IMG_1899.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1899.PNG,0c7feb80605d912fbf0c469e6db123d7907fdbb0638d8911f7cc824390d88e18
+RC-KIT-FILE-069,IMG_1900.PNG,04-handoff/blog-ux/capturas/IMG_1900.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1900.PNG,06e18673a6c2adba05c0ca5523953e68bc99a3a7447050336ade17a5612bb8a3
+RC-KIT-FILE-070,IMG_1901.PNG,04-handoff/blog-ux/capturas/IMG_1901.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1901.PNG,4f2f0ff0bfaaed84f993b709b2ddccc47e261f56eb31f79e5041049106990692
+RC-KIT-FILE-071,IMG_1902.PNG,04-handoff/blog-ux/capturas/IMG_1902.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1902.PNG,d2d88c11f25344478087560e98df7f98e4389832b839c84e2564845bace66ffa
+RC-KIT-FILE-072,IMG_1903.PNG,04-handoff/blog-ux/capturas/IMG_1903.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1903.PNG,9a717bc168c23aecfa467744e6948d8c8cc2c46b35e2379dcc6be1908d4862de
+RC-KIT-FILE-073,IMG_1904.PNG,04-handoff/blog-ux/capturas/IMG_1904.PNG,png,A DEFINIR,PRESERVADO,,04-handoff,Arch_.zip/Arch /IMG_1904.PNG,b8de1ce77c01ead70d3b8ade79dbe54c0a705d0135e53e734b4e981cebb8fe19
+RC-KIT-FILE-074,handoff-arquitetura-ux-blog.md,04-handoff/blog-ux/handoff-arquitetura-ux-blog.md,md,A DEFINIR,SOT,,04-handoff,Untitled.md (anexo: Handoff — Arquitetura de telas e UX flow do blog),90ed6b7a448519b5a1d459e85101a72750c1071c0fb12f0bbe18dc11657c04db
 RC-KIT-FILE-040,HANDOFF.md,04-handoff/brain-home/HANDOFF.md,md,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/HANDOFF.md,a422f17342f18a8f2aa1209c9bb6bfeb4eedcf64ec75207ca1a9d6e37ebdb74a
 RC-KIT-FILE-041,PROVENIENCIA.md,04-handoff/brain-home/PROVENIENCIA.md,md,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/PROVENIENCIA.md,5d6026e0ced035a10fb76c780905e93c0478e62d77176a8ade31e30d308e819b
 RC-KIT-FILE-042,brain-particles-attr.bin,04-handoff/brain-home/assets/brain-particles-attr.bin,bin,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/assets/brain-particles-attr.bin,6a64659f1b3419d5784388f840dae162d01a1a8b15ba3fb6d63e4f0ef67ec331
@@ -61,7 +75,7 @@ RC-KIT-FILE-018,Storyboard de componentes e handoff de uso.html,04-handoff/story
 RC-KIT-FILE-032,MDX EXEMPLO.md,05-exemplos/mdx-exemplo.md,md,A DEFINIR,PRESERVADO,,05-exemplos,MDX EXEMPLO.md,1943b2ceff3d59d5f73635f00aa341087e8cdba564ef3f383aca6ab229b8cc36
 RC-KIT-FILE-020,TUTOTIAL.md,06-operacao/tutorial.md,md,A DEFINIR,PRESERVADO,,06-operacao,TUTOTIAL.md,eecb80f84a1b2da5ca4f0d0c464ba4486bd78e88aa6214cad2bbd8666a126680
 RC-KIT-FILE-033,risco-cognitivo-reading-flow-v1.audit.yaml,07-validacao/auditorias/risco-cognitivo-reading-flow-v1.audit.yaml,yaml,A DEFINIR,PRESERVADO,,07-validacao,risco-cognitivo-reading-flow-v1.audit.yaml,3faf8020aef0adf951ae4b5e8b6a765e291e8368fca3d33c00f1803d25610136
-RC-KIT-GOV-003,contrast-report.md,07-validacao/contrast-report.md,md,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,998bca8cd57bcb2d630a7cbda786a88d87a68e4e476f51a5837cb174b4b48f6f
+RC-KIT-GOV-003,contrast-report.md,07-validacao/contrast-report.md,md,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,5e67d6cd9610f27064693057f7e2bfe95cde2cd87de8bb7233be4ccf3f7b368f
 RC-KIT-GOV-004,verification.json,07-validacao/verification.json,json,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,AUTORREFERENTE
 RC-KIT-GOV-005,MASTER-INDEX.csv,MASTER-INDEX.csv,csv,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,AUTORREFERENTE
-RC-KIT-GOV-006,README.md,README.md,md,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,ecc5edd53422a0d8ccd28210f9332f38e1d13547812014bace0a3dd3a2444e21
+RC-KIT-GOV-006,README.md,README.md,md,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,fce1f3c3ff80ac6f74bfc1878b022497604aa89710c99bbe019358a175083f6f

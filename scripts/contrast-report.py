@@ -34,6 +34,15 @@ PAIRS = [
     ("Vermelho risco #FF0000 sobre canvas (borda)", "#ff0000", CANVAS, "non-text"),
     ("Verde solução #00BF63 sobre canvas (borda)", "#00bf63", CANVAS, "non-text"),
     ("Borda #2D5CE6 do botão secundário sobre canvas", "#2d5ce6", CANVAS, "non-text"),
+    # Estrutura do handoff de UX (D-25, D-28): bordas de controle e estados
+    ("Borda de controle #85847F sobre canvas", "#85847f", CANVAS, "non-text"),
+    ("Borda de controle #85847F sobre card #F4F3F0", "#85847f", SUBTLE, "non-text"),
+    ("Borda de controle #85847F sobre branco", "#85847f", "#ffffff", "non-text"),
+    ("Dot ativo #000 sobre canvas", "#000000", CANVAS, "non-text"),
+    ("Dot inativo #85847F sobre canvas", "#85847f", CANVAS, "non-text"),
+    ("Texto 'Em breve' #545454 sobre #F4F3F0", "#545454", SUBTLE, "text"),
+    ("Placeholder da busca #545454 sobre branco", "#545454", "#ffffff", "text"),
+    ("Contador branco sobre #000 (badge de filtros)", "#ffffff", "#000000", "text"),
     # Cérebro 3D (D-23): índigo restrito ao componente
     ("Texto da pílula selecionada #4F53D9 sobre branco", "#4f53d9", "#ffffff", "text"),
     ("Texto da pílula #000 sobre branco 94%", "#000000", "#ffffff", "text"),

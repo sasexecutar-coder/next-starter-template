@@ -4,7 +4,8 @@ type Props = {
 };
 
 const Container = ({ children, className = "" }: Props) => {
-  return <div className={`mx-auto w-full max-w-6xl px-5 sm:px-8 ${className}`}>{children}</div>;
+  // D-25: gutter 32 (mobile) / 48 (≥ 640), conteúdo até 1120
+  return <div className={`container-page ${className}`}>{children}</div>;
 };
 
 export default Container;

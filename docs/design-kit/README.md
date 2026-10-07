@@ -5,9 +5,9 @@ Fonte de verdade de marca, design e editorial do site Risco Cognitivo. O site qu
 | Campo | Valor |
 |---|---|
 | ID do pacote | RC-DESIGN-KIT-001 |
-| Versão | 1.2.0 (organização 1.0.0 + Fase 1 + cérebro 3D HOME-BRAIN-001) |
+| Versão | 1.3.0 (organização 1.0.0 + Fase 1 + cérebro 3D + arquitetura UX global) |
 | Área | Design / Editorial / Handoff |
-| Status | Organização VERIFIED; decisões D-01…D-24 aplicadas no site; pendências em [DECISIONS](00-governanca/DECISIONS.md) |
+| Status | Organização VERIFIED; decisões D-01…D-30 aplicadas no site; pendências em [DECISIONS](00-governanca/DECISIONS.md) |
 | Owner | A DEFINIR |
 | Evidência | [verification.json](07-validacao/verification.json), [contrast-report.md](07-validacao/contrast-report.md) |
 
@@ -32,7 +32,7 @@ Reunir num só lugar a identidade, o sistema visual, os contratos editoriais e o
 | `00-governanca/` | DECISIONS (decisões, precedência, pendências) e MAPPING (ID ↔ nome original) | Canônica |
 | `01-referencias/marca/` | OBRAND-STYLING-001: referência externa OpenAI | Só referência (D-15) |
 | `01-referencias/visuais/` | 16 imagens de referência, preservadas sem classificação inferida | Só referência |
-| `01-referencias/design-systems/nocturne/` | Design system Nocturne | Estrutura adotada, paleta não (D-13) |
+| `01-referencias/design-systems/nocturne/` | Design system Nocturne | Estados e foco adotados; escala e raios substituídos pelo handoff de UX (D-13 revista por D-25) |
 | `02-design-system/fundamentos/` | BRAND-COLOR-SYSTEM | Canônica (global) |
 | `02-design-system/layout/` | EDITORIAL-LAYOUT-SYSTEM | Canônica (superfície artigo) |
 | `02-design-system/componentes/` | CARD-HIERARCHY-SYSTEM | Canônica |
@@ -45,13 +45,14 @@ Reunir num só lugar a identidade, o sistema visual, os contratos editoriais e o
 | `04-handoff/storyboard/` | Storyboard de componentes | Consulta |
 | `04-handoff/brain-home/` | Cérebro 3D HOME-BRAIN-001: **v1 = fonte de verdade**, cena, assets, gerador, brutos FreeSurfer, HANDOFF e PROVENIÊNCIA | Canônica (D-22, D-23) |
 | `04-handoff/prototipos/` | Brain Home v2 (versão oca) | SUPERADA (D-22) |
+| `04-handoff/blog-ux/` | Handoff de arquitetura de telas e UX flow (13 capturas, 390 px) | Canônica para estrutura global: espaçamento, raios, alturas, navegação, estados (D-25…D-30) |
 | `05-exemplos/` | Exemplo MDX do template | Sem autoridade |
 | `06-operacao/` | Tutorial de personalização | Orientação |
 | `07-validacao/` | Verificação, contraste, auditoria histórica | Evidência |
 
 ## Regras de precedência
 
-1. As decisões D-01…D-24 em DECISIONS valem sobre qualquer arquivo de origem.
+1. As decisões D-01…D-30 em DECISIONS valem sobre qualquer arquivo de origem.
 2. Fundamentos (`02-design-system/fundamentos`) valem globalmente.
 3. Layout, componentes e contratos editoriais valem para a superfície que nomeiam.
 4. Handoffs aplicam as regras acima a uma superfície. Valores estimados (`≈`) dos handoffs não são adotados.
@@ -68,11 +69,13 @@ Reunir num só lugar a identidade, o sistema visual, os contratos editoriais e o
 | Blocos editoriais (D-17) | `src/lib/remark-editorial-blocks.ts`, `src/app/_components/markdown-styles.module.css` |
 | Conteúdo com status GAP (D-10) | `src/content/*.ts` |
 | Home (D-12, D-24), `/mapas` (D-05), `/ferramentas` (D-06) | `src/app/page.tsx`, `src/app/mapas/`, `src/app/ferramentas/` |
+| Estrutura global, header, menu, sub-nav (D-25, D-26, D-29) | `src/app/globals.css`, `src/app/_components/site-header.tsx`, `src/app/_components/blog/sub-nav.tsx`, `src/lib/site.ts` |
+| Hub `/artigos`, card, carrossel, filtros, taxonomia (D-27, D-28, D-30) | `src/app/artigos/`, `src/app/_components/blog/`, `src/content/taxonomy.ts` |
 | Cérebro 3D (D-22, D-23) | `src/lib/brain/brain-scene.ts`, `src/app/_components/brain/`, assets copiados por `scripts/sync-brain-assets.mjs` para `public/models/home-brain/` (não versionado; fonte = kit) |
 
 ## Pendências
 
-Estão listadas em [DECISIONS → Pendências](00-governanca/DECISIONS.md#pendências): GAP-001, GAP-005 a GAP-007 e GAP-010 a GAP-018. Itens sem fonte aparecem no site como "Em preparação" e nunca como fato.
+Estão listadas em [DECISIONS → Pendências](00-governanca/DECISIONS.md#pendências): GAP-001, GAP-005 a GAP-007 e GAP-010 a GAP-023. Itens sem fonte aparecem no site como "Em preparação" e nunca como fato.
 
 ## Critérios de aceite
 
@@ -84,6 +87,7 @@ Estão listadas em [DECISIONS → Pendências](00-governanca/DECISIONS.md#pendê
 - [x] O site não exibe depoimentos, logos, pricing nem números sem fonte.
 - [ ] Conteúdo RC-01…RC-09, evidências das funções e artigos da série (GAP-006, GAP-007, GAP-010).
 - [x] Cérebro 3D da v1 na Home e em `/mapas`, com assets verificados por hash contra o `build-report.json`.
+- [x] Estrutura do handoff de UX aplicada no site inteiro (header 72, sub-nav 52, gutter 32, alvos ≥ 44, bordas de controle ≥ 3:1), medida em navegador a 390 px.
 - [ ] Aprovação visual G2 do cérebro e medições G3 em aparelhos reais (GAP-015, GAP-016).
 - [ ] Símbolo do logo aprovado (GAP-005).
 

@@ -22,6 +22,14 @@ Gerado por `scripts/contrast-report.py` (Fase 1). Fórmula WCAG 2.x de luminânc
 | Vermelho risco #FF0000 sobre canvas (borda) | `#ff0000` | `#fffdfa` | 3.94:1 | non-text ≥ 3.0:1 | PASS |
 | Verde solução #00BF63 sobre canvas (borda) | `#00bf63` | `#fffdfa` | 2.40:1 | non-text ≥ 3.0:1 | abaixo de 3:1 — só decorativo, nunca único portador de significado |
 | Borda #2D5CE6 do botão secundário sobre canvas | `#2d5ce6` | `#fffdfa` | 5.46:1 | non-text ≥ 3.0:1 | PASS |
+| Borda de controle #85847F sobre canvas | `#85847f` | `#fffdfa` | 3.69:1 | non-text ≥ 3.0:1 | PASS |
+| Borda de controle #85847F sobre card #F4F3F0 | `#85847f` | `#f4f3f0` | 3.38:1 | non-text ≥ 3.0:1 | PASS |
+| Borda de controle #85847F sobre branco | `#85847f` | `#ffffff` | 3.75:1 | non-text ≥ 3.0:1 | PASS |
+| Dot ativo #000 sobre canvas | `#000000` | `#fffdfa` | 20.68:1 | non-text ≥ 3.0:1 | PASS |
+| Dot inativo #85847F sobre canvas | `#85847f` | `#fffdfa` | 3.69:1 | non-text ≥ 3.0:1 | PASS |
+| Texto 'Em breve' #545454 sobre #F4F3F0 | `#545454` | `#f4f3f0` | 6.82:1 | text ≥ 4.5:1 | PASS |
+| Placeholder da busca #545454 sobre branco | `#545454` | `#ffffff` | 7.57:1 | text ≥ 4.5:1 | PASS |
+| Contador branco sobre #000 (badge de filtros) | `#ffffff` | `#000000` | 21.00:1 | text ≥ 4.5:1 | PASS |
 | Texto da pílula selecionada #4F53D9 sobre branco | `#4f53d9` | `#ffffff` | 5.88:1 | text ≥ 4.5:1 | PASS |
 | Texto da pílula #000 sobre branco 94% | `#000000` | `#ffffff` | 21.00:1 | text ≥ 4.5:1 | PASS |
 | Marcador #6E72F0 sobre canvas (não textual) | `#6e72f0` | `#fffdfa` | 3.88:1 | non-text ≥ 3.0:1 | PASS |
