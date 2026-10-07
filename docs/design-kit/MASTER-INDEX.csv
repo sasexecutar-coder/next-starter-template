@@ -1,5 +1,5 @@
 id,titulo,caminho,tipo,versao,status,depende_de,aplica_a,fonte,evidencia
-RC-KIT-GOV-001,DECISIONS.md,00-governanca/DECISIONS.md,md,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,cb812e700c31e4f5332e2cbba048d7b405c4d67eabcc97dff1042a070b36eb64
+RC-KIT-GOV-001,DECISIONS.md,00-governanca/DECISIONS.md,md,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,a61f58e42dc47c248cfe3def74f8b31f1836c05f931c3884706ff9887f925a3c
 RC-KIT-GOV-002,MAPPING.json,00-governanca/MAPPING.json,json,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,AUTORREFERENTE
 RC-KIT-FILE-034,_adherence.oxlintrc.json,01-referencias/design-systems/nocturne/_adherence.oxlintrc.json,json,A DEFINIR,PRESERVADO,,01-referencias,Arquivo.zip/nocturne-02c4ffae-3abc-4626-b190-1a7caf3c77c7/_adherence.oxlintrc.json,06186bb46f06c0fa5afd27543508082248de52d249988265ce294511a684923d
 RC-KIT-FILE-035,_ds_bundle.js,01-referencias/design-systems/nocturne/_ds_bundle.js,js,A DEFINIR,PRESERVADO,,01-referencias,Arquivo.zip/nocturne-02c4ffae-3abc-4626-b190-1a7caf3c77c7/_ds_bundle.js,aceb66bfea8c86f6ebf519525c4669e2d6bda22791fdf24db8f2cff09deabfb0
@@ -33,14 +33,35 @@ RC-KIT-FILE-031,ESQUERMAS PLAIN TXT.md,03-editorial/arquitetura/esquemas-editori
 RC-KIT-FILE-029,BLOCKS-CONTRAT.md,03-editorial/contratos/blocks-contract.md,md,A DEFINIR,PRESERVADO,,03-editorial,BLOCKS-CONTRAT.md,0846be1a809279a553bb56d7b25095f6b2c3907c8cbd7c77a300c153431d990c
 RC-KIT-FILE-023,MDX_CONTRACT.md,03-editorial/contratos/mdx-contract.md,md,A DEFINIR,PRESERVADO,,03-editorial,MDX_CONTRACT.md,c86010b48ec1daa59181aa49ec631f82fc2d9dc5274a5ec137d5d9bdd291db30
 RC-KIT-FILE-027,LEITURA CONGTIVA.md,03-editorial/leitura/leitura-cognitiva.md,md,A DEFINIR,PRESERVADO,,03-editorial,LEITURA CONGTIVA.md,4863c816fef5165bf382106fd1e86a291d33e64a90aceb05961e18413c7a9ae1
+RC-KIT-FILE-040,HANDOFF.md,04-handoff/brain-home/HANDOFF.md,md,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/HANDOFF.md,a422f17342f18a8f2aa1209c9bb6bfeb4eedcf64ec75207ca1a9d6e37ebdb74a
+RC-KIT-FILE-041,PROVENIENCIA.md,04-handoff/brain-home/PROVENIENCIA.md,md,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/PROVENIENCIA.md,5d6026e0ced035a10fb76c780905e93c0478e62d77176a8ade31e30d308e819b
+RC-KIT-FILE-042,brain-particles-attr.bin,04-handoff/brain-home/assets/brain-particles-attr.bin,bin,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/assets/brain-particles-attr.bin,6a64659f1b3419d5784388f840dae162d01a1a8b15ba3fb6d63e4f0ef67ec331
+RC-KIT-FILE-043,brain-particles.bin,04-handoff/brain-home/assets/brain-particles.bin,bin,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/assets/brain-particles.bin,c6822ba52404024b8c27565030ecffbd994d4cc5f561e7901e479a106354bdc9
+RC-KIT-FILE-044,brain-poster-legacy.webp,04-handoff/brain-home/assets/brain-poster-legacy.webp,webp,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/assets/brain-poster-legacy.webp,a9826f6f92d7445c0cb5768a8004a63c1aedcde7592bb72b6a8c5a9afca6b6bb
+RC-KIT-FILE-045,brain-poster.png,04-handoff/brain-home/assets/brain-poster.png,png,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/assets/brain-poster.png,9ec768c17cb65a94e507d323cbe920063a2f809f89bf1360c6d7811be545f3ed
+RC-KIT-FILE-046,brain-surface.glb,04-handoff/brain-home/assets/brain-surface.glb,glb,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/assets/brain-surface.glb,ce97da58a5d4cdcf55b40d47a25ef55ca677e5e12a9f71e9ad0942cee2860c93
+RC-KIT-FILE-047,build-report.json,04-handoff/brain-home/assets/build-report.json,json,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/assets/build-report.json,ad7a934af96a6190c871631ec77bf7c25c4b6096897b01b676a0506446af09b1
+RC-KIT-FILE-048,brain-hollow.js,04-handoff/brain-home/brain-hollow.js,js,A DEFINIR,SUPERADO,,04-handoff,Arquivo_2.zip/brain-hollow.js,6643f8a7a42ceadcaa38ce10b4e3652e8b3e626c4e78d00494757f393ea95fe7
+RC-KIT-FILE-049,brain-home-v1.html,04-handoff/brain-home/brain-home-v1.html,html,A DEFINIR,SOT,,04-handoff,Arquivo_2.zip/Brain Home.html,672555743965d983cb3e2664fcde49ebc555bb4e9ed3b4cb952f4c50df0ed8d5
+RC-KIT-FILE-050,brain-scene.js,04-handoff/brain-home/brain-scene.js,js,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/brain-scene.js,c60f90b4cab9cd04a60d417986f2fcda4b34b3460f5b0f98a5ef979d08e0ec92
+RC-KIT-FILE-051,brain-viewer.html,04-handoff/brain-home/brain-viewer.html,html,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/Brain Viewer.html,23b8ff392cd273087a114fcefd16ad5fa6ad87f48d26be29258c8642364d7546
+RC-KIT-FILE-052,brain-visual-config.json,04-handoff/brain-home/brain-visual-config.json,json,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/brain-visual-config.json,84a77f5cf4c802203092be481881432f522646be8dde1740a2a6f4d5749b59bb
+RC-KIT-FILE-053,build-brain-assets.js,04-handoff/brain-home/build/build-brain-assets.js,js,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/build/build-brain-assets.js,f7e6c91bca7ded3ffadfd9a0662ebc94359f81ced18bad4a25e26939d6b7f6e7
+RC-KIT-FILE-054,aseg.mgz,04-handoff/brain-home/source/aseg.mgz,mgz,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/source/aseg.mgz,d2c386e1aaa05074042b07c8c9c53e999e6172053586562227c97e77a1a41a96
+RC-KIT-FILE-055,lh.pial.T1,04-handoff/brain-home/source/lh.pial.T1,t1,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/source/lh.pial.T1,2aac780dd856e8be55362cec46663bd0eb14c03d3cac7ac3969f2083a7bf09f8
+RC-KIT-FILE-056,lh.sulc,04-handoff/brain-home/source/lh.sulc,sulc,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/source/lh.sulc,0aad26d4ab724eacdb337321fcf2ecae6ba3b1f2530a65729c55501875d5a9ac
+RC-KIT-FILE-057,rh.pial.T1,04-handoff/brain-home/source/rh.pial.T1,t1,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/source/rh.pial.T1,655690359a5cf3c4cd498b31594a22014d7ad4b85620248ae60ed82b25ce3d31
+RC-KIT-FILE-058,rh.sulc,04-handoff/brain-home/source/rh.sulc,sulc,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/source/rh.sulc,cb83fcb0fd4e7cffef77636819a2faf69fe98c36e38d3d634b45899654c68e83
+RC-KIT-FILE-059,three-d-stage.js,04-handoff/brain-home/three-d-stage.js,js,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/three-d-stage.js,072cca1bb58d363504e415af8b20f694476b206498c07169de31829880649ef5
+RC-KIT-FILE-060,tokens.css,04-handoff/brain-home/tokens.css,css,A DEFINIR,PRESERVADO,,04-handoff,Arquivo_2.zip/tokens.css,3bd68496c042097e749aa851b0d7f4e3d4208b4fde0f9acd47917134269052eb
 RC-KIT-FILE-019,Handoff editorial tokens para artigos de blog e ebooks.md,04-handoff/editorial/handoff-tokens-blog-ebooks.md,md,A DEFINIR,PRESERVADO,,04-handoff,Handoff editorial tokens para artigos de blog e ebooks.md,9550f2bfef1c79b6522121478799f3792a1569f95cdaacfb66cba8a496f1d757
-RC-KIT-FILE-039,brain-home-v2.html,04-handoff/prototipos/brain-home-v2.html,html,A DEFINIR,PRESERVADO,,04-handoff,Arquivo.zip/Brain Home v2 2.html,2e3768a34746f884f09d6f7d1296e85af5f2b97e091719a48499737dd440d9df
+RC-KIT-FILE-039,brain-home-v2.html,04-handoff/prototipos/brain-home-v2.html,html,A DEFINIR,SUPERADO,,04-handoff,Arquivo.zip/Brain Home v2 2.html,2e3768a34746f884f09d6f7d1296e85af5f2b97e091719a48499737dd440d9df
 RC-KIT-FILE-017,Developer Handoff Spec ΓÇö Branded Mainline Astro Site.md,04-handoff/site/developer-handoff-mainline-astro.md,md,A DEFINIR,PRESERVADO,,04-handoff,Developer Handoff Spec ΓÇö Branded Mainline Astro Site.md,8a546aeb47c394a1fa9a60db5fdd41af9c707b7fbfe1ade5c6a4fb8cc7c02c74
 RC-KIT-FILE-018,Storyboard de componentes e handoff de uso.html,04-handoff/storyboard/storyboard-componentes.html,html,A DEFINIR,PRESERVADO,,04-handoff,Storyboard de componentes e handoff de uso.html,e73ae06b42bd8e66ed59121973a1f4fcf916da19e18f5fc719656971e424337c
 RC-KIT-FILE-032,MDX EXEMPLO.md,05-exemplos/mdx-exemplo.md,md,A DEFINIR,PRESERVADO,,05-exemplos,MDX EXEMPLO.md,1943b2ceff3d59d5f73635f00aa341087e8cdba564ef3f383aca6ab229b8cc36
 RC-KIT-FILE-020,TUTOTIAL.md,06-operacao/tutorial.md,md,A DEFINIR,PRESERVADO,,06-operacao,TUTOTIAL.md,eecb80f84a1b2da5ca4f0d0c464ba4486bd78e88aa6214cad2bbd8666a126680
 RC-KIT-FILE-033,risco-cognitivo-reading-flow-v1.audit.yaml,07-validacao/auditorias/risco-cognitivo-reading-flow-v1.audit.yaml,yaml,A DEFINIR,PRESERVADO,,07-validacao,risco-cognitivo-reading-flow-v1.audit.yaml,3faf8020aef0adf951ae4b5e8b6a765e291e8368fca3d33c00f1803d25610136
-RC-KIT-GOV-003,contrast-report.md,07-validacao/contrast-report.md,md,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,c7af67d48eec2afa650fba402ba4f68abdabbff09dd6147a4f2aa941afca4c0d
+RC-KIT-GOV-003,contrast-report.md,07-validacao/contrast-report.md,md,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,998bca8cd57bcb2d630a7cbda786a88d87a68e4e476f51a5837cb174b4b48f6f
 RC-KIT-GOV-004,verification.json,07-validacao/verification.json,json,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,AUTORREFERENTE
 RC-KIT-GOV-005,MASTER-INDEX.csv,MASTER-INDEX.csv,csv,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,AUTORREFERENTE
-RC-KIT-GOV-006,README.md,README.md,md,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,07f406a973c00e2dc4353867dcd9b9615ae34b363b93705810378b4a6deb88ef
+RC-KIT-GOV-006,README.md,README.md,md,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,ecc5edd53422a0d8ccd28210f9332f38e1d13547812014bace0a3dd3a2444e21

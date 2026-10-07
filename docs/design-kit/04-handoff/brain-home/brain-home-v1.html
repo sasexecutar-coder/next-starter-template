@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Risco Cognitivo — Mapa interativo</title>
+<script type="importmap">
+{ "imports": { "three": "https://unpkg.com/three@0.184.0/build/three.module.js" } }
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--color-page); color: var(--color-text); font-family: var(--font-base); -webkit-font-smoothing: antialiased; }
+  a { color: var(--color-text); text-decoration: none; }
+  a:hover { color: var(--color-brand-strong); }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--color-brand-strong); outline-offset: 2px; }
+  .nav { display: flex; align-items: center; gap: var(--space-xxl); padding: 14px var(--layout-gutter); border-bottom: 1px solid var(--color-border); max-width: 1280px; margin: 0 auto; }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 600; line-height: 1.05; font-size: 17px; letter-spacing: -.01em; }
+  .logo svg { width: 38px; height: 38px; color: var(--color-brand); }
+  .links { display: flex; gap: var(--space-xxl); color: var(--color-support); font-size: 15px; flex: 1; }
+  .links a { color: var(--color-support); } .links a:hover { color: var(--color-text); }
+  .search { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--color-border); background: #fff; display: grid; place-items: center; cursor: pointer; }
+  .cta { background: var(--color-text); color: #fff; border: 0; border-radius: 6px; padding: 0 20px; height: 44px; font-weight: 500; font-size: 15px; cursor: pointer; }
+  .cta:hover { background: #000; }
+  @media (max-width: 860px) { .links { display: none; } .nav { justify-content: space-between; } }
+
+  .hero { background-image: radial-gradient(circle, #d9d9de 1px, transparent 1.2px); background-size: 22px 22px; background-position: center top; }
+  .hero-in { max-width: 1280px; margin: 0 auto; padding: 56px var(--layout-gutter) 32px; text-align: center; }
+  .eyebrow { display: inline-flex; align-items: center; gap: 18px; font-size: 13px; letter-spacing: .28em; text-transform: uppercase; color: var(--color-support); font-weight: 500; }
+  .eyebrow::before, .eyebrow::after { content: ""; width: 3px; height: 30px; background: var(--color-brand); }
+  h1 { font-size: clamp(42px, 7vw, 84px); line-height: 1; letter-spacing: -.045em; font-weight: 700; margin: 26px 0 18px; }
+  .sub { font-size: clamp(19px, 2.2vw, 28px); line-height: 1.3; color: var(--color-support); margin: 0 auto; max-width: 30ch; text-wrap: balance; letter-spacing: -.01em; }
+
+  .map { max-width: 1280px; margin: 0 auto; padding: 8px var(--layout-gutter) 0; display: grid; grid-template-columns: minmax(0, 1fr) 330px; gap: 24px; align-items: center; }
+  @media (max-width: 900px) { .map { grid-template-columns: minmax(0, 1fr); } }
+  .stage { position: relative; height: clamp(420px, 56vw, 600px); touch-action: pan-y; cursor: grab; user-select: none; }
+  .stage.dragging { cursor: grabbing; }
+  .stage canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; transition: opacity 400ms ease; pointer-events: none; }
+  .poster.hide { opacity: 0; }
+  .markers { position: absolute; inset: 0; pointer-events: none; }
+  .mk { position: absolute; left: 0; top: 0; display: flex; align-items: center; gap: 10px; pointer-events: auto; background: none; border: 0; padding: 0; cursor: pointer; will-change: transform, opacity; transition: opacity 200ms ease; }
+  .mk.left { flex-direction: row-reverse; }
+  .mk .dot { width: 22px; height: 22px; border-radius: 50%; background: var(--color-brand); border: 4px solid #fff; box-shadow: 0 0 0 1px var(--color-brand-soft), 0 2px 8px rgba(79,83,217,.25); flex: none; transition: transform 200ms ease, box-shadow 200ms ease; }
+  .mk .pill { background: rgba(255,255,255,.94); border: 1px solid var(--color-border); border-radius: 999px; padding: 9px 16px; font-size: 14px; font-weight: 500; white-space: nowrap; box-shadow: 0 6px 18px rgba(33,33,33,.06); transition: border-color 200ms ease, color 200ms ease; }
+  .mk:hover .pill { border-color: var(--color-border-strong); }
+  .mk:hover .dot { transform: scale(1.1); }
+  .mk[aria-pressed="true"] .dot { transform: scale(1.25); box-shadow: 0 0 0 6px rgba(110,114,240,.18), 0 0 0 1px var(--color-brand); }
+  .mk[aria-pressed="true"] .pill { border-color: var(--color-brand); color: var(--color-brand-strong); }
+  .mk.back { opacity: 0 !important; pointer-events: none; }
+
+  .card { border: 1px solid var(--color-border-strong); border-radius: 4px; background: #fff; padding: 24px; position: relative; box-shadow: 0 10px 28px rgba(33,33,33,.05); min-height: 420px; }
+  .card.sel { border-color: var(--color-brand); }
+  .card::before { content: ""; position: absolute; left: -1px; top: -1px; width: 16px; height: 16px; border-left: 3px solid var(--color-brand); border-top: 3px solid var(--color-brand); }
+  .card h2 { display: flex; align-items: center; gap: 14px; font-size: 20px; font-weight: 600; letter-spacing: -.01em; margin: 0 0 10px; }
+  .card h2 svg { width: 30px; height: 30px; color: var(--color-brand); flex: none; }
+  .card .lead { color: var(--color-support); font-size: 16px; line-height: 1.45; margin: 0 0 8px; text-wrap: pretty; }
+  .rows { display: grid; }
+  .r { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 14px; padding: 16px 0; border-top: 1px solid var(--color-border); align-items: start; }
+  .r svg { width: 30px; height: 30px; color: var(--color-brand); }
+  .r b { display: block; font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+  .r span { font-size: 14px; color: var(--color-support); line-height: 1.45; }
+  .pick { appearance: none; text-align: left; background: none; border: 0; border-top: 1px solid var(--color-border); padding: 14px 0; cursor: pointer; display: grid; grid-template-columns: 10px minmax(0, 1fr) 18px; gap: 14px; align-items: center; width: 100%; }
+  .pick i { width: 10px; height: 10px; border-radius: 50%; background: var(--color-brand); }
+  .pick b { display: block; font-size: 15px; font-weight: 600; } .pick span { font-size: 14px; color: var(--color-support); }
+  .pick:hover b { color: var(--color-brand-strong); }
+  .close { position: absolute; right: 12px; top: 12px; width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--color-border); background: #fff; cursor: pointer; display: grid; place-items: center; color: var(--color-support); }
+  .close:hover { color: var(--color-text); border-color: var(--color-border-strong); }
+  .fade { animation: fade 260ms ease both; }
+  @keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .fade { animation: none; } }
+  body.rm .fade { animation: none; }
+
+  .ctrl { max-width: 1280px; margin: 0 auto; padding: 20px var(--layout-gutter) 32px; display: grid; gap: 18px; justify-items: center; }
+  .hints { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px 22px; color: var(--color-support); font-size: 15px; }
+  .hints .sep { width: 1px; height: 22px; background: var(--color-border-strong); }
+  .hints svg { width: 22px; height: 22px; vertical-align: -6px; margin-right: 8px; }
+  .bar { width: 100%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; }
+  .tools { display: flex; gap: 6px; }
+  .ib { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--color-border); background: #fff; display: grid; place-items: center; cursor: pointer; color: var(--color-text); }
+  .ib:hover { border-color: var(--color-border-strong); } .ib svg { width: 16px; height: 16px; }
+  .dots { display: flex; gap: 6px; }
+  .dots button { width: 28px; height: 28px; border: 0; background: none; padding: 0; display: grid; place-items: center; cursor: pointer; }
+  .dots button i { width: 8px; height: 8px; border-radius: 50%; background: var(--color-border-strong); transition: all 200ms ease; }
+  .dots button[aria-current="true"] i { width: 16px; height: 16px; background: var(--color-brand); }
+  .rmt { justify-self: end; display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--color-support); cursor: pointer; }
+  .sw { width: 40px; height: 24px; border-radius: 99px; background: var(--color-border-strong); position: relative; transition: background 200ms; border: 0; cursor: pointer; padding: 0; }
+  .sw::after { content: ""; position: absolute; left: 3px; top: 3px; width: 18px; height: 18px; border-radius: 50%; background: #fff; transition: transform 200ms; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .sw[aria-checked="true"] { background: var(--color-brand); } .sw[aria-checked="true"]::after { transform: translateX(16px); }
+  @media (max-width: 600px) { .bar { grid-template-columns: 1fr; justify-items: center; } .rmt { justify-self: center; } .hints .sep { display: none; } }
+
+  .steps { max-width: 1280px; margin: 0 auto; padding: 0 var(--layout-gutter) 80px; }
+  .steps-in { border-top: 1px solid var(--color-border); display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); padding-top: 32px; }
+  @media (max-width: 820px) { .steps-in { grid-template-columns: minmax(0, 1fr); gap: 40px; } .step { border: 0 !important; padding: 0 !important; } }
+  .step { padding: 0 36px; border-left: 1px solid var(--color-border); display: grid; gap: 10px; align-content: start; }
+  .step:first-child { border-left: 0; padding-left: 0; }
+  .step .ic { width: 64px; height: 64px; border-radius: 10px; background: var(--color-canvas); display: grid; place-items: center; margin-bottom: 14px; }
+  .step .ic svg { width: 34px; height: 34px; }
+  .step small { font-size: 15px; color: var(--color-support); font-weight: 500; }
+  .step h3 { font-size: 36px; letter-spacing: -.035em; margin: 0; font-weight: 700; }
+  .step p { color: var(--color-support); font-size: 18px; line-height: 1.5; margin: 0 0 18px; max-width: 28ch; }
+  .arrow { width: 54px; height: 54px; border-radius: 50%; border: 2px solid var(--color-brand); display: grid; place-items: center; color: var(--color-brand); }
+  .arrow:hover { background: var(--color-brand-soft); color: var(--color-brand-strong); }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
+</head>
+<body>
+<nav class="nav">
+  <a class="logo" href="#"><svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M20 6v28M20 9c-2-3-7-3-8.5 0-3.5 0-5.5 3.5-4 6.5-3 2-3 6.5 0 8.5-1.5 3 1 6.5 4.5 6.5 1.5 3 6 3.5 8 .5M20 9c2-3 7-3 8.5 0 3.5 0 5.5 3.5 4 6.5 3 2 3 6.5 0 8.5 1.5 3-1 6.5-4.5 6.5-1.5 3-6 3.5-8 .5M13 16h4M27 22h-4M14 25l3-2M26 15l-3 2"/></svg><span>Risco<br>Cognitivo</span></a>
+  <div class="links"><a href="#">Artigos</a><a href="#">Guias</a><a href="#">Mapas</a><a href="#">Ferramentas</a><a href="#">Sobre</a></div>
+  <button class="search" aria-label="Buscar"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+  <button class="cta">Começar agora</button>
+</nav>
+
+<main>
+  <div class="hero">
+    <div class="hero-in">
+      <div class="eyebrow">Mapa interativo</div>
+      <h1>Entenda sua execução.</h1>
+      <p class="sub">Explore as relações entre funções executivas, demandas e estratégias.</p>
+    </div>
+    <div class="map">
+      <div class="stage" id="stage" tabindex="0" role="application" aria-label="Cérebro 3D. Arraste para girar. Setas trocam de função; espaço pausa.">
+        <img class="poster hide" id="poster" src="assets/brain-poster.png" alt="">
+        <div class="markers" id="markers"></div>
+      </div>
+      <aside class="card" id="card" aria-live="polite"></aside>
+    </div>
+  </div>
+
+  <div class="ctrl">
+    <div class="hints">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V11m0-1.5a1.5 1.5 0 0 1 3 0V11m0-.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1a6 6 0 0 1-5-2.7L4.3 15a1.5 1.5 0 0 1 2.4-1.8L9 15.5M5 4 3.5 2.5M5 4H2.5M15 4l1.5-1.5M15 4h2.5"/></svg>Arraste para explorar o cérebro</span>
+      <span class="sep"></span>
+      <span>Clique nos marcadores para ver detalhes</span>
+    </div>
+    <div class="bar">
+      <div class="tools">
+        <button class="ib" id="bPause" aria-label="Pausar rotação"></button>
+        <button class="ib" id="bReset" aria-label="Restaurar vista"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5"/></svg></button>
+      </div>
+      <div class="dots" id="dots" role="tablist" aria-label="Funções"></div>
+      <label class="rmt">Movimento reduzido <button class="sw" id="rm" role="switch" aria-checked="false"></button></label>
+    </div>
+  </div>
+
+  <section class="steps">
+    <div class="steps-in">
+      <div class="step"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 6.5C10 5 7 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-4-.5-7 0-9 1.5Zm0 0v13"/></svg></div><small>01</small><h3>Entenda</h3><p>Conheça as funções executivas e como elas influenciam sua execução no dia a dia.</p><a class="arrow" href="#" aria-label="Entenda"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+      <div class="step"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="11" width="10" height="10" rx="1"/><rect x="11" y="3" width="10" height="10" rx="1"/></svg></div><small>02</small><h3>Estruture</h3><p>Relacione demandas, vulnerabilidades e estratégias de apoio com base em evidências.</p><a class="arrow" href="#" aria-label="Estruture"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+      <div class="step"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20v-5h3v5zm6.5 0V11h3v9zM17 20V4h3v16z"/></svg></div><small>03</small><h3>Execute</h3><p>Aplique sistemas simples para reduzir o custo cognitivo e aumentar sua consistência.</p><a class="arrow" href="#" aria-label="Execute"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></a></div>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+import * as THREE from 'three';
+import { DEFAULT_CONFIG, loadBrainAssets, createBrain } from './brain-scene.js';
+
+const $ = (id) => document.getElementById(id);
+const ICON = {
+  plan: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 10h17M8 3v4m8-4v4"/></svg>',
+  stop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><path d="m6 6 12 12"/></svg>',
+  mem: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="11" width="10" height="10" rx="1"/><rect x="11" y="3" width="10" height="10" rx="1"/></svg>',
+  flex: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M19.5 9A8 8 0 0 0 5 7.5M4.5 15A8 8 0 0 0 19 16.5M5 3.5v4h4M19 20.5v-4h-4"/></svg>',
+  target: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="3.5"/></svg>',
+  warn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M12 3.5 2.5 20h19Z"/><path d="M12 10v4.5m0 2.5v.5" stroke-linecap="round"/></svg>',
+  bulb: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M9 17h6m-5 3h4M12 3a6 6 0 0 0-3.5 10.9c.4.3.5.7.5 1.1v2h6v-2c0-.4.2-.8.5-1.1A6 6 0 0 0 12 3Z"/></svg>',
+};
+// dir = outward direction in brain object space (+x anterior, +y superior, +z right hemisphere)
+const FX = [
+  { id: 'plan', name: 'Planejamento', icon: 'plan', dir: [1, 0.25, 0.3], short: 'Define metas, organiza passos e prioriza ações.',
+    lead: 'Define metas, organiza passos e prioriza ações antes de começar.',
+    demand: 'Transformar um objetivo em uma sequência de etapas com ordem e prazo.',
+    risk: 'Começar sem rota, subestimar o tempo e travar na primeira decisão.',
+    help: 'Quebrar a meta em próximos passos visíveis, cada um com data.' },
+  { id: 'stop', name: 'Controle inibitório', icon: 'stop', dir: [0.55, -0.55, 0.65], short: 'Ajuda a focar e evitar distrações.',
+    lead: 'Ajuda a focar no que importa e a segurar respostas automáticas.',
+    demand: 'Manter a atenção na tarefa diante de estímulos concorrentes.',
+    risk: 'Responder no impulso e trocar de tarefa a cada notificação.',
+    help: 'Reduzir gatilhos no ambiente: notificações desligadas e blocos de foco com horário.' },
+  { id: 'mem', name: 'Memória de trabalho', icon: 'mem', dir: [0.2, 0.85, 0.5], short: 'Mantém e manipula informações no curto prazo.',
+    lead: 'Mantém e manipula informações enquanto você executa uma tarefa.',
+    demand: 'Lidar com múltiplas informações ao mesmo tempo.',
+    risk: 'Esquecer etapas, perder o fio da tarefa e se sobrecarregar.',
+    help: 'Externalizar no ambiente: listas, checklists e blocos visuais.' },
+  { id: 'flex', name: 'Flexibilidade', icon: 'flex', dir: [-0.65, 0.55, 0.55], short: 'Permite adaptar estratégias e lidar com mudanças.',
+    lead: 'Permite adaptar estratégias e lidar com mudanças de plano.',
+    demand: 'Ajustar o caminho quando as condições ou prioridades mudam.',
+    risk: 'Insistir em uma abordagem que não funciona e desorganizar-se com imprevistos.',
+    help: 'Prever um plano B e revisar o plano em checkpoints curtos.' },
+];
+
+let sel = -1, paused = false;
+let reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+try { const s = JSON.parse(localStorage.getItem('rc-home-brain') || 'null'); if (s) reduced = !!s.reduced; } catch {}
+
+// ---------- card ----------
+function renderCard() {
+  const c = $('card');
+  if (sel < 0) {
+    c.className = 'card fade';
+    c.innerHTML = `<h2>Funções executivas</h2><p class="lead">Quatro capacidades que sustentam a execução. Selecione uma para ver demandas, riscos e apoio.</p>
+      <div class="rows">${FX.map((f, i) => `<button class="pick" data-i="${i}"><i></i><span><b>${f.name}</b><span>${f.short}</span></span><svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m9 6 6 6-6 6"/></svg></button>`).join('')}</div>`;
+    c.querySelectorAll('.pick').forEach((b) => b.onclick = () => select(+b.dataset.i));
+  } else {
+    const f = FX[sel];
+    c.className = 'card sel fade';
+    c.innerHTML = `<button class="close" aria-label="Fechar detalhes"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+      <h2>${ICON[f.icon]}${f.name}</h2><p class="lead">${f.lead}</p>
+      <div class="rows">
+        <div class="r">${ICON.target}<div><b>Demanda</b><span>${f.demand}</span></div></div>
+        <div class="r">${ICON.warn}<div><b>Dificuldade possível</b><span>${f.risk}</span></div></div>
+        <div class="r">${ICON.bulb}<div><b>Estratégia de apoio</b><span>${f.help}</span></div></div>
+      </div>`;
+    c.querySelector('.close').onclick = () => select(-1);
+  }
+  void c.offsetWidth;
+}
+function renderDots() {
+  const d = $('dots'); d.innerHTML = '';
+  [-1, 0, 1, 2, 3].forEach((i) => {
+    const b = document.createElement('button'); b.setAttribute('role', 'tab');
+    b.setAttribute('aria-label', i < 0 ? 'Visão geral' : FX[i].name); b.setAttribute('aria-current', String(i === sel));
+    b.innerHTML = '<i></i>'; b.onclick = () => select(i); d.append(b);
+  });
+}
+const PAUSE = '<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>';
+const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>';
+function syncUI() {
+  const still = paused || reduced;
+  $('bPause').innerHTML = still ? PLAY : PAUSE; $('bPause').setAttribute('aria-label', still ? 'Retomar rotação' : 'Pausar rotação');
+  $('rm').setAttribute('aria-checked', String(reduced)); document.body.classList.toggle('rm', reduced);
+  markers.forEach((m, i) => m.el.setAttribute('aria-pressed', String(i === sel)));
+}
+
+// ---------- scene ----------
+const stage = $('stage');
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.setClearColor(0xffffff, 0);
+stage.prepend(renderer.domElement);
+const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(34, 1, 0.1, 40);
+scene.add(new THREE.HemisphereLight(0xffffff, 0xe6e6ee, 1.5));
+const key = new THREE.DirectionalLight(0xffffff, 1.25); key.position.set(-4, 5, 6); scene.add(key);
+const fill = new THREE.DirectionalLight(0xeef0ff, 0.55); fill.position.set(-6, -2, -5); scene.add(fill);
+const fog = new THREE.Fog(0xffffff, 5, 9); scene.fog = fog;
+
+const cfg = structuredClone(DEFAULT_CONFIG);
+cfg.lines.intensity = 0.35;
+cfg.surface.crown = '#fdfdfe'; cfg.surface.fundus = '#dcdde5'; cfg.surface.sulcStrength = 1.2; cfg.surface.roughness = 0.9;
+cfg.particles.sizePx = 2.3; cfg.particles.opacity = 1; cfg.particles.crownMix = 0.7;
+const rot = { x: 0.16, y: -0.42, anim: null };
+const HOME = { x: 0.16, y: -0.42 };
+let brain, pivot = new THREE.Group(), dist = 6.6, markers = [];
+scene.add(pivot);
+
+// Globe-style orbit rings around the brain (dashed, with nodes) — give the 3D read when rotating.
+function rings() {
+  const g = new THREE.Group();
+  const specs = [[2.55, 1.85, 0.35, 0.1], [2.35, 1.7, -0.9, 0.5], [2.7, 1.55, 1.25, -0.25]];
+  specs.forEach(([rx, ry, ty, tz], k) => {
+    const pts = []; for (let i = 0; i <= 200; i++) { const a = (i / 200) * Math.PI * 2; pts.push(new THREE.Vector3(Math.cos(a) * rx, Math.sin(a) * ry * 0.35, Math.sin(a) * ry)); }
+    const geo = new THREE.BufferGeometry().setFromPoints(pts);
+    const line = new THREE.Line(geo, new THREE.LineDashedMaterial({ color: 0x9da1f2, dashSize: 0.045, gapSize: 0.05, transparent: true, opacity: 0.9, depthWrite: false }));
+    line.computeLineDistances(); line.rotation.set(tz, ty, 0); g.add(line);
+    const nodes = []; for (let i = 0; i < 5; i++) nodes.push(pts[Math.floor(((i + k * 0.37) / 5) * 200)]);
+    const n = new THREE.Points(new THREE.BufferGeometry().setFromPoints(nodes), new THREE.PointsMaterial({ color: 0x8f93ef, size: 0.08, transparent: true, opacity: 0.9, depthWrite: false }));
+    n.rotation.copy(line.rotation); g.add(n);
+  });
+  return g;
+}
+
+function frame() {
+  const w = stage.clientWidth || 1, h = stage.clientHeight || 1;
+  renderer.setSize(w, h, false); camera.aspect = w / h;
+  const t = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  dist = Math.max(2.75 / (t * camera.aspect * 0.96), 2.0 / (t * 0.96));
+  camera.position.set(0, 0.1, dist); camera.lookAt(0, 0, 0); camera.updateProjectionMatrix();
+  fog.near = dist - 1.4; fog.far = dist + 4.2;
+  if (brain) brain.apply({ ...cfg, camera: { ...cfg.camera, distanceUnits: dist } }, { dpr: renderer.getPixelRatio() });
+}
+
+function buildMarkers(assets) {
+  const q = new Int16Array(assets.pts), a = new Uint8Array(assets.attr), n = q.length / 3;
+  FX.forEach((f, idx) => {
+    const d = new THREE.Vector3(...f.dir).normalize(); let best = -1e9, bi = 0;
+    for (let i = 0; i < n; i++) { if (a[2 * i + 1] !== 0) continue; const s = (q[3 * i] * d.x + q[3 * i + 1] * d.y + q[3 * i + 2] * d.z); if (s > best) { best = s; bi = i; } }
+    const p = new THREE.Vector3(q[3 * bi], q[3 * bi + 1], q[3 * bi + 2]).multiplyScalar(2 / 32767);
+    const el = document.createElement('button'); el.className = 'mk'; el.type = 'button';
+    el.innerHTML = `<span class="dot"></span><span class="pill">${f.name}</span>`;
+    el.onclick = (e) => { e.stopPropagation(); select(sel === idx ? -1 : idx); };
+    el.addEventListener('pointerdown', (e) => e.stopPropagation());
+    $('markers').append(el);
+    markers.push({ el, p, n: p.clone().normalize() });
+  });
+}
+
+const v = new THREE.Vector3(), nrm = new THREE.Vector3();
+function placeMarkers() {
+  const w = stage.clientWidth, h = stage.clientHeight;
+  for (const m of markers) {
+    v.copy(m.p).applyMatrix4(pivot.matrixWorld);
+    nrm.copy(m.n).applyQuaternion(pivot.quaternion);
+    const facing = nrm.dot(v.clone().sub(camera.position).negate().normalize());
+    v.project(camera);
+    const x = (v.x * 0.5 + 0.5) * w, y = (-v.y * 0.5 + 0.5) * h;
+    const ew = m.el.offsetWidth;
+    let left = x < w * 0.5;
+    if (!left && x - 11 + ew > w) left = true;
+    else if (left && x + 11 - ew < 0) left = false;
+    m.el.classList.toggle('left', left);
+    const tx = THREE.MathUtils.clamp(left ? x - ew + 11 : x - 11, 0, Math.max(0, w - ew));
+    m.el.style.transform = `translate(${tx.toFixed(1)}px, ${(y - 11).toFixed(1)}px)`;
+    const o = THREE.MathUtils.smoothstep(facing, -0.25, 0.2);
+    m.el.style.opacity = (0.15 + 0.85 * o).toFixed(2);
+    m.el.classList.toggle('back', facing < -0.35);
+    m.el.style.zIndex = String(Math.round(o * 10));
+  }
+}
+
+function aimAt(i) {
+  let x = HOME.x, y = HOME.y;
+  if (i >= 0) { const p = markers[i].p; y = Math.atan2(-p.x, p.z) + 0.38; x = 0.12; }
+  const dy = ((y - rot.y + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+  if (reduced) { rot.x = x; rot.y += dy; rot.anim = null; }
+  else rot.anim = { fx: rot.x, fy: rot.y, x, y: rot.y + dy, t: 0 };
+}
+function select(i) { sel = i; renderCard(); renderDots(); syncUI(); if (markers.length) aimAt(i); }
+
+// drag
+let drag = null;
+stage.addEventListener('pointerdown', (e) => {
+  if (!e.isPrimary || e.button !== 0) return;
+  drag = { id: e.pointerId, x: e.clientX, y: e.clientY, type: e.pointerType }; rot.anim = null;
+  stage.setPointerCapture(e.pointerId); stage.classList.add('dragging');
+});
+stage.addEventListener('pointermove', (e) => {
+  if (!drag || drag.id !== e.pointerId) return;
+  rot.y += (e.clientX - drag.x) * 0.008;
+  if (drag.type !== 'touch') rot.x = THREE.MathUtils.clamp(rot.x + (e.clientY - drag.y) * 0.004, -0.5, 1.2);
+  drag.x = e.clientX; drag.y = e.clientY;
+});
+const end = () => { drag = null; stage.classList.remove('dragging'); };
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach((t) => stage.addEventListener(t, end));
+stage.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') { e.preventDefault(); select(sel >= 3 ? -1 : sel + 1); }
+  else if (e.key === 'ArrowLeft') { e.preventDefault(); select(sel <= -1 ? 3 : sel - 1); }
+  else if (e.key === ' ') { e.preventDefault(); paused = !paused; syncUI(); }
+  else if (e.key === 'Escape') select(-1);
+});
+$('bPause').onclick = () => { if (reduced) { reduced = false; save(); } else paused = !paused; syncUI(); };
+$('bReset').onclick = () => { paused = false; select(-1); };
+const save = () => localStorage.setItem('rc-home-brain', JSON.stringify({ reduced }));
+$('rm').onclick = (e) => { e.preventDefault(); reduced = !reduced; save(); syncUI(); };
+
+let last = 0;
+function tick(t) {
+  requestAnimationFrame(tick);
+  const dt = last ? Math.min((t - last) / 1000, 0.05) : 0; last = t;
+  if (rot.anim) {
+    rot.anim.t = Math.min(1, rot.anim.t + dt / 0.9); const e = 1 - Math.pow(1 - rot.anim.t, 3);
+    rot.x = rot.anim.fx + (rot.anim.x - rot.anim.fx) * e; rot.y = rot.anim.fy + (rot.anim.y - rot.anim.fy) * e;
+    if (rot.anim.t >= 1) rot.anim = null;
+  } else if (!paused && !reduced && !drag && sel < 0 && !document.hidden) rot.y += dt * 0.12;
+  pivot.rotation.set(rot.x, rot.y, 0); pivot.updateMatrixWorld();
+  placeMarkers();
+  renderer.render(scene, camera);
+}
+
+renderCard(); renderDots(); syncUI();
+try {
+  const assets = await loadBrainAssets('assets/');
+  brain = createBrain(assets);
+  pivot.add(rings(), brain.root);
+  buildMarkers(assets);
+  new ResizeObserver(frame).observe(stage); frame(); syncUI();
+  requestAnimationFrame(tick);
+    window.__brainHome = { select, rot, markers };
+} catch (err) { console.error(err); $('poster').classList.remove('hide'); }
+</script>
+</body>
+</html>

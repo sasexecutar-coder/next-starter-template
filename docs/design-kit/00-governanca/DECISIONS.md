@@ -24,7 +24,7 @@ Registro canônico do pacote **RC-DESIGN-KIT-001**. Cada decisão tem origem (`p
 | D-02 | FX-EDGE-01 `soft_black_outline` | glow/outline preto, offset 0, blur 0, opacidade 0,19; spread/size `100` | tipo: PROJECT_DECISION; `100`: SOURCE_CONTROL_VALUE (Canva) | Utilitário `.fx-edge-01`, só em recortes. Proibido: overlay de página, sombra pesada, sombra de card flutuante |
 | D-03 | Tipografia | Display DM Sans (h1–h3, wordmark) · Body Inter (parágrafos, UI, botões, rótulos, navegação) · Mono DM Mono (rótulos técnicos, IDs, schemas, metadados) | PROJECT_DECISION | `next/font` em `src/app/layout.tsx` → `--font-display/--font-body/--font-mono` |
 | D-04 | Logo | LOGO-V0 provisório; wordmark canônico "Risco Cognitivo" em DM Sans 600; símbolo = GAP | PROJECT_DECISION | Componente `Wordmark`. Favicon tipográfico "RC" (`public/brand/favicon.svg`) marcado como provisório; neste repositório não existe `/logo.svg` |
-| D-05 | Rota `/mapas` | 8 seções: hero, orientação, mapa interativo, seletor, detalhe, riscos relacionados, relações, fontes/limites. Sequência do detalhe: função → demanda → dificuldade possível → estratégia → riscos relacionados → evidência | PROJECT_DECISION | `src/app/mapas/`. Funções canônicas: Inibição, Memória de Trabalho, Flexibilidade Cognitiva |
+| D-05 | Rota `/mapas` | 8 seções: hero, orientação, mapa interativo, seletor, detalhe, riscos relacionados, relações, fontes/limites. Sequência do detalhe: função → demanda → dificuldade possível → estratégia → riscos relacionados → evidência | PROJECT_DECISION | `src/app/mapas/`. **Funções canônicas (atualizado, GAP-009): as 4 do Brain Home v1: Planejamento, Controle inibitório, Memória de trabalho, Flexibilidade** |
 | D-06 | Rota `/ferramentas` | Hero, como funciona (Entenda/Preencha/Gere), catálogo (5 ferramentas), execução em 3 telas, privacidade/limites | PROJECT_DECISION | `src/app/ferramentas/`. Ferramentas com status GAP |
 | D-07 | Depoimentos | `DISABLED` até existir fonte real, permissão e atribuição | PROJECT_DECISION | Bloco inexistente na Home |
 | D-08 | Logos de prova social | `DISABLED` | PROJECT_DECISION | Bloco inexistente na Home |
@@ -44,8 +44,11 @@ Registro canônico do pacote **RC-DESIGN-KIT-001**. Cada decisão tem origem (`p
 | D-17 | **Blocos do MDX contract** escritos em Markdown com diretivas (`:::callout{title}`, `:::summary`, `:::definition{term}`, `:::keypoints`), convertidos no build. Sem MDX executável em tempo de execução | PROJECT_DECISION |
 | D-18 | **Resíduos do template removidos**: 3 posts lorem ipsum com autores reais, fotos desses autores, favicons do Next.js, banner de preview, rodapé da Vercel, alternador de tema | PROJECT_DECISION |
 | D-19 | **Modo escuro desligado** até existir paleta escura aprovada (a do handoff editorial é proposta e a do Nocturne foi recusada em D-13) | PROJECT_DECISION |
-| D-20 | **`/mapas` usa mapa de rede** (SVG interativo) em vez do cérebro 3D: o protótipo `brain-home-v2.html` importa `brain-scene.js`, `brain-hollow.js` e `assets/`, que não vieram no pacote. O contrato D-05 admite "cérebro / rede / causal map" | PROJECT_DECISION |
-| D-21 | **Textos das funções** vêm do protótipo Brain Home v2 (`lead`, demanda, dificuldade, estratégia) | EXISTING_PROJECT_CONTENT |
+| D-20 | ~~`/mapas` usa mapa de rede (SVG)~~ **Substituída pela D-22**: os arquivos do cérebro chegaram em `Arquivo_2.zip` | PROJECT_DECISION |
+| D-21 | **Textos das funções** vêm do Brain Home v1 (`short`, `lead`, demanda, dificuldade, estratégia). Pelo HANDOFF, os textos de Planejamento, Controle inibitório e Flexibilidade são rascunho de conteúdo (`draft: true`) pendente de G2; Memória de trabalho é do mockup | EXISTING_PROJECT_CONTENT |
+| D-22 | **Cérebro 3D HOME-BRAIN-001: a fonte de verdade é a v1** (`04-handoff/brain-home/brain-home-v1.html`): superfície anatômica + partículas, anéis orbitais, marcadores clicáveis, card de detalhe, pontos, pausa/reset, movimento reduzido. A v2 oca (`prototipos/brain-home-v2.html`, `brain-hollow.js`) fica SUPERADA. Anatomia: OpenNeuro ds006128 (CC0), procedência em `brain-home/PROVENIENCIA.md`. Implementação: `src/lib/brain/brain-scene.ts` (porte 1:1) + `src/app/_components/brain/brain-stage.tsx`; os assets servidos são copiados do kit com hash conferido (`scripts/sync-brain-assets.mjs`) | PROJECT_DECISION |
+| D-23 | **Acento do cérebro**: índigo da v1 `#6E72F0` (forte `#4F53D9`, suave `#E4E6FF`), restrito ao componente do cérebro e ao Hero que o contém (tokens `--brain-*`). `#6E72F0` só como marcador, borda ou traço (3,9:1); texto em índigo usa `#4F53D9` (5,9:1). Aprovação visual G2 pendente | PROJECT_DECISION |
+| D-24 | **Home**: o bloco 03 (Mapa) passa a fazer parte do Hero, como na composição da v1 (eyebrow, título, cérebro + card, controles, passos Entenda/Estruture/Execute). O header ganha o CTA "Começar agora" da v1; a busca da v1 não entra (GAP-018) | PROJECT_DECISION |
 
 ## Precedência de tokens (resolve GAP-002)
 
@@ -78,14 +81,18 @@ Em conflito: registrar valores, fontes e decisão aqui; nunca escolher silencios
 | GAP-005 | ABERTO | Símbolo gráfico do logo (D-04) | Aprovar símbolo | `public/brand/symbol.svg` + atualização de D-04 |
 | GAP-006 | ABERTO | Títulos e descrições de RC-01…RC-09 sem fonte | Fornecer conteúdo com fonte | `src/content/risks.ts` com `status: "PUBLISHED"` |
 | GAP-007 | ABERTO | Riscos relacionados e evidências de cada função | Fornecer referências | `relatedRisks`/`evidence` preenchidos em `src/content/functions.ts` |
-| GAP-008 | ABERTO | Cérebro 3D: `brain-scene.js`, `brain-hollow.js`, `assets/` ausentes | Enviar os arquivos | Cérebro 3D em `/mapas` com o mapa de rede como fallback |
-| GAP-009 | ABERTO | "Planejamento" existe no protótipo e não está na lista canônica de D-05 | Decidir inclusão | D-05 atualizado |
+| GAP-008 | RESOLVIDO | Arquivos recebidos em `Arquivo_2.zip`; ver D-22 | — | Cérebro 3D na Home e em `/mapas` |
+| GAP-009 | RESOLVIDO | Lista canônica = 4 funções da v1 (D-05 atualizada) | — | D-05 atualizado |
 | GAP-010 | ABERTO | Artigos da série (00–04) não escritos | Publicar em `_posts/` | `slug` preenchido em `src/content/series.ts` |
 | GAP-011 | ABERTO | Ferramentas funcionais (Fase 2) e texto de privacidade definitivo | Especificar fluxo e tratamento de dados | Ferramenta com as 3 telas + exportação PDF |
 | GAP-012 | ABERTO | Paleta do modo escuro (D-19) | Aprovar paleta | Tokens `.dark` com contraste verificado |
 | GAP-013 | ABERTO | Nocturne veio sem `theme.json`, `components/`, `foundations/` e `templates/` citados no readme | Enviar se forem necessários | Referência completa |
 | GAP-014 | ABERTO | Depoimentos e métricas próprias (D-07, D-10) | Coletar com fonte, permissão e data | Bloco reativado |
+| GAP-015 | ABERTO | Aprovação visual G2 do cérebro: índigo `#6E72F0` e textos dos cards (rascunho) | Revisar e aprovar | D-21/D-23 marcadas como aprovadas; `draft: false` |
+| GAP-016 | ABERTO | Medições G3 em aparelhos reais (FPS em 375/768/1440). Em 375px o cérebro fica pequeno e rótulos podem se sobrepor (comportamento da v1) | Medir e ajustar a composição mobile | Registro de FPS por aparelho e layout mobile aprovado |
+| GAP-017 | ABERTO | Peso do modelo: GLB 9,47 MB sem compressão (o parser próprio não lê meshopt/Draco) | Gerar malha mais leve (grade 1,6 mm) ou trocar o parser | Download do cérebro ≤ 3 MB |
+| GAP-018 | ABERTO | Busca do header (presente no mockup da v1) | Definir busca (ex.: índice estático) | Busca funcional |
 
 ## Condição de retomada
 
-Fase 1 aplicada no site. A próxima rodada começa por GAP-006, GAP-007 e GAP-010 (conteúdo) e GAP-011 (ferramentas).
+Fase 1 e cérebro 3D (D-22) aplicados no site. A próxima rodada começa por GAP-015 (aprovação G2), GAP-006, GAP-007 e GAP-010 (conteúdo) e GAP-011 (ferramentas).

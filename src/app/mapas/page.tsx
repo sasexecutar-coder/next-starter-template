@@ -5,7 +5,7 @@ import { RelationChain } from "@/app/_components/relation-chain";
 import { SectionHeader } from "@/app/_components/section-header";
 import { FUNCTIONS } from "@/content/functions";
 import { RISKS } from "@/content/risks";
-import { FunctionExplorer } from "./function-explorer";
+import { BrainStage } from "@/app/_components/brain/brain-stage";
 
 export const metadata: Metadata = {
   title: "Mapas",
@@ -42,10 +42,10 @@ export default function MapasPage() {
         </Container>
       </section>
 
-      {/* 03 MAPA · 04 SELETOR · 05 DETALHE */}
+      {/* 03 MAPA (cérebro 3D, D-22) · 04 SELETOR (marcadores e pontos) · 05 DETALHE (card) */}
       <section aria-label="Mapa interativo das funções" className="pb-16">
         <Container>
-          <FunctionExplorer functions={FUNCTIONS} />
+          <BrainStage functions={FUNCTIONS} variant="mapas" />
         </Container>
       </section>
 
@@ -84,12 +84,13 @@ export default function MapasPage() {
           <SectionHeader id="fontes" title="Fontes e limites" />
           <div className="mt-6 max-w-measure space-y-3 text-muted">
             <p>
-              Os textos das funções vêm do protótipo do projeto (Brain Home v2). As referências
+              Os textos das funções vêm do mapa interativo do projeto (Brain Home v1). As referências
               científicas de cada ficha estão em preparação e serão citadas aqui.
             </p>
             <p>
-              O mapa é uma representação conceitual de relações. Ele não avalia pessoas, não localiza
-              funções no cérebro e não substitui acompanhamento profissional.
+              O modelo 3D é a anatomia real de um cérebro adulto (OpenNeuro ds006128, licença CC0). Os
+              marcadores indicam pontos de acesso a redes distribuídas, não regiões clínicas exatas: o mapa
+              não avalia pessoas, não localiza funções no cérebro e não substitui acompanhamento profissional.
             </p>
           </div>
         </Container>

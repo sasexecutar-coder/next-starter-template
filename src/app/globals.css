@@ -24,6 +24,12 @@
   --attention-surface: #ffe659;
   --attention-ink: #8a5a00;
 
+  /* cérebro 3D (D-23): índigo do Brain Home v1, restrito ao componente do cérebro */
+  --brain-accent: #6e72f0;
+  --brain-accent-strong: #4f53d9;
+  --brain-accent-soft: #e4e6ff;
+  --brain-border-strong: #cbcbcb;
+
   /* texto e superfícies */
   --text-primary: #000000;
   --text-secondary: #545454;
