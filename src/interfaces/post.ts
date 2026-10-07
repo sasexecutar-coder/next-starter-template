@@ -11,5 +11,7 @@ export type Post = {
     url: string;
   };
   content: string;
+  eyebrow?: string;
+  category?: string;
   preview?: boolean;
 };

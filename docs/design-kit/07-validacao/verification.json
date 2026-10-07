@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "scope": "preservação de bytes dos originais, unicidade de IDs/caminhos, cobertura do índice",
+  "source_files": 33,
+  "preserved_files": 33,
+  "added_files": 6,
+  "generated_files": 6,
+  "index_rows": 45,
+  "files_on_disk": 45,
+  "all_source_hashes_match": true,
+  "unique_ids": true,
+  "unique_destination_paths": true,
+  "historical_audit_revalidated": false,
+  "missing_historical_audit_inputs": [
+    "risco-cognitivo.mdx",
+    "risco-cognitivo-reading-flow-v1.mdx"
+  ],
+  "contrast_report": "07-validacao/contrast-report.md",
+  "problems": []
+}
