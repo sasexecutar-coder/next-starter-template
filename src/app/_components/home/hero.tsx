@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Container from "../container";
+import { Eyebrow } from "../ui/eyebrow";
 import { BrainStage } from "../brain/brain-stage";
 import { FUNCTIONS } from "@/content/functions";
 
@@ -44,18 +45,16 @@ export function Hero() {
       aria-labelledby="hero-title"
       className="border-b border-line"
       style={{
-        backgroundImage: "radial-gradient(circle, #d9d9de 1px, transparent 1.2px)",
+        backgroundImage: "radial-gradient(circle, var(--dot-grid) 1px, transparent 1.2px)",
         backgroundSize: "22px 22px",
         backgroundPosition: "center top",
       }}
     >
-      <Container className="pt-16 text-center">
-        <p className="inline-flex items-center gap-[18px] text-[13px] font-medium uppercase tracking-[0.28em] text-muted before:h-[30px] before:w-[3px] before:bg-[var(--brain-accent)] before:content-[''] after:h-[30px] after:w-[3px] after:bg-[var(--brain-accent)] after:content-['']">
-          Mapa interativo
-        </p>
+      <Container className="pt-[var(--block-y)] text-center">
+        <Eyebrow variant="bars">Mapa interativo</Eyebrow>
         <h1
           id="hero-title"
-          className="mx-auto mb-[18px] mt-[26px] font-bold leading-none"
+          className="mx-auto mb-4 mt-6 font-bold leading-none"
           style={{ fontSize: "clamp(42px, 7vw, 84px)", letterSpacing: "-0.045em" }}
         >
           Entenda sua execução.
@@ -70,11 +69,11 @@ export function Hero() {
       <Container className="pt-2">
         <BrainStage functions={FUNCTIONS} variant="home" />
       </Container>
-      <Container className="pb-24 pt-12">
+      <Container className="pb-[var(--block-y)] pt-[var(--stack-section)]">
         <ol className="grid gap-12 border-t border-line pt-8 md:grid-cols-3 md:gap-0">
           {STEPS.map((st, i) => (
-            <li key={st.n} className={`grid content-start gap-2.5 ${i > 0 ? "md:border-l md:border-line md:pl-9" : ""} md:pr-9`}>
-              <span className="mb-3.5 grid h-16 w-16 place-items-center rounded-[10px] bg-subtle">
+            <li key={st.n} className={`grid content-start gap-2 ${i > 0 ? "md:border-l md:border-line md:pl-8" : ""} md:pr-8`}>
+              <span className="mb-3 grid h-16 w-16 place-items-center rounded-lg bg-subtle">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.6} className="h-[34px] w-[34px]" aria-hidden="true">
                   {st.icon}
                 </svg>

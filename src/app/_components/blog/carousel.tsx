@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { PostSummary } from "@/interfaces/post";
 import { ResourceCard } from "./resource-card";
+import { Button } from "../ui/button";
 
 // Carrossel de destaques (handoff): scroll-snap, card de altura fixa, setas 40 nas pontas, dots 6 (pitch 25).
 // Sem avanço automático. 1 item: sem controles. > 7 itens: contador "3 de 9". Setas desabilitadas nas pontas (D-30).
@@ -59,9 +60,9 @@ export function Carousel({ posts }: { posts: PostSummary[] }) {
       </div>
       {n > 1 && (
         <div className="mt-6 flex items-center justify-between">
-          <button type="button" className="btn-icon" aria-label="Destaque anterior" disabled={index === 0} onClick={() => go(index - 1)}>
+          <Button variant="icon" aria-label="Destaque anterior" disabled={index === 0} onClick={() => go(index - 1)}>
             <Chevron dir="left" />
-          </button>
+          </Button>
           {n > 7 ? (
             <p className="meta" aria-live="polite">
               {index + 1} de {n}
@@ -77,14 +78,14 @@ export function Carousel({ posts }: { posts: PostSummary[] }) {
                   onClick={() => go(i)}
                   className="grid h-11 w-[25px] place-items-center"
                 >
-                  <span className={`h-1.5 w-1.5 rounded-full transition-colors duration-150 ${i === index ? "bg-ink" : "bg-control"}`} />
+                  <span className={`h-1.5 w-1.5 rounded-full transition-colors duration-150 ${i === index ? "bg-action-text" : "bg-control"}`} />
                 </button>
               ))}
             </div>
           )}
-          <button type="button" className="btn-icon" aria-label="Próximo destaque" disabled={index >= n - 1} onClick={() => go(index + 1)}>
+          <Button variant="icon" aria-label="Próximo destaque" disabled={index >= n - 1} onClick={() => go(index + 1)}>
             <Chevron dir="right" />
-          </button>
+          </Button>
         </div>
       )}
     </section>

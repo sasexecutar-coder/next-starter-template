@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/api";
 import markdownToHtml from "@/lib/markdownToHtml";
-import Container from "@/app/_components/container";
+import { Section } from "@/app/_components/ui/section";
 import { PostBody } from "@/app/_components/post-body";
 import { PostHeader } from "@/app/_components/post-header";
 import { PostActions } from "@/app/_components/blog/post-actions";
@@ -23,8 +23,8 @@ export default async function Post(props: Params) {
 
   return (
     <main data-surface="article">
-      <Container>
-        <article className="pb-24">
+      <Section label="Artigo">
+        <article>
           <PostHeader
             title={post.title}
             coverImage={post.coverImage}
@@ -33,9 +33,11 @@ export default async function Post(props: Params) {
             type={post.type}
           />
           <PostBody content={content} />
-          <PostActions title={post.title} asset={post.asset} />
+          <div className="stack-section">
+            <PostActions title={post.title} asset={post.asset} />
+          </div>
         </article>
-      </Container>
+      </Section>
     </main>
   );
 }

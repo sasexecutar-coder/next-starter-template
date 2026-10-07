@@ -3,16 +3,19 @@
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { ExecutiveFunction } from "@/content/functions";
-import { GapChip } from "@/app/_components/gap-chip";
-import { Icon } from "@/app/_components/icons";
+import { Chip } from "@/app/_components/ui/chip";
+import { FunctionIcon } from "@/app/_components/icons";
 import s from "./brain-stage.module.css";
 
-// Porte do Brain Home v1 (docs/design-kit/04-handoff/brain-home/brain-home-v1.html, D-22).
+// Cena do Brain Home v1 (D-22) com a camada de interface do Brain Home v2 (D-32):
+// marcadores em círculo com ícone, callout tracejado com colchetes, painel com marcas de canto.
+// Sem pausa, reset ou switch de movimento (D-36): o movimento segue só o prefers-reduced-motion.
 // A cena (three + brain-scene) só é importada quando o palco entra na tela; antes disso, pôster.
 
 const ASSETS = "/models/home-brain/";
 const HOME = { x: 0.16, y: -0.42 };
-const STORAGE_KEY = "rc-home-brain";
+// Contrato de callouts automáticos (v2): entra com facing > 0,32, sai < 0,12, troca após 6 s
+const AUTO = { enter: 0.32, leave: 0.12, dwellMs: 6000, settleMs: 300 };
 
 type Status = "poster" | "loading" | "ready" | "failed" | "saveData";
 
@@ -30,45 +33,33 @@ export function BrainStage({ functions, variant }: Props) {
   const stageRef = useRef<HTMLDivElement>(null);
   const markerRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const engineRef = useRef<Engine | null>(null);
+  const calloutRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const [sel, setSel] = useState(-1);
-  const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
   const [status, setStatus] = useState<Status>("poster");
   // Pedido de carga separado do status exibido: mudar o status não pode desmontar a cena.
   const [load, setLoad] = useState(false);
   const functionsRef = useRef(functions);
   const [dragging, setDragging] = useState(false);
-  const live = useRef({ sel: -1, paused: false, reduced: false, inView: true });
+  const live = useRef({ sel: -1, reduced: false, inView: true });
 
-  // Preferência de movimento: sistema + escolha salva (como na v1)
+  // Movimento: só a preferência do sistema (D-36)
   useEffect(() => {
-    let r = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    try {
-      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-      if (saved) r = !!saved.reduced;
-    } catch {}
-    setReduced(r);
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const on = () => setReduced(mq.matches);
+    on();
+    mq.addEventListener("change", on);
+    return () => mq.removeEventListener("change", on);
   }, []);
 
   useEffect(() => {
-    live.current = { ...live.current, sel, paused, reduced };
-  }, [sel, paused, reduced]);
+    live.current = { ...live.current, sel, reduced };
+  }, [sel, reduced]);
 
-  const select = useCallback(
-    (i: number) => {
-      setSel(i);
-      engineRef.current?.aimAt(i);
-    },
-    [],
-  );
-
-  const toggleReduced = () => {
-    const next = !reduced;
-    setReduced(next);
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify({ reduced: next }));
-    } catch {}
-  };
+  const select = useCallback((i: number) => {
+    setSel(i);
+    engineRef.current?.aimAt(i);
+  }, []);
 
   // Carga preguiçosa: só quando o palco aparece; respeita "economia de dados"
   useEffect(() => {
@@ -129,15 +120,20 @@ export function BrainStage({ functions, variant }: Props) {
         const fill = new THREE.DirectionalLight(0xeef0ff, 0.55);
         fill.position.set(-6, -2, -5);
         sc.add(fill);
-        // Névoa na cor do canvas da marca (#FFFDFA) para separar frente e verso
-        const fog = new THREE.Fog(0xfffdfa, 5, 9);
+        // Névoa na cor do fundo do tema (D-33) para separar frente e verso
+        // ds-allow: fallback do token --surface-page quando o CSS ainda não carregou
+        const canvasColor = () => getComputedStyle(document.documentElement).getPropertyValue("--surface-page").trim() || "#fffdfa";
+        const fog = new THREE.Fog(canvasColor(), 5, 9);
         sc.fog = fog;
+        const onTheme = () => fog.color.set(canvasColor());
+        window.addEventListener("rc-theme", onTheme);
 
         // Configuração da v1
         const cfg = structuredClone(scene.DEFAULT_CONFIG);
         cfg.lines.intensity = 0.35;
-        cfg.surface.crown = "#fdfdfe";
-        cfg.surface.fundus = "#dcdde5";
+        // ds-allow: material da cena v1 (fonte de verdade D-22), não é cor de interface
+        cfg.surface.crown = "#fdfdfe"; // ds-allow
+        cfg.surface.fundus = "#dcdde5"; // ds-allow
         cfg.surface.sulcStrength = 1.2;
         cfg.surface.roughness = 0.9;
         cfg.particles.sizePx = 2.3;
@@ -222,30 +218,87 @@ export function BrainStage({ functions, variant }: Props) {
 
         const v = new THREE.Vector3();
         const nrm = new THREE.Vector3();
-        const placeMarkers = () => {
+        const toCam = new THREE.Vector3();
+        const proj = anchors.map(() => ({ x: 0, y: 0, facing: -1, inside: false }));
+        let shown: { i: number; since: number }[] = [];
+        let settledAt = 0;
+        const hit = (a: Box, b: Box) => !(a.r < b.l || b.r < a.l || a.b < b.t || b.b < a.t);
+
+        const project = () => {
           const w = stage.clientWidth;
           const h = stage.clientHeight;
           anchors.forEach((m, i) => {
-            const el = markerRefs.current[i];
-            if (!el) return;
             v.copy(m.p).applyMatrix4(pivot.matrixWorld);
             nrm.copy(m.n).applyQuaternion(pivot.quaternion);
-            const facing = nrm.dot(v.clone().sub(camera.position).negate().normalize());
+            toCam.copy(camera.position).sub(v).normalize();
+            const facing = nrm.dot(toCam);
             v.project(camera);
             const x = (v.x * 0.5 + 0.5) * w;
             const y = (-v.y * 0.5 + 0.5) * h;
-            const ew = el.offsetWidth;
-            let left = x < w * 0.5;
-            if (!left && x - 11 + ew > w) left = true;
-            else if (left && x + 11 - ew < 0) left = false;
-            el.classList.toggle(s.left, left);
-            const tx = THREE.MathUtils.clamp(left ? x - ew + 11 : x - 11, 0, Math.max(0, w - ew));
-            el.style.transform = `translate(${tx.toFixed(1)}px, ${(y - 11).toFixed(1)}px)`;
-            const o = THREE.MathUtils.smoothstep(facing, -0.25, 0.2);
-            el.style.opacity = (0.15 + 0.85 * o).toFixed(2);
-            el.classList.toggle(s.back, facing < -0.35);
-            el.tabIndex = facing < -0.35 ? -1 : 0;
-            el.style.zIndex = String(Math.round(o * 10));
+            proj[i] = { x, y, facing, inside: x > 24 && x < w - 24 && y > 24 && y < h - 24 };
+          });
+        };
+
+        // Callouts automáticos por orientação (v2): 1 no mobile, 2 no desktop; histerese e permanência mínima
+        const updateAuto = (now: number, busy: boolean) => {
+          if (live.current.sel >= 0 || busy || now - settledAt < AUTO.settleMs) return;
+          const slots = stage.clientWidth < 600 ? 1 : 2;
+          const ok = (i: number) => proj[i].inside && proj[i].facing > AUTO.leave;
+          shown = shown.filter((x) => ok(x.i));
+          const cands = proj
+            .map((_, i) => i)
+            .filter((i) => proj[i].inside && proj[i].facing > AUTO.enter && !shown.some((x) => x.i === i))
+            .sort((a, b) => proj[b].facing - proj[a].facing);
+          for (const i of cands) {
+            if (shown.length < slots) {
+              shown.push({ i, since: now });
+              continue;
+            }
+            const old = shown.findIndex((x) => now - x.since > AUTO.dwellMs);
+            if (old >= 0) shown[old] = { i, since: now };
+          }
+        };
+
+        const placeOverlay = () => {
+          const w = stage.clientWidth;
+          const h = stage.clientHeight;
+          const si = live.current.sel;
+          const active = si >= 0 ? [si] : shown.map((x) => x.i);
+          anchors.forEach((_, i) => {
+            const el = markerRefs.current[i];
+            if (!el) return;
+            const p = proj[i];
+            const front = p.facing > -0.05 && p.inside;
+            el.style.transform = `translate(${(p.x - 22).toFixed(1)}px, ${(p.y - 22).toFixed(1)}px)`;
+            el.style.opacity = front ? Math.min(1, 0.35 + p.facing * 1.6).toFixed(2) : "0";
+            el.classList.toggle(s.back, !front);
+            el.classList.toggle(s.on, active.includes(i));
+            el.tabIndex = front ? 0 : -1;
+          });
+          const taken: Box[] = [];
+          const order = [...active].sort((a, b) => (a === si ? -1 : b === si ? 1 : 0));
+          const showCo = new Set<number>();
+          for (const i of order) {
+            const co = calloutRefs.current[i];
+            const p = proj[i];
+            if (!co || (i !== si && !(p.facing > AUTO.leave && p.inside))) continue;
+            const cw = co.offsetWidth;
+            const ch = co.offsetHeight;
+            let x = p.x < w * 0.55 ? p.x + 30 : p.x - 30 - cw;
+            let y = p.y - ch / 2;
+            x = Math.max(4, Math.min(w - cw - 4, x));
+            y = Math.max(4, Math.min(h - ch - 4, y));
+            const box = { l: x, t: y, r: x + cw, b: y + ch };
+            if (taken.some((t) => hit(t, box))) continue;
+            taken.push(box);
+            showCo.add(i);
+            co.style.transform = `translate(${x.toFixed(1)}px, ${y.toFixed(1)}px)`;
+          }
+          calloutRefs.current.forEach((co, i) => {
+            if (!co) return;
+            co.classList.toggle(s.show, showCo.has(i));
+            co.classList.toggle(s.coSel, i === si);
+            co.tabIndex = showCo.has(i) ? 0 : -1;
           });
         };
 
@@ -283,6 +336,7 @@ export function BrainStage({ functions, variant }: Props) {
           drag.y = e.clientY;
         };
         const onEnd = () => {
+          if (drag) settledAt = performance.now();
           drag = null;
           setDragging(false);
         };
@@ -308,27 +362,40 @@ export function BrainStage({ functions, variant }: Props) {
             last = 0;
             return;
           }
-          const { paused: p, reduced: r, sel: si } = live.current;
+          const { reduced: r, sel: si } = live.current;
           if (rot.anim) {
             rot.anim.t = Math.min(1, rot.anim.t + dt / 0.9);
             const e = 1 - Math.pow(1 - rot.anim.t, 3);
             rot.x = rot.anim.fx + (rot.anim.x - rot.anim.fx) * e;
             rot.y = rot.anim.fy + (rot.anim.y - rot.anim.fy) * e;
-            if (rot.anim.t >= 1) rot.anim = null;
-          } else if (!p && !r && !drag && si < 0) rot.y += dt * 0.12;
+            if (rot.anim.t >= 1) {
+              rot.anim = null;
+              settledAt = t;
+            }
+          } else if (!r && !drag && si < 0) rot.y += dt * 0.12;
           pivot.rotation.set(rot.x, rot.y, 0);
           pivot.updateMatrixWorld();
-          placeMarkers();
+          project();
+          updateAuto(t, !!drag || !!rot.anim);
+          placeOverlay();
           renderer.render(sc, camera);
         };
         raf = requestAnimationFrame(tick);
 
-        engineRef.current = { aimAt, dispose: () => {} };
+        engineRef.current = {
+          aimAt: (i: number) => {
+            shown = [];
+            settledAt = performance.now();
+            aimAt(i);
+          },
+          dispose: () => {},
+        };
         if (live.current.sel >= 0) aimAt(live.current.sel);
         setStatus("ready");
 
         cleanup = () => {
           cancelAnimationFrame(raf);
+          window.removeEventListener("rc-theme", onTheme);
           ro.disconnect();
           io.disconnect();
           stage.removeEventListener("pointerdown", onDown);
@@ -369,13 +436,9 @@ export function BrainStage({ functions, variant }: Props) {
     } else if (e.key === "ArrowLeft") {
       e.preventDefault();
       select(sel <= -1 ? last : sel - 1);
-    } else if (e.key === " " && e.target === e.currentTarget) {
-      e.preventDefault();
-      setPaused((p) => !p);
     } else if (e.key === "Escape") select(-1);
   };
 
-  const still = paused || reduced;
   const current = sel >= 0 ? functions[sel] : null;
 
   return (
@@ -386,7 +449,7 @@ export function BrainStage({ functions, variant }: Props) {
           className={`${s.stage} ${dragging ? s.dragging : ""}`}
           tabIndex={0}
           role="application"
-          aria-label="Cérebro 3D. Arraste para girar. Setas trocam de função; espaço pausa; Esc volta à visão geral."
+          aria-label="Cérebro 3D. Arraste para girar. Setas trocam de função; Esc volta à visão geral."
           onKeyDown={onKey}
         >
           <Image
@@ -397,7 +460,28 @@ export function BrainStage({ functions, variant }: Props) {
             priority={variant === "home"}
             className={`${s.poster} ${status === "ready" ? s.posterHidden : ""}`}
           />
-          <div className={s.markers}>
+          <div className={`${s.layer} ${status === "ready" ? "" : s.hidden}`}>
+            {functions.map((f, i) => (
+              <button
+                key={f.id}
+                ref={(el) => {
+                  calloutRefs.current[i] = el;
+                }}
+                type="button"
+                tabIndex={-1}
+                className={s.co}
+                onClick={() => select(i)}
+              >
+                <i className={s.c} />
+                <i className={s.c} />
+                <i className={s.c} />
+                <i className={s.c} />
+                <b>{f.name}</b>
+                <span>{f.short}</span>
+              </button>
+            ))}
+          </div>
+          <div className={`${s.layer} ${status === "ready" ? "" : s.hidden}`}>
             {functions.map((f, i) => (
               <button
                 key={f.id}
@@ -405,19 +489,21 @@ export function BrainStage({ functions, variant }: Props) {
                   markerRefs.current[i] = el;
                 }}
                 type="button"
-                className={`${s.mk} ${status === "ready" ? "" : s.hidden}`}
+                className={s.mk}
+                aria-label={f.name}
                 aria-pressed={i === sel}
                 onClick={() => select(sel === i ? -1 : i)}
               >
-                <span className={s.dot} />
-                <span className={s.pill}>{f.name}</span>
+                <i>
+                  <FunctionIcon id={f.id} />
+                </i>
               </button>
             ))}
           </div>
           {status === "loading" && <p className={s.status}>Carregando cérebro…</p>}
           {status === "failed" && (
             <p className={s.status} role="status">
-              A visualização 3D não está disponível neste navegador. As funções continuam acessíveis no card.
+              A visualização 3D não está disponível neste navegador. As funções continuam acessíveis no painel.
             </p>
           )}
           {status === "saveData" && (
@@ -429,63 +515,60 @@ export function BrainStage({ functions, variant }: Props) {
           )}
         </div>
 
-        <aside className={`${s.card} ${current ? s.sel : ""} ${s.fade}`} aria-live="polite" key={sel}>
+        <aside className={`${s.panel} ${current ? s.sel : ""} ${s.fade}`} aria-live="polite" key={sel}>
+          <i className={s.k} />
+          <i className={s.k} />
+          <i className={s.k} />
+          <i className={s.k} />
           {current ? (
             <>
-              <button type="button" className={s.close} aria-label="Fechar detalhes" onClick={() => select(-1)}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
+              <button type="button" className={s.close} aria-label="Fechar e voltar à lista" onClick={() => select(-1)}>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
                   <path d="M6 6l12 12M18 6 6 18" />
                 </svg>
               </button>
               <h2>
-                <Icon name={current.id} />
+                <FunctionIcon id={current.id} />
                 {current.name}
               </h2>
               <p className={s.lead}>{current.lead}</p>
-              <div className={s.rows}>
-                <Row icon="target" label="Demanda" text={current.demand} />
-                <Row icon="warn" label="Dificuldade possível" text={current.difficulty} />
-                <Row icon="bulb" label="Estratégia de apoio" text={current.strategy} />
-                {variant === "mapas" && (
-                  <>
-                    <div className={s.r}>
-                      <Icon name="stop" />
-                      <div>
-                        <b>Riscos relacionados</b>
-                        {current.relatedRisks.length ? <span>{current.relatedRisks.join(", ")}</span> : <GapChip />}
-                      </div>
-                    </div>
-                    <div className={s.r}>
-                      <Icon name="target" />
-                      <div>
-                        <b>Evidência</b>
-                        {current.evidence.length ? <span>{current.evidence.join("; ")}</span> : <GapChip label="Fontes em preparação" />}
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
+              <Row label="Demanda" text={current.demand} />
+              <Row label="Dificuldade possível" text={current.difficulty} />
+              <Row label="Estratégia de apoio" text={current.strategy} />
+              {variant === "mapas" && (
+                <>
+                  <div className={s.row}>
+                    <b>Riscos relacionados</b>
+                    {current.relatedRisks.length ? <span>{current.relatedRisks.join(", ")}</span> : <Chip variant="gap" />}
+                  </div>
+                  <div className={s.row}>
+                    <b>Evidência</b>
+                    {current.evidence.length ? <span>{current.evidence.join("; ")}</span> : <Chip variant="gap">Fontes em preparação</Chip>}
+                  </div>
+                </>
+              )}
             </>
           ) : (
             <>
               <h2>Funções executivas</h2>
               <p className={s.lead}>
-                Quatro capacidades que sustentam a execução. Selecione uma para ver demandas, riscos e apoio.
+                Quatro capacidades que sustentam a execução. Escolha uma para ver demanda, dificuldade e apoio.
               </p>
-              <div className={s.rows}>
-                {functions.map((f, i) => (
-                  <button key={f.id} type="button" className={s.pick} onClick={() => select(i)}>
-                    <i />
-                    <span>
-                      <b>{f.name}</b>
-                      <span>{f.short}</span>
-                    </span>
-                    <svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                      <path d="m9 6 6 6-6 6" />
-                    </svg>
-                  </button>
-                ))}
-              </div>
+              {functions.map((f, i) => (
+                <button key={f.id} type="button" className={s.pick} onClick={() => select(i)}>
+                  <span className={s.ic}>
+                    <FunctionIcon id={f.id} />
+                  </span>
+                  <span>
+                    <b>{f.name}</b>
+                    <span>{f.short}</span>
+                  </span>
+                  <svg viewBox="0 0 24 24" width="16" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="m9 6 6 6-6 6" />
+                  </svg>
+                </button>
+              ))}
+              <p className={s.note}>Os marcadores indicam acessos a redes distribuídas, não regiões clínicas exatas.</p>
             </>
           )}
         </aside>
@@ -495,62 +578,21 @@ export function BrainStage({ functions, variant }: Props) {
         <div className={s.hints}>
           <span>Arraste para explorar o cérebro</span>
           <span className={s.sep} />
-          <span>Clique nos marcadores para ver detalhes</span>
+          <span>Toque em um marcador para ler</span>
         </div>
-        <div className={s.bar}>
-          <div className={s.tools}>
+        <div className={s.dots} role="tablist" aria-label="Funções">
+          {[-1, ...functions.map((_, i) => i)].map((i) => (
             <button
+              key={i}
               type="button"
-              className={s.ib}
-              aria-label={still ? "Retomar rotação" : "Pausar rotação"}
-              onClick={() => {
-                if (reduced) toggleReduced();
-                else setPaused((p) => !p);
-              }}
+              role="tab"
+              aria-selected={i === sel}
+              aria-label={i < 0 ? "Visão geral" : functions[i].name}
+              onClick={() => select(i)}
             >
-              {still ? (
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M7 4.5v15l13-7.5z" />
-                </svg>
-              ) : (
-                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <rect x="6" y="5" width="4" height="14" rx="1" />
-                  <rect x="14" y="5" width="4" height="14" rx="1" />
-                </svg>
-              )}
+              <i />
             </button>
-            <button
-              type="button"
-              className={s.ib}
-              aria-label="Restaurar vista"
-              onClick={() => {
-                setPaused(false);
-                select(-1);
-              }}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-                <path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5" />
-              </svg>
-            </button>
-          </div>
-          <div className={s.dots} role="tablist" aria-label="Funções">
-            {[-1, ...functions.map((_, i) => i)].map((i) => (
-              <button
-                key={i}
-                type="button"
-                role="tab"
-                aria-selected={i === sel}
-                aria-label={i < 0 ? "Visão geral" : functions[i].name}
-                onClick={() => select(i)}
-              >
-                <i />
-              </button>
-            ))}
-          </div>
-          <label className={s.rmt}>
-            Movimento reduzido
-            <button type="button" className={s.sw} role="switch" aria-checked={reduced} onClick={toggleReduced} />
-          </label>
+          ))}
         </div>
       </div>
 
@@ -558,14 +600,12 @@ export function BrainStage({ functions, variant }: Props) {
       <noscript>
         <div className="mt-8 grid gap-4 md:grid-cols-2">
           {functions.map((f) => (
-            <div key={f.id} className={s.card} style={{ minHeight: 0 }}>
+            <div key={f.id} className={s.panel} style={{ minHeight: 0 }}>
               <h2>{f.name}</h2>
               <p className={s.lead}>{f.lead}</p>
-              <div className={s.rows}>
-                <Row icon="target" label="Demanda" text={f.demand} />
-                <Row icon="warn" label="Dificuldade possível" text={f.difficulty} />
-                <Row icon="bulb" label="Estratégia de apoio" text={f.strategy} />
-              </div>
+              <Row label="Demanda" text={f.demand} />
+              <Row label="Dificuldade possível" text={f.difficulty} />
+              <Row label="Estratégia de apoio" text={f.strategy} />
             </div>
           ))}
         </div>
@@ -574,14 +614,13 @@ export function BrainStage({ functions, variant }: Props) {
   );
 }
 
-function Row({ icon, label, text }: { icon: string; label: string; text: string }) {
+function Row({ label, text }: { label: string; text: string }) {
   return (
-    <div className={s.r}>
-      <Icon name={icon} />
-      <div>
-        <b>{label}</b>
-        <span>{text}</span>
-      </div>
+    <div className={s.row}>
+      <b>{label}</b>
+      <span>{text}</span>
     </div>
   );
 }
+
+type Box = { l: number; t: number; r: number; b: number };

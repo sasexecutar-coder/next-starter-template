@@ -67,7 +67,7 @@ function SubNavInner({ activeKey }: { activeKey: string }) {
             <Link
               href={i.href!}
               aria-current={i.key === activeKey ? "page" : undefined}
-              className={`flex min-h-[44px] items-center gap-2 text-[16px] ${i.key === activeKey ? "text-ink" : "text-muted hover:text-ink"}`}
+              className={`flex min-h-[44px] items-center gap-2 text-[16px] ${i.key === activeKey ? "font-medium text-action-text" : "text-muted hover:text-ink"}`}
             >
               {i.key === "buscar" && <SearchIcon />}
               {i.label}
@@ -85,7 +85,7 @@ function SubNavInner({ activeKey }: { activeKey: string }) {
               <Link
                 href={i.href!}
                 aria-current={i.key === activeKey ? "page" : undefined}
-                className={`inline-flex min-h-[44px] items-center gap-1.5 ${i.key === activeKey ? "text-ink underline underline-offset-8" : "text-muted hover:text-ink"}`}
+                className={`inline-flex min-h-[44px] items-center gap-2 ${i.key === activeKey ? "font-medium text-action-text underline underline-offset-8" : "text-muted hover:text-ink"}`}
               >
                 {i.key === "buscar" && <SearchIcon />}
                 {i.label}

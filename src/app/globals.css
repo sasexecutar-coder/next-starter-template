@@ -3,15 +3,17 @@
 @tailwind utilities;
 
 /*
- * Tokens Risco Cognitivo — fonte: docs/design-kit (DECISIONS D-01…D-29).
+ * Tokens Risco Cognitivo — fonte: docs/design-kit (DECISIONS D-01…D-36).
  * Paleta: BRAND-COLOR-SYSTEM + D-01. Fontes: D-03.
- * Estrutura (espaço, raio, alturas, bordas de controle, estados): handoff de arquitetura UX (D-25),
- * que substitui a escala do Nocturne. Regra: 96 entre blocos, 48 entre grupos, 32 entre itens,
- * 24 dentro de componentes, 8–16 dentro de grupos.
- * Editorial (--ed-*): handoff-tokens-blog-ebooks §11.1 com slots preenchidos pela marca.
+ * Estrutura (espaço, raio, alturas, bordas de controle, estados): handoff de arquitetura UX (D-25).
+ * Ritmo (D-34): a regra é a DISTÂNCIA entre blocos (96 desktop / 64 mobile). Cada bloco recebe metade
+ * em cima e embaixo (--block-y), então dois blocos vizinhos somam exatamente a regra.
+ * Cards e destaques (D-32): tokens do Brain Home v2 (painel com marcas de canto, callout com colchetes).
+ * Temas (D-33): "atual" = marca (padrão); "claro" e "noite" = tokens do blog-starter original.
+ * Componentes devem usar src/app/_components/ui/ — conferido por `npm run audit:ds`.
  */
 :root {
-  /* marca */
+  /* marca (não muda entre temas) */
   --brand-canvas: #fffdfa;
   --brand-dark-gray: #545454;
   --brand-light-gray: #ececec;
@@ -26,14 +28,17 @@
   --semantic-solution: #00bf63;
   --attention-surface: #ffe659;
   --attention-ink: #8a5a00;
+  --on-attention: #000000;
 
-  /* cérebro 3D (D-23): índigo do Brain Home v1, restrito ao componente do cérebro */
+  /* cérebro 3D (D-23): índigo do Brain Home, restrito ao componente do cérebro */
   --brain-accent: #6e72f0;
   --brain-accent-strong: #4f53d9;
   --brain-accent-soft: #e4e6ff;
+  --brain-accent-line: #a3a8f5;
+  --brain-accent-text: #4f53d9;
   --brain-border-strong: #cbcbcb;
 
-  /* texto e superfícies */
+  /* texto e superfícies — tema "atual" (kit) */
   --text-primary: #000000;
   --text-secondary: #545454;
   --text-on-dark: #ffffff;
@@ -41,6 +46,15 @@
   --surface-subtle: #f4f3f0;
   --surface-raised: #ffffff;
   --line-subtle: var(--brand-light-gray);
+  --border-subtle: var(--brand-light-gray);
+  /* bordas de controle ≥ 3:1 (D-28) e marcas de canto do painel (D-32) */
+  --border-control: #85847f;
+  --border-strong: #cbcbcb;
+  /* cor da marca como texto/realce (D-35): links, negrito do artigo, eyebrow, estados ativos */
+  --action-text: var(--brand-action-blue);
+  --action-line: rgb(45 92 230 / 45%);
+  --dot-grid: #d9d9de;
+  --selection: var(--brand-light-blue);
 
   /* estrutura (D-25): múltiplos de 8, 12 como única exceção */
   --space-1: 4px;
@@ -52,29 +66,34 @@
   --space-12: 48px;
   --space-16: 64px;
   --space-24: 96px;
+  /* ritmo (D-34) */
+  --block-y: var(--space-8); /* metade de 64 (mobile) */
+  --stack-section: var(--space-8); /* cabeçalho da seção → conteúdo */
+  --stack-items: var(--space-8); /* itens repetidos */
+  --stack-inner: var(--space-6); /* dentro de componentes */
   --gutter: 32px;
   --container: 1120px;
   --header-h: 72px;
   --subnav-h: 52px;
+  --radius-xs: 2px; /* painel, callout e card (v2, D-32) */
   --radius-sm: 4px; /* checkbox */
   --radius-md: 8px; /* botões de texto */
   --radius-lg: 12px; /* botões de ícone */
-  --radius-xl: 16px; /* cards, busca, dropdowns, imagens */
-  /* bordas (D-28): divisor sutil; controles ≥ 3:1 (correção do handoff) */
-  --border-subtle: var(--brand-light-gray);
-  --border-control: #85847f;
+  --radius-xl: 16px; /* busca, dropdowns, imagens */
   --shadow-sm: 0 0 0 1px var(--border-subtle);
   --shadow-md: 0 0 0 1px var(--border-subtle), 0 6px 18px rgb(0 0 0 / 6%);
   --shadow-card-raised: 0 4px 16px rgb(20 20 19 / 8%);
   --scrim: rgb(20 20 19 / 20%);
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --dur-menu: 320ms;
 
   /* editorial (superfície "artigo") */
-  --ed-paper: var(--brand-canvas);
+  --ed-paper: var(--surface-page);
   --ed-ink: var(--text-primary);
   --ed-heading: var(--text-primary);
   --ed-label: var(--text-secondary);
-  --ed-link: var(--brand-action-blue);
+  --ed-link: var(--action-text);
+  --ed-strong: var(--action-text);
   --ed-callout-head: var(--brand-dark-indigo);
   --ed-callout-head-text: var(--text-on-dark);
   --ed-callout-bg: var(--brand-light-blue-soft);
@@ -94,6 +113,44 @@
   --ed-sp-paragraph: calc(var(--ed-lh) * 0.75);
   --ed-sp-callout-before: var(--ed-lh);
   --ed-sp-callout-after: calc(var(--ed-lh) * 1.5);
+  color-scheme: light;
+}
+
+/* Tema "claro" (D-33): tokens do blog-starter (fundo #FFF, accent-1 #FAFAFA, accent-2 #EAEAEA, accent-7 #333) */
+:root[data-theme="claro"] {
+  --text-primary: #171717;
+  --text-secondary: #333333;
+  --surface-page: #ffffff;
+  --surface-subtle: #fafafa;
+  --surface-raised: #ffffff;
+  --line-subtle: #eaeaea;
+  --border-subtle: #eaeaea;
+  --border-strong: #cccccc;
+  --dot-grid: #e5e5e5;
+}
+
+/* Tema "noite" (D-33): tokens do blog-starter (slate-900 #0F172A, slate-400 #94A3B8, foreground #EDEDED) */
+:root[data-theme="noite"] {
+  --text-primary: #ededed;
+  --text-secondary: #94a3b8;
+  --surface-page: #0f172a;
+  --surface-subtle: #1e293b;
+  --surface-raised: #1e293b;
+  --line-subtle: #334155;
+  --border-subtle: #334155;
+  --border-control: #94a3b8;
+  --border-strong: #475569;
+  --action-text: #8fa9ff;
+  --action-line: rgb(143 169 255 / 50%);
+  --dot-grid: #263248;
+  --selection: #1f46bf;
+  --brain-accent-soft: #272a5c;
+  --brain-accent-text: #a3a8f5;
+  --brain-border-strong: #475569;
+  --shadow-card-raised: 0 4px 16px rgb(0 0 0 / 40%);
+  --scrim: rgb(0 0 0 / 50%);
+  --ed-callout-bg: rgb(45 92 230 / 18%);
+  color-scheme: dark;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -109,10 +166,16 @@
 @media (min-width: 640px) {
   :root {
     --gutter: 48px;
+    --stack-section: var(--space-12);
     --ed-fs-body: 1.125rem;
     --ed-lh-body: 1.65;
     --ed-sp-title-to-body: calc(var(--ed-lh) * 3.5);
     --ed-sp-h-before: calc(var(--ed-lh) * 2.4);
+  }
+}
+@media (min-width: 768px) {
+  :root {
+    --block-y: var(--space-12); /* metade de 96 */
   }
 }
 @media (min-width: 1024px) {
@@ -137,10 +200,10 @@
     @apply font-display;
   }
   ::selection {
-    background: var(--brand-light-blue);
+    background: var(--selection);
   }
   :focus-visible {
-    outline: 2px solid var(--brand-action-blue);
+    outline: 2px solid var(--action-text);
     outline-offset: 2px;
   }
 }
@@ -153,12 +216,21 @@
     margin-inline: auto;
     padding-inline: var(--gutter);
   }
-  /* Ritmo vertical: 96 entre blocos de página */
+  /* Ritmo (D-34): metade da distância entre blocos em cima e embaixo → vizinhos somam 64/96.
+     Só o <Section> (ui/section.tsx) usa esta classe. */
   .page-block {
-    padding-block: var(--space-24);
+    padding-block: var(--block-y);
+  }
+  .stack-section {
+    margin-top: var(--stack-section);
+  }
+  .stack-items {
+    display: grid;
+    gap: var(--stack-items);
   }
 
-  /* Botões (D-25): grande 40/18, médio 36/16, ícone 40×40; área de toque ampliada para ≥ 44 */
+  /* Botões (D-25, D-31): grande 40/18, médio 36/16, ícone 40×40; área de toque ≥ 44.
+     CTA = sempre primário azul. Contorno só para ações utilitárias. Só o <Button> usa estas classes. */
   .btn {
     @apply inline-flex items-center justify-center gap-2 font-body font-medium;
     position: relative;
@@ -185,6 +257,9 @@
     cursor: not-allowed;
     transform: none;
   }
+  .btn[aria-busy="true"] {
+    cursor: progress;
+  }
   .btn-md {
     height: 36px;
     font-size: 16px;
@@ -199,7 +274,6 @@
   .btn-primary:hover:not(:disabled):not([aria-disabled="true"]) {
     background: var(--brand-action-blue-strong);
   }
-  /* Contorno: fundo branco, borda de controle ≥ 3:1 */
   .btn-secondary {
     background: var(--surface-raised);
     border-color: var(--border-control);
@@ -239,39 +313,204 @@
     color: var(--text-secondary);
   }
 
-  /* Eyebrow (BRAND-COLOR-SYSTEM usage_rules) */
+  /* Eyebrow (D-35): mono maiúsculo na cor da marca, sem fundo cinza */
   .eyebrow {
     @apply inline-block font-mono text-xs font-medium uppercase tracking-wider;
-    padding: var(--space-1) var(--space-3);
-    border-radius: var(--radius-sm);
-    background: var(--brand-dark-gray);
-    color: var(--text-on-dark);
+    color: var(--action-text);
   }
-  .eyebrow-indigo {
-    background: var(--brand-dark-indigo);
+  /* Variante do hero do cérebro (v1): barras índigo */
+  .eyebrow-bars {
+    @apply inline-flex items-center font-body font-medium uppercase;
+    gap: 18px;
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    color: var(--text-secondary);
+  }
+  .eyebrow-bars::before,
+  .eyebrow-bars::after {
+    content: "";
+    width: 3px;
+    height: 30px;
+    background: var(--brain-accent);
   }
 
-  /* Status de conteúdo sem fonte (D-10): GAP visível, nunca apresentado como fato */
-  .chip-gap {
-    @apply inline-flex items-center font-mono text-xs font-medium;
+  /* Chips (D-10, D-35): amarelo só para GAP; nunca quebram linha */
+  .chip {
+    @apply inline-flex shrink-0 items-center whitespace-nowrap font-mono text-xs font-medium;
     padding: 2px var(--space-2);
     border-radius: var(--radius-sm);
+  }
+  .chip-gap {
     background: var(--attention-surface);
-    color: #000;
+    color: var(--on-attention);
+  }
+  .chip-soon {
+    background: var(--surface-subtle);
+    color: var(--text-secondary);
+    font-family: var(--font-body);
+  }
+  .chip-tag {
+    border: 1px solid var(--border-control);
+    color: var(--text-primary);
+  }
+  .chip-tag[aria-pressed="true"],
+  .chip-tag[aria-current] {
+    border-color: var(--action-text);
+    color: var(--action-text);
   }
 
-  /* Cards (CARD-HIERARCHY-SYSTEM + D-25): padding 24, raio 16, borda sutil */
-  .card-feature {
-    background: var(--surface-subtle);
+  /* Painel (D-32, tokens do Brain Home v2): borda 1, 4 marcas de canto de 10 px */
+  .panel {
+    position: relative;
+    background: var(--surface-raised);
     border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-xl);
+    border-radius: var(--radius-xs);
     padding: var(--space-6);
   }
-  .card-micro {
-    background: var(--surface-raised);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
+  .panel-subtle {
+    background: var(--surface-subtle);
+  }
+  .panel-compact {
     padding: var(--space-3) var(--space-4);
+  }
+  .panel > .tick {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--border-strong);
+    background: var(--surface-raised);
+    pointer-events: none;
+  }
+  .panel > .tick:nth-of-type(1) {
+    left: -5px;
+    top: -5px;
+  }
+  .panel > .tick:nth-of-type(2) {
+    right: -5px;
+    top: -5px;
+  }
+  .panel > .tick:nth-of-type(3) {
+    left: -5px;
+    bottom: -5px;
+  }
+  .panel > .tick:nth-of-type(4) {
+    right: -5px;
+    bottom: -5px;
+  }
+  .panel-interactive {
+    transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+  }
+  .panel-interactive:hover,
+  .panel-interactive:focus-within {
+    border-color: var(--action-text);
+    box-shadow: var(--shadow-card-raised);
+  }
+  .panel-interactive:hover > .tick,
+  .panel-interactive:focus-within > .tick {
+    border-color: var(--action-text);
+  }
+
+  /* Callout (D-32, v2): linha tracejada de 1 px e colchetes sólidos de 12 × 2 na cor da marca */
+  .callout {
+    position: relative;
+    background: color-mix(in srgb, var(--surface-raised) 90%, transparent);
+    border: 1px dashed var(--action-line);
+    border-radius: var(--radius-xs);
+    padding: var(--space-4) var(--space-6);
+  }
+  .callout > .bracket {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 0 solid var(--action-text);
+    pointer-events: none;
+  }
+  .callout > .bracket:nth-of-type(1) {
+    left: -1px;
+    top: -1px;
+    border-left-width: 2px;
+    border-top-width: 2px;
+  }
+  .callout > .bracket:nth-of-type(2) {
+    right: -1px;
+    top: -1px;
+    border-right-width: 2px;
+    border-top-width: 2px;
+  }
+  .callout > .bracket:nth-of-type(3) {
+    left: -1px;
+    bottom: -1px;
+    border-left-width: 2px;
+    border-bottom-width: 2px;
+  }
+  .callout > .bracket:nth-of-type(4) {
+    right: -1px;
+    bottom: -1px;
+    border-right-width: 2px;
+    border-bottom-width: 2px;
+  }
+
+  /* Destaque com régua (D-35, ref. f02): fio fino em cima e embaixo, segmento grosso da marca no centro */
+  .highlight {
+    position: relative;
+    padding-block: var(--space-6);
+    border-block: 1px solid var(--border-strong);
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.625rem);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+    text-wrap: balance;
+  }
+  .highlight::before,
+  .highlight::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    width: 48px;
+    height: 4px;
+    transform: translate(-50%, -50%);
+    background: var(--action-text);
+  }
+  .highlight::before {
+    top: -0.5px;
+  }
+  .highlight::after {
+    top: calc(100% + 0.5px);
+  }
+  .highlight cite {
+    @apply mt-3 block font-body text-sm font-normal not-italic;
+    color: var(--text-secondary);
+  }
+
+  /* Negrito da marca (D-35, ref. f13) */
+  .brand-strong {
+    font-weight: 700;
+    color: var(--action-text);
+  }
+
+  /* Controle segmentado (seletor de tema) */
+  .segmented {
+    display: inline-flex;
+    border: 1px solid var(--border-control);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+  .segmented button {
+    min-height: 44px;
+    padding: 0 var(--space-4);
+    font-size: 14px;
+    color: var(--text-secondary);
+    background: var(--surface-raised);
+  }
+  .segmented button + button {
+    border-left: 1px solid var(--border-subtle);
+  }
+  .segmented button[aria-pressed="true"] {
+    color: var(--action-text);
+    font-weight: 600;
+    background: var(--surface-subtle);
   }
 
   /* FX-EDGE-01 (D-02): contorno preto 19% em recortes; aproximação CSS do controle "100" do Canva */

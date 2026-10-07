@@ -45,7 +45,7 @@
   text-underline-offset: 0.15em;
 }
 .markdown a:hover {
-  color: var(--brand-action-blue-strong);
+  color: var(--text-primary);
 }
 
 .markdown ul,
@@ -62,14 +62,43 @@
   margin-top: 0.35em;
 }
 
+/* D-35 (ref. f13): negrito do corpo na cor da marca */
 .markdown strong {
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--ed-strong);
 }
 
+/* D-35 (ref. f02): citação entre fios finos, com segmento da marca centrado em cada fio */
 .markdown blockquote {
-  border-left: 2px solid var(--ed-rule);
-  padding-left: 1em;
-  color: var(--text-secondary);
+  position: relative;
+  margin-block: calc(var(--ed-lh) * 1.5);
+  padding-block: var(--space-6);
+  border-block: 1px solid var(--border-strong);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.25em;
+  line-height: 1.35;
+  color: var(--text-primary);
+  text-wrap: balance;
+}
+.markdown blockquote::before,
+.markdown blockquote::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  width: 48px;
+  height: 4px;
+  transform: translate(-50%, -50%);
+  background: var(--action-text);
+}
+.markdown blockquote::before {
+  top: -0.5px;
+}
+.markdown blockquote::after {
+  top: calc(100% + 0.5px);
+}
+.markdown blockquote strong {
+  color: inherit;
 }
 
 .markdown code {
@@ -116,23 +145,28 @@
   font-weight: 600;
   font-size: 0.95em;
 }
+/* Callout editorial = callout v2 (D-32): linha tracejada e colchetes de canto na cor da marca */
 .markdown :global(.ed-callout) {
-  background: var(--ed-callout-bg);
+  --c: var(--action-text);
+  border: 1px dashed var(--action-line);
+  border-radius: var(--radius-xs);
+  padding: var(--space-4) var(--space-6);
   color: var(--ed-callout-text);
+  background:
+    linear-gradient(var(--c), var(--c)) 0 0 / 12px 2px,
+    linear-gradient(var(--c), var(--c)) 0 0 / 2px 12px,
+    linear-gradient(var(--c), var(--c)) 100% 0 / 12px 2px,
+    linear-gradient(var(--c), var(--c)) 100% 0 / 2px 12px,
+    linear-gradient(var(--c), var(--c)) 0 100% / 12px 2px,
+    linear-gradient(var(--c), var(--c)) 0 100% / 2px 12px,
+    linear-gradient(var(--c), var(--c)) 100% 100% / 12px 2px,
+    linear-gradient(var(--c), var(--c)) 100% 100% / 2px 12px,
+    var(--surface-raised);
+  background-repeat: no-repeat;
+  background-origin: border-box;
 }
 .markdown :global(.ed-callout) > :global(.ed-block-title) {
-  background: var(--ed-callout-head);
-  color: var(--ed-callout-head-text);
-  padding: 0.5em 1em;
-}
-.markdown :global(.ed-callout) > :not(:global(.ed-block-title)) {
-  padding: 0 1em;
-}
-.markdown :global(.ed-callout) > :last-child {
-  padding-bottom: 0.9em;
-}
-.markdown :global(.ed-callout) > :global(.ed-block-title) + * {
-  padding-top: 0.75em;
+  color: var(--text-primary);
 }
 .markdown :global(.ed-summary),
 .markdown :global(.ed-keypoints) {
@@ -141,7 +175,7 @@
   border-radius: var(--radius-md);
 }
 .markdown :global(.ed-definition) {
-  border-left: 3px solid var(--brand-dark-indigo);
+  border-left: 3px solid var(--action-text);
   padding-left: 1em;
 }
 .markdown :global(.ed-block) > * + * {

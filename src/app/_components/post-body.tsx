@@ -8,7 +8,7 @@ export function PostBody({ content }: Props) {
   return (
     <div
       className={`mx-auto ${markdownStyles["markdown"]}`}
-      style={{ marginTop: "var(--space-12)" }}
+      style={{ marginTop: "var(--stack-section)" }}
       dangerouslySetInnerHTML={{ __html: content }}
     />
   );

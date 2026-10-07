@@ -4,6 +4,7 @@ import { ptBR } from "date-fns/locale";
 import type { PostSummary } from "@/interfaces/post";
 import { PROGRAMS, termLabel, typeLabel } from "@/content/taxonomy";
 import { TypeIcon } from "./type-icon";
+import { Ticks } from "../ui/panel";
 
 type Props = {
   post: PostSummary;
@@ -16,7 +17,8 @@ export function shortDate(iso: string) {
   return format(parseISO(iso), "d MMM yyyy", { locale: ptBR }).replace(".", "");
 }
 
-// Card de recurso (handoff, D-25): padding 24, raio 16, faixa de topo de 44, link único no título.
+// Card de recurso (handoff, D-25 + painel v2, D-32): padding 24, faixa de topo de 44, link único no título,
+// marcas de canto do painel que acendem na cor da marca no hover/foco.
 // A ilustração tem célula própria no grid e nunca cobre o texto (corrige o defeito da referência).
 export function ResourceCard({ post, variant = "list", headingLevel = "h3" }: Props) {
   const H = headingLevel;
@@ -24,8 +26,9 @@ export function ResourceCard({ post, variant = "list", headingLevel = "h3" }: Pr
   const featured = variant === "featured";
   return (
     <article
-      className={`group relative flex flex-col overflow-hidden rounded-xl border border-line bg-subtle transition-[box-shadow,transform] duration-150 focus-within:-translate-y-0.5 focus-within:shadow-[var(--shadow-card-raised)] hover:-translate-y-0.5 hover:shadow-[var(--shadow-card-raised)] active:-translate-y-0.5 active:shadow-[var(--shadow-card-raised)] motion-reduce:transform-none ${featured ? "h-[395px]" : ""}`}
+      className={`panel panel-interactive group flex flex-col !p-0 hover:-translate-y-0.5 focus-within:-translate-y-0.5 motion-reduce:transform-none ${featured ? "h-[395px]" : ""}`}
     >
+      <Ticks />
       {/* Faixa de topo: tipo e data */}
       <div className="flex h-11 shrink-0 items-center justify-between border-b border-line px-6 text-[14px]">
         <span className="flex items-center gap-2 text-ink">
@@ -60,7 +63,7 @@ export function ResourceCard({ post, variant = "list", headingLevel = "h3" }: Pr
         </div>
       )}
       {/* Anel de foco visível no card quando o link do título recebe foco */}
-      <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-xl group-has-[a:focus-visible]:outline group-has-[a:focus-visible]:outline-2 group-has-[a:focus-visible]:outline-offset-2 group-has-[a:focus-visible]:outline-[var(--brand-action-blue)]" />
+      <span aria-hidden="true" className="pointer-events-none absolute inset-0 rounded-xs group-has-[a:focus-visible]:outline group-has-[a:focus-visible]:outline-2 group-has-[a:focus-visible]:outline-offset-2 group-has-[a:focus-visible]:outline-[var(--action-text)]" />
     </article>
   );
 }
