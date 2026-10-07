@@ -1,63 +1,37 @@
-# Next.js Framework Starter
+# Next.js Blog Starter on Cloudflare Workers
 
-[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/cloudflare/templates/tree/main/next-starter-template)
+A statically generated blog using Next.js, Markdown and TypeScript, deployed on [Cloudflare Workers](https://developers.cloudflare.com/workers/) with the [OpenNext Cloudflare adapter](https://opennext.js.org/cloudflare).
 
-<!-- dash-content-start -->
+This is the [blog-starter](https://github.com/vercel/next.js/tree/canary/examples/blog-starter) example from Next.js (Tailwind CSS v3, `remark`, `gray-matter`), adapted to run as a Worker.
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). It's deployed on Cloudflare Workers as a [static website](https://developers.cloudflare.com/workers/static-assets/).
-
-This template uses [OpenNext](https://opennext.js.org/) via the [OpenNext Cloudflare adapter](https://opennext.js.org/cloudflare), which works by taking the Next.js build output and transforming it, so that it can run in Cloudflare Workers.
-
-<!-- dash-content-end -->
-
-Outside of this repo, you can start a new project with this template using [C3](https://developers.cloudflare.com/pages/get-started/c3/) (the `create-cloudflare` CLI):
-
-```bash
-npm create cloudflare@latest -- --template=cloudflare/templates/next-starter-template
-```
-
-A live public deployment of this template is available at [https://next-starter-template.templates.workers.dev](https://next-starter-template.templates.workers.dev)
+Posts live in `/_posts` as Markdown files with front matter. Adding a new Markdown file there creates a new blog post. `remark` and `remark-html` convert the Markdown to HTML and `gray-matter` parses the metadata.
 
 ## Getting Started
 
-First, run:
-
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
-```
-
-Then run the development server (using the package manager of your choice):
-
-```bash
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Deploy to Cloudflare Workers
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+| Command           | Action                                                           |
+| :---------------- | :--------------------------------------------------------------- |
+| `npm run build`   | Build the Worker bundle (`.open-next/`) with the prerendered cache |
+| `npm run preview` | Build for Workers and preview locally in the Workers runtime     |
+| `npm run deploy`  | Build for Workers and deploy (uses the `name` in `wrangler.jsonc`) |
 
-## Deploying To Production
+### Why static generation matters here
 
-| Command                           | Action                                       |
-| :-------------------------------- | :------------------------------------------- |
-| `npm run build`                   | Build your production site                   |
-| `npm run preview`                 | Preview your build locally, before deploying |
-| `npm run build && npm run deploy` | Deploy your production site to Cloudflare    |
-| `npm wrangler tail`               | View real-time logs for all Workers          |
+Workers have no filesystem at runtime, so `/_posts` can only be read **at build time**. This is handled by:
 
-## Learn More
+- `generateStaticParams` + `dynamicParams = false` in `src/app/posts/[slug]/page.tsx`: every post is prerendered, unknown slugs return 404.
+- `open-next.config.ts` uses the static-assets incremental cache, so the prerendered pages are served from the Worker's static assets and nothing is re-rendered (or read from `fs`) per request.
 
-To learn more about Next.js, take a look at the following resources:
+Do not call `getAllPosts()` / `getPostBySlug()` from code that runs per request (route handlers, dynamic pages); keep it in statically generated pages.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+`blog-starter` uses [Tailwind CSS v3](https://tailwindcss.com/blog/tailwindcss-v3).

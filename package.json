@@ -1,6 +1,6 @@
 {
 	"name": "next-starter-template",
-	"description": "Build a full-stack web application with Next.js.",
+	"description": "A statically generated blog using Next.js, Markdown and TypeScript, deployed on Cloudflare Workers.",
 	"cloudflare": {
 		"label": "Next.js Framework Starter",
 		"products": [
@@ -13,25 +13,31 @@
 	},
 	"dependencies": {
 		"@opennextjs/cloudflare": "1.14.0",
+		"classnames": "^2.5.1",
+		"date-fns": "^3.6.0",
+		"gray-matter": "^4.0.3",
 		"next": "16.0.7",
 		"react": "19.2.1",
-		"react-dom": "19.2.1"
+		"react-dom": "19.2.1",
+		"remark": "^15.0.1",
+		"remark-html": "^16.0.1"
 	},
 	"devDependencies": {
 		"@eslint/eslintrc": "3",
-		"@tailwindcss/postcss": "4.1.17",
 		"@types/node": "24.10.1",
 		"@types/react": "19.2.7",
 		"@types/react-dom": "19.2.3",
+		"autoprefixer": "^10.4.19",
 		"eslint": "9.39.2",
 		"eslint-config-next": "16.0.7",
-		"tailwindcss": "4.1.17",
+		"postcss": "^8.4.38",
+		"tailwindcss": "^3.4.4",
 		"typescript": "5.9.3",
 		"wrangler": "4.136.1"
 	},
 	"private": true,
 	"scripts": {
-		"build": "next build",
+		"build": "opennextjs-cloudflare build && opennextjs-cloudflare populateCache local",
 		"cf-typegen": "wrangler types --env-interface CloudflareEnv env.d.ts",
 		"check": "npm run build && tsc",
 		"deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
