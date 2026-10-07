@@ -9,26 +9,27 @@ type Props = {
   coverImage: string;
   date: string;
   author: Author;
+  excerpt: string;
+  eyebrow?: string;
 };
 
-export function PostHeader({ title, coverImage, date, author }: Props) {
+// EDITORIAL-LAYOUT-SYSTEM: na superfície "artigo", H1 e lead centralizados; corpo à esquerda.
+export function PostHeader({ title, coverImage, date, author, excerpt, eyebrow }: Props) {
   return (
-    <>
+    <header className="text-center">
+      {eyebrow && <p className="eyebrow eyebrow-indigo mb-6">{eyebrow}</p>}
       <PostTitle>{title}</PostTitle>
-      <div className="hidden md:block md:mb-12">
+      <p className="mx-auto mt-6 max-w-[60ch] text-lg text-ink sm:text-xl" style={{ textWrap: "balance" }}>
+        {excerpt}
+      </p>
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 font-mono text-sm text-muted">
         <Avatar name={author.name} picture={author.picture} />
+        <DateFormatter dateString={date} />
       </div>
-      <div className="mb-8 md:mb-16 sm:mx-0">
+      <hr className="mt-10 border-line" />
+      <div className="mx-auto mt-10 max-w-4xl">
         <CoverImage title={title} src={coverImage} />
       </div>
-      <div className="max-w-2xl mx-auto">
-        <div className="block md:hidden mb-6">
-          <Avatar name={author.name} picture={author.picture} />
-        </div>
-        <div className="mb-6 text-lg">
-          <DateFormatter dateString={date} />
-        </div>
-      </div>
-    </>
+    </header>
   );
 }

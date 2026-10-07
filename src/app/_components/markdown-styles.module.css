@@ -1,18 +1,149 @@
+/* Superfície "artigo": tokens --ed-* (handoff editorial §11, slots da marca).
+   Coluna única de 68ch, alinhada à esquerda, sem justificar (MDX contract §3). */
 .markdown {
-  @apply text-lg leading-relaxed;
+  max-width: var(--ed-measure);
+  font-size: var(--ed-fs-body);
+  line-height: var(--ed-lh-body);
+  color: var(--ed-ink);
+  text-wrap: pretty;
 }
 
-.markdown p,
-.markdown ul,
-.markdown ol,
-.markdown blockquote {
-  @apply my-6;
+.markdown > * + * {
+  margin-top: var(--ed-sp-paragraph);
 }
 
+/* Proximidade: título mais perto do que introduz do que do que veio antes */
 .markdown h2 {
-  @apply text-3xl mt-12 mb-4 leading-snug;
+  margin-top: var(--ed-sp-h-before);
+  margin-bottom: 0;
+  font-family: var(--font-display);
+  font-size: var(--ed-fs-h2);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ed-heading);
+  text-wrap: balance;
+}
+.markdown h3 {
+  margin-top: calc(var(--ed-sp-h-before) * 0.8);
+  margin-bottom: 0;
+  font-family: var(--font-display);
+  font-size: var(--ed-fs-h3);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ed-heading);
+}
+.markdown h2 + * {
+  margin-top: var(--ed-sp-h2-after);
+}
+.markdown h3 + * {
+  margin-top: var(--ed-sp-h3-after);
 }
 
-.markdown h3 {
-  @apply text-2xl mt-8 mb-4 leading-snug;
+.markdown a {
+  color: var(--ed-link);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.markdown a:hover {
+  color: var(--brand-action-blue-strong);
+}
+
+.markdown ul,
+.markdown ol {
+  padding-left: 1.25em;
+}
+.markdown ul {
+  list-style: disc;
+}
+.markdown ol {
+  list-style: decimal;
+}
+.markdown li + li {
+  margin-top: 0.35em;
+}
+
+.markdown strong {
+  font-weight: 600;
+}
+
+.markdown blockquote {
+  border-left: 2px solid var(--ed-rule);
+  padding-left: 1em;
+  color: var(--text-secondary);
+}
+
+.markdown code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--surface-subtle);
+  padding: 0.1em 0.3em;
+  border-radius: var(--radius-sm);
+}
+
+.markdown hr {
+  border: 0;
+  border-top: 1px solid var(--ed-rule);
+  margin-block: calc(var(--ed-lh) * 1.5);
+}
+
+/* Tabela editorial: sem caixa nem bordas verticais; rolagem no próprio bloco */
+.markdown table {
+  display: block;
+  overflow-x: auto;
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
+}
+.markdown th,
+.markdown td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.6em 1em 0.6em 0;
+  border-bottom: 1px solid var(--ed-rule);
+}
+.markdown th {
+  font-weight: 600;
+  border-top: 1px solid var(--ed-rule);
+}
+
+/* Blocos de apoio (BLOCKS contract) */
+.markdown :global(.ed-block) {
+  margin-top: var(--ed-sp-callout-before);
+  margin-bottom: var(--ed-sp-callout-after);
+}
+.markdown :global(.ed-block-title) {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95em;
+}
+.markdown :global(.ed-callout) {
+  background: var(--ed-callout-bg);
+  color: var(--ed-callout-text);
+}
+.markdown :global(.ed-callout) > :global(.ed-block-title) {
+  background: var(--ed-callout-head);
+  color: var(--ed-callout-head-text);
+  padding: 0.5em 1em;
+}
+.markdown :global(.ed-callout) > :not(:global(.ed-block-title)) {
+  padding: 0 1em;
+}
+.markdown :global(.ed-callout) > :last-child {
+  padding-bottom: 0.9em;
+}
+.markdown :global(.ed-callout) > :global(.ed-block-title) + * {
+  padding-top: 0.75em;
+}
+.markdown :global(.ed-summary),
+.markdown :global(.ed-keypoints) {
+  background: var(--surface-subtle);
+  padding: 1em 1.25em;
+  border-radius: var(--radius-md);
+}
+.markdown :global(.ed-definition) {
+  border-left: 3px solid var(--brand-dark-indigo);
+  padding-left: 1em;
+}
+.markdown :global(.ed-block) > * + * {
+  margin-top: 0.5em;
 }

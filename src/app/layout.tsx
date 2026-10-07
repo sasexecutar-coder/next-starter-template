@@ -1,20 +1,22 @@
 import Footer from "@/app/_components/footer";
-import { CMS_NAME, HOME_OG_IMAGE_URL } from "@/lib/constants";
+import Header from "@/app/_components/header";
+import { SITE } from "@/lib/site";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import cn from "classnames";
-import { ThemeSwitcher } from "./_components/theme-switcher";
+import { DM_Mono, DM_Sans, Inter } from "next/font/google";
 
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+// D-03: DM Sans (display), Inter (leitura/UI), DM Mono (sistema/metadados)
+const display = DM_Sans({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--font-display" });
+const body = Inter({ subsets: ["latin"], variable: "--font-body" });
+const mono = DM_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  title: `Next.js Blog Example with ${CMS_NAME}`,
-  description: `A statically generated blog example using Next.js and ${CMS_NAME}.`,
-  openGraph: {
-    images: [HOME_OG_IMAGE_URL],
-  },
+  metadataBase: new URL(SITE.url),
+  title: { default: SITE.name, template: `%s | ${SITE.name}` },
+  description: SITE.description,
+  openGraph: { siteName: SITE.name, locale: "pt_BR", type: "website" },
+  icons: { icon: "/brand/favicon.svg" },
 };
 
 export default function RootLayout({
@@ -23,45 +25,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/favicon/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/favicon/site.webmanifest" />
-        <link
-          rel="mask-icon"
-          href="/favicon/safari-pinned-tab.svg"
-          color="#000000"
-        />
-        <link rel="shortcut icon" href="/favicon/favicon.ico" />
-        <meta name="msapplication-TileColor" content="#000000" />
-        <meta
-          name="msapplication-config"
-          content="/favicon/browserconfig.xml"
-        />
-        <meta name="theme-color" content="#000" />
-        <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
-      </head>
-      <body
-        className={cn(inter.className, "dark:bg-slate-900 dark:text-slate-400")}
-      >
-        <ThemeSwitcher />
-        <div className="min-h-screen">{children}</div>
+    <html lang={SITE.locale} className={`${display.variable} ${body.variable} ${mono.variable}`}>
+      <body className="bg-canvas text-ink">
+        <a href="#conteudo" className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 btn btn-primary">
+          Pular para o conteúdo
+        </a>
+        <Header />
+        <div id="conteudo" className="min-h-screen">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>

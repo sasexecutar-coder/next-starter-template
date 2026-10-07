@@ -1,11 +1,8 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllPosts, getPostBySlug } from "@/lib/api";
-import { CMS_NAME } from "@/lib/constants";
 import markdownToHtml from "@/lib/markdownToHtml";
-import Alert from "@/app/_components/alert";
 import Container from "@/app/_components/container";
-import Header from "@/app/_components/header";
 import { PostBody } from "@/app/_components/post-body";
 import { PostHeader } from "@/app/_components/post-header";
 
@@ -24,16 +21,16 @@ export default async function Post(props: Params) {
   const content = await markdownToHtml(post.content || "");
 
   return (
-    <main>
-      <Alert preview={post.preview} />
+    <main data-surface="article">
       <Container>
-        <Header />
-        <article className="mb-32">
+        <article className="pb-16 pt-12 sm:pt-16">
           <PostHeader
             title={post.title}
             coverImage={post.coverImage}
             date={post.date}
             author={post.author}
+            excerpt={post.excerpt}
+            eyebrow={post.eyebrow}
           />
           <PostBody content={content} />
         </article>
@@ -56,12 +53,12 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
     return notFound();
   }
 
-  const title = `${post.title} | Next.js Blog Example with ${CMS_NAME}`;
-
   return {
-    title,
+    title: post.title,
+    description: post.excerpt,
     openGraph: {
-      title,
+      title: post.title,
+      description: post.excerpt,
       images: [post.ogImage.url],
     },
   };

@@ -1,10 +1,26 @@
-# Next.js Blog Starter on Cloudflare Workers
+# Risco Cognitivo
 
-A statically generated blog using Next.js, Markdown and TypeScript, deployed on [Cloudflare Workers](https://developers.cloudflare.com/workers/) with the [OpenNext Cloudflare adapter](https://opennext.js.org/cloudflare).
+Site e blog do Risco Cognitivo: Next.js (geração estática), Markdown e TypeScript, publicado no [Cloudflare Workers](https://developers.cloudflare.com/workers/) com o [adaptador OpenNext](https://opennext.js.org/cloudflare).
 
-This is the [blog-starter](https://github.com/vercel/next.js/tree/canary/examples/blog-starter) example from Next.js (Tailwind CSS v3, `remark`, `gray-matter`), adapted to run as a Worker.
+Marca, design e regras editoriais vêm do design kit em [`docs/design-kit`](docs/design-kit/README.md). Comece por lá antes de mudar cores, tipografia ou componentes.
 
-Posts live in `/_posts` as Markdown files with front matter. Adding a new Markdown file there creates a new blog post. `remark` and `remark-html` convert the Markdown to HTML and `gray-matter` parses the metadata.
+Os posts ficam em `/_posts`, em Markdown com front matter. O build converte o Markdown com `unified` (`remark-gfm`, `remark-directive`), e `gray-matter` lê os metadados. Os blocos do contrato editorial são escritos como diretivas:
+
+```markdown
+:::summary
+Resumo rápido (obrigatório em textos com mais de 300 palavras).
+:::
+
+:::callout{title="Leitura recomendada"}
+Texto do destaque.
+:::
+
+:::definition{term="Risco cognitivo"}
+Definição curta.
+:::
+```
+
+Conteúdo da Home, de `/mapas` e de `/ferramentas` fica em `src/content/*.ts`. Itens com `status: "GAP"` aparecem como "Em preparação" até terem fonte.
 
 ## Getting Started
 

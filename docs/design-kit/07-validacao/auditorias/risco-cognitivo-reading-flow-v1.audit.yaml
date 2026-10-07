@@ -1,0 +1,59 @@
+reading_flow_audit:
+  version: '1.0'
+  source_file: risco-cognitivo.mdx
+  output_file: risco-cognitivo-reading-flow-v1.mdx
+  status: PASS_STRUCTURE
+  scope: reading-flow and block-architecture only
+  metrics:
+    approx_visible_words: 1695
+    blocks_total: 64
+    sections_h2: 13
+    subsections_h3: 2
+    block_types:
+      lead: 2
+      callout: 3
+      intertitle: 13
+      paragraph: 34
+      prompt: 2
+      bullet-list: 5
+      ordered-list: 1
+      diagram: 1
+      subintertitle: 2
+      reference-list: 1
+    max_paragraph_words: 59
+    paragraphs_over_60_words: 0
+    sentences_over_25_words: 0
+    headings_over_10_words: 0
+    list_items_over_30_words: 0
+    support_budget_violations: 0
+  applied_changes:
+  - Removed duplicate H1 from MDX body; title remains in frontmatter for the page
+    template.
+  - Added deterministic @reading-flow metadata.
+  - Added stable @block metadata to each editorial block.
+  - Kept the existing short-answer panel as the required summary block for long-form
+    content.
+  - Split overlong paragraphs and one long sentence to fit the reading-flow limits.
+  - Shortened the longest H2 to the project heading limit.
+  - Converted the two work examples into H3 subsections to avoid multiple list blocks
+    competing inside one section.
+  - Preserved existing PlainTextPanel and AsciiDiagram content and IDs.
+  - Kept references as a dedicated reference-list block.
+  validation:
+    summary_required_over_300_words: PASS
+    single_h1_source: PASS_FRONTMATTER
+    heading_sequence_h1_h2_h3: PASS
+    paragraph_target_20_60: PASS
+    sentence_warning_over_25: PASS
+    list_item_warning_over_30: PASS
+    max_one_heavy_block_per_section: PASS
+    max_one_light_support_block_per_section_or_subsection: PASS
+    consecutive_callouts: PASS
+    consecutive_heavy_blocks: PASS
+  gaps:
+  - Frontmatter was intentionally not normalized to the current Mainline repository
+    schema.
+  - PlainTextPanel and AsciiDiagram availability in the target repository was not
+    changed by this transformation.
+  - Visual rendering, contrast tokens, and component CSS were not validated in this
+    pass.

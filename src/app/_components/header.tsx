@@ -1,13 +1,26 @@
 import Link from "next/link";
+import Container from "./container";
+import { Wordmark } from "./wordmark";
+import { NAV } from "@/lib/site";
 
 const Header = () => {
   return (
-    <h2 className="text-2xl md:text-4xl font-bold tracking-tight md:tracking-tighter leading-tight mb-20 mt-8 flex items-center">
-      <Link href="/" className="hover:underline">
-        Blog
-      </Link>
-      .
-    </h2>
+    <header className="border-b border-line">
+      <Container className="flex min-h-[64px] flex-wrap items-center justify-between gap-x-8 gap-y-2 py-3">
+        <Wordmark />
+        <nav aria-label="Principal">
+          <ul className="flex flex-wrap gap-x-6 gap-y-1 text-[15px]">
+            {NAV.map((item) => (
+              <li key={item.href}>
+                <Link href={item.href} className="text-muted hover:text-ink">
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </Container>
+    </header>
   );
 };
 

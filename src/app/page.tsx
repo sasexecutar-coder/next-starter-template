@@ -1,30 +1,30 @@
-import Container from "@/app/_components/container";
-import { HeroPost } from "@/app/_components/hero-post";
-import { Intro } from "@/app/_components/intro";
-import { MoreStories } from "@/app/_components/more-stories";
+import { Articles } from "@/app/_components/home/articles";
+import { Faq } from "@/app/_components/home/faq";
+import { FinalCta } from "@/app/_components/home/final-cta";
+import { Hero } from "@/app/_components/home/hero";
+import { HowItWorks } from "@/app/_components/home/how-it-works";
+import { MapPreview } from "@/app/_components/home/map-preview";
+import { Problem } from "@/app/_components/home/problem";
+import { Risks } from "@/app/_components/home/risks";
+import { ToolsPreview } from "@/app/_components/home/tools-preview";
 import { getAllPosts } from "@/lib/api";
 
+// Home (decisão 12): PROBLEMA → ENTENDER → EXPLORAR → APRENDER → APLICAR.
+// Sem logos, depoimentos, pricing ou números de marketing (D-07…D-10).
 export default function Index() {
-  const allPosts = getAllPosts();
-
-  const heroPost = allPosts[0];
-
-  const morePosts = allPosts.slice(1);
+  const posts = getAllPosts();
 
   return (
     <main>
-      <Container>
-        <Intro />
-        <HeroPost
-          title={heroPost.title}
-          coverImage={heroPost.coverImage}
-          date={heroPost.date}
-          author={heroPost.author}
-          slug={heroPost.slug}
-          excerpt={heroPost.excerpt}
-        />
-        {morePosts.length > 0 && <MoreStories posts={morePosts} />}
-      </Container>
+      <Hero />
+      <Problem />
+      <MapPreview />
+      <Risks />
+      <HowItWorks />
+      <Articles posts={posts} />
+      <ToolsPreview />
+      <Faq />
+      <FinalCta />
     </main>
   );
 }

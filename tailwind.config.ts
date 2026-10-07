@@ -1,41 +1,43 @@
 import type { Config } from "tailwindcss";
 
+// Utilitários apontam para os tokens de globals.css; não usar hex soltos em componentes.
 const config: Config = {
-  darkMode: "class",
-  content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/app/**/*.{js,ts,jsx,tsx,mdx}", "./src/content/**/*.ts"],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-      },
       colors: {
-        "accent-1": "#FAFAFA",
-        "accent-2": "#EAEAEA",
-        "accent-7": "#333",
-        success: "#0070f3",
-        cyan: "#79FFE1",
+        canvas: "var(--surface-page)",
+        subtle: "var(--surface-subtle)",
+        raised: "var(--surface-raised)",
+        line: "var(--line-subtle)",
+        ink: "var(--text-primary)",
+        muted: "var(--text-secondary)",
+        action: "var(--brand-action-blue)",
+        "action-strong": "var(--brand-action-blue-strong)",
+        indigo: "var(--brand-dark-indigo)",
+        "light-blue": "var(--brand-light-blue)",
+        risk: "var(--semantic-risk)",
+        solution: "var(--semantic-solution)",
+        attention: "var(--attention-surface)",
+        "attention-ink": "var(--attention-ink)",
       },
-      spacing: {
-        28: "7rem",
+      fontFamily: {
+        display: ["var(--font-display)", "system-ui", "sans-serif"],
+        body: ["var(--font-body)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
       },
-      letterSpacing: {
-        tighter: "-.04em",
-      },
-      fontSize: {
-        "5xl": "2.5rem",
-        "6xl": "2.75rem",
-        "7xl": "4.5rem",
-        "8xl": "6.25rem",
+      borderRadius: {
+        sm: "var(--radius-sm)",
+        md: "var(--radius-md)",
+        lg: "var(--radius-lg)",
       },
       boxShadow: {
-        sm: "0 5px 10px rgba(0, 0, 0, 0.12)",
-        md: "0 8px 30px rgba(0, 0, 0, 0.12)",
+        sm: "var(--shadow-sm)",
+        md: "var(--shadow-md)",
+        lg: "var(--shadow-lg)",
+      },
+      maxWidth: {
+        measure: "68ch",
       },
     },
   },
