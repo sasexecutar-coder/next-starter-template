@@ -19,7 +19,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 | Command           | Action                                                           |
 | :---------------- | :--------------------------------------------------------------- |
-| `npm run build`   | Build the Next.js site                                           |
+| `npm run build`   | Build the Worker bundle (`.open-next/`) with the prerendered cache |
 | `npm run preview` | Build for Workers and preview locally in the Workers runtime     |
 | `npm run deploy`  | Build for Workers and deploy (uses the `name` in `wrangler.jsonc`) |
 
