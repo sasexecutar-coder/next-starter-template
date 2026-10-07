@@ -1,9 +1,10 @@
 import { defineCloudflareConfig } from "@opennextjs/cloudflare";
+import staticAssetsIncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/static-assets-incremental-cache";
 
+// The blog is fully static (Markdown in `_posts` is read at build time only —
+// Workers have no filesystem). Serving the prerendered pages from the static
+// assets binding means no request ever re-renders a page or touches `fs`.
 export default defineCloudflareConfig({
-	// Uncomment to enable R2 cache,
-	// It should be imported as:
-	// `import r2IncrementalCache from "@opennextjs/cloudflare/overrides/incremental-cache/r2-incremental-cache";`
-	// See https://opennext.js.org/cloudflare/caching for more details
-	// incrementalCache: r2IncrementalCache,
+	incrementalCache: staticAssetsIncrementalCache,
+	enableCacheInterception: true,
 });
