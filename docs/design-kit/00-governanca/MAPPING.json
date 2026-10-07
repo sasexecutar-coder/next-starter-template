@@ -668,6 +668,153 @@
       "decisao": "D-13"
     },
     {
+      "registro_id": "RC-KIT-FILE-040",
+      "id": "RC-KIT-FILE-040",
+      "nome_original": "Arquivo_2.zip/HANDOFF.md",
+      "caminho": "04-handoff/brain-home/HANDOFF.md",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-041",
+      "id": "RC-KIT-FILE-041",
+      "nome_original": "Arquivo_2.zip/PROVENIENCIA.md",
+      "caminho": "04-handoff/brain-home/PROVENIENCIA.md",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-042",
+      "id": "RC-KIT-FILE-042",
+      "nome_original": "Arquivo_2.zip/assets/brain-particles-attr.bin",
+      "caminho": "04-handoff/brain-home/assets/brain-particles-attr.bin",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-043",
+      "id": "RC-KIT-FILE-043",
+      "nome_original": "Arquivo_2.zip/assets/brain-particles.bin",
+      "caminho": "04-handoff/brain-home/assets/brain-particles.bin",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-044",
+      "id": "RC-KIT-FILE-044",
+      "nome_original": "Arquivo_2.zip/assets/brain-poster-legacy.webp",
+      "caminho": "04-handoff/brain-home/assets/brain-poster-legacy.webp",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-045",
+      "id": "RC-KIT-FILE-045",
+      "nome_original": "Arquivo_2.zip/assets/brain-poster.png",
+      "caminho": "04-handoff/brain-home/assets/brain-poster.png",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-046",
+      "id": "RC-KIT-FILE-046",
+      "nome_original": "Arquivo_2.zip/assets/brain-surface.glb",
+      "caminho": "04-handoff/brain-home/assets/brain-surface.glb",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-047",
+      "id": "RC-KIT-FILE-047",
+      "nome_original": "Arquivo_2.zip/assets/build-report.json",
+      "caminho": "04-handoff/brain-home/assets/build-report.json",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-048",
+      "id": "RC-KIT-FILE-048",
+      "nome_original": "Arquivo_2.zip/brain-hollow.js",
+      "caminho": "04-handoff/brain-home/brain-hollow.js",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-049",
+      "id": "RC-KIT-FILE-049",
+      "nome_original": "Arquivo_2.zip/Brain Home.html",
+      "caminho": "04-handoff/brain-home/brain-home-v1.html",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-050",
+      "id": "RC-KIT-FILE-050",
+      "nome_original": "Arquivo_2.zip/brain-scene.js",
+      "caminho": "04-handoff/brain-home/brain-scene.js",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-051",
+      "id": "RC-KIT-FILE-051",
+      "nome_original": "Arquivo_2.zip/Brain Viewer.html",
+      "caminho": "04-handoff/brain-home/brain-viewer.html",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-052",
+      "id": "RC-KIT-FILE-052",
+      "nome_original": "Arquivo_2.zip/brain-visual-config.json",
+      "caminho": "04-handoff/brain-home/brain-visual-config.json",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-053",
+      "id": "RC-KIT-FILE-053",
+      "nome_original": "Arquivo_2.zip/build/build-brain-assets.js",
+      "caminho": "04-handoff/brain-home/build/build-brain-assets.js",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-054",
+      "id": "RC-KIT-FILE-054",
+      "nome_original": "Arquivo_2.zip/source/aseg.mgz",
+      "caminho": "04-handoff/brain-home/source/aseg.mgz",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-055",
+      "id": "RC-KIT-FILE-055",
+      "nome_original": "Arquivo_2.zip/source/lh.pial.T1",
+      "caminho": "04-handoff/brain-home/source/lh.pial.T1",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-056",
+      "id": "RC-KIT-FILE-056",
+      "nome_original": "Arquivo_2.zip/source/lh.sulc",
+      "caminho": "04-handoff/brain-home/source/lh.sulc",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-057",
+      "id": "RC-KIT-FILE-057",
+      "nome_original": "Arquivo_2.zip/source/rh.pial.T1",
+      "caminho": "04-handoff/brain-home/source/rh.pial.T1",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-058",
+      "id": "RC-KIT-FILE-058",
+      "nome_original": "Arquivo_2.zip/source/rh.sulc",
+      "caminho": "04-handoff/brain-home/source/rh.sulc",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-059",
+      "id": "RC-KIT-FILE-059",
+      "nome_original": "Arquivo_2.zip/three-d-stage.js",
+      "caminho": "04-handoff/brain-home/three-d-stage.js",
+      "decisao": "D-22"
+    },
+    {
+      "registro_id": "RC-KIT-FILE-060",
+      "id": "RC-KIT-FILE-060",
+      "nome_original": "Arquivo_2.zip/tokens.css",
+      "caminho": "04-handoff/brain-home/tokens.css",
+      "decisao": "D-22"
+    },
+    {
       "registro_id": "RC-KIT-FILE-039",
       "id": "RC-KIT-FILE-039",
       "nome_original": "Arquivo.zip/Brain Home v2 2.html",

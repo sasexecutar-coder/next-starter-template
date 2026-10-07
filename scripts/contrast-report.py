@@ -34,12 +34,20 @@ PAIRS = [
     ("Vermelho risco #FF0000 sobre canvas (borda)", "#ff0000", CANVAS, "non-text"),
     ("Verde solução #00BF63 sobre canvas (borda)", "#00bf63", CANVAS, "non-text"),
     ("Borda #2D5CE6 do botão secundário sobre canvas", "#2d5ce6", CANVAS, "non-text"),
+    # Cérebro 3D (D-23): índigo restrito ao componente
+    ("Texto da pílula selecionada #4F53D9 sobre branco", "#4f53d9", "#ffffff", "text"),
+    ("Texto da pílula #000 sobre branco 94%", "#000000", "#ffffff", "text"),
+    ("Marcador #6E72F0 sobre canvas (não textual)", "#6e72f0", CANVAS, "non-text"),
+    ("Borda do card selecionado #6E72F0 sobre branco", "#6e72f0", "#ffffff", "non-text"),
+    ("Índigo #6E72F0 como texto (proibido; só marcador)", "#6e72f0", "#ffffff", "text-proibido"),
 ]
 
 rows, fails = [], 0
 for name, fg, bg, kind in PAIRS:
-    r = ratio(fg, bg); need = 4.5 if kind == "text" else 3.0
-    if r >= need: status = "PASS"
+    r = ratio(fg, bg); need = 4.5 if kind.startswith("text") else 3.0
+    if kind == "text-proibido":
+        status = "PASS" if r >= need else "não usar como texto (registrado em D-23)"
+    elif r >= need: status = "PASS"
     elif kind == "text": status = "FAIL"; fails += 1
     else: status = "abaixo de 3:1 — só decorativo, nunca único portador de significado"
     rows.append(f"| {name} | `{fg}` | `{bg}` | {r:.2f}:1 | {kind} ≥ {need}:1 | {status} |")
@@ -57,6 +65,7 @@ Pares de texto reprovados: **{fails}**.
 Observações:
 - `#FFE659` não é usado como texto nem como linha isolada sobre o creme (D-01); aparece só como fundo de chip, com texto preto.
 - Vermelho e verde semânticos aparecem como borda na cadeia de relações, sempre com o rótulo em texto preto; a cor nunca é o único portador do significado.
+- `#6E72F0` (índigo do cérebro, D-23) aparece só como marcador, borda e traço; texto no índigo usa `#4F53D9`.
 - O fundo do callout é `#CBD4FF` a 48% composto sobre o canvas (`{CALLOUT}`).
 """
 open("docs/design-kit/07-validacao/contrast-report.md", "w").write(md)

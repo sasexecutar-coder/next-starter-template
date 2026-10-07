@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HOME-BRAIN-001 — revisão do objeto</title>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.184.0/build/three.module.js",
+    "three/addons/controls/OrbitControls.js": "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js",
+    "three/addons/exporters/OBJExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js",
+    "three/addons/exporters/GLTFExporter.js": "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js"
+  },
+  "integrity": {
+    "https://unpkg.com/three@0.184.0/build/three.module.js": "sha384-8FCZ1eVO6it4+pbec2aDtnTrwjWXZLJRC+MAGCIPDgsYnUrl/E0A2YlF8ioMKI/J",
+    "https://unpkg.com/three@0.184.0/build/three.core.js": "sha384-dw2ooPewaEIrAgl6oFDBmmBWCE9oW9LxRGcfwZ0hLvEprzo202wXl7vCYHRlSnOT",
+    "https://unpkg.com/three@0.184.0/examples/jsm/controls/OrbitControls.js": "sha384-4rziNxOBZKQ69i+w+f89KJ55TCYquwchVbByQwmaOeIOXdOU2PLDn3kOfXHwIJC9",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/OBJExporter.js": "sha384-nbwtoZENJD3Vq+ACK0CuGQdPMuDWHkamC2KJD70EV5nfg6jQjfppKOea07YJN+N3",
+    "https://unpkg.com/three@0.184.0/examples/jsm/exporters/GLTFExporter.js": "sha384-VofkvpG6HERhFCYbsUOHeNXBCqID2nfqkQqnVzE1jc/oPcz+qJ13ADdXH08hE+cQ"
+  }
+}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background: var(--color-page); color: var(--color-text); font-family: var(--font-base); -webkit-font-smoothing: antialiased; }
+  a { color: var(--color-text); text-decoration-color: var(--color-brand); text-underline-offset: 3px; }
+  a:hover { color: var(--color-brand-strong); }
+  :focus-visible { outline: 2px solid var(--color-brand-strong); outline-offset: 2px; }
+  three-d-stage:not(:defined) { visibility: hidden; }
+  .shell { max-width: 1440px; margin: 0 auto; padding: var(--space-xl) var(--layout-gutter) var(--space-xxxl); display: grid; gap: var(--space-xl); }
+  header { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: var(--space-lg); }
+  .eyebrow { font-size: var(--type-eyebrow); letter-spacing: .08em; text-transform: uppercase; color: var(--color-support); display: flex; gap: var(--space-sm); align-items: center; }
+  .eyebrow i { width: 8px; height: 8px; background: var(--color-brand); display: block; }
+  h1 { font-size: var(--type-h2); font-weight: 500; letter-spacing: -.02em; margin: var(--space-sm) 0 0; }
+  .lede { color: var(--color-support); font-size: var(--type-body-sm); margin: var(--space-sm) 0 0; max-width: 60ch; text-wrap: pretty; }
+  .layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: var(--space-xl); align-items: start; }
+  @media (max-width: 960px) { .layout { grid-template-columns: minmax(0, 1fr); } }
+  .viewport { position: relative; border: 1px solid var(--color-border); border-radius: var(--radius-lg); overflow: hidden; background: var(--color-page); }
+  .viewport .stage-wrap { position: relative; height: min(72vh, 760px); min-height: 420px; }
+  three-d-stage { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: pan-y; cursor: grab; }
+  three-d-stage.dragging { cursor: grabbing; }
+  .poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; transition: opacity var(--motion-slow); }
+  .poster.hide { opacity: 0; }
+  .corner { position: absolute; width: 14px; height: 14px; border-color: var(--color-brand); border-style: solid; pointer-events: none; }
+  .vbar { position: absolute; left: var(--space-lg); right: var(--space-lg); bottom: var(--space-lg); display: flex; flex-wrap: wrap; gap: var(--space-sm); justify-content: space-between; align-items: center; pointer-events: none; }
+  .vbar > * { pointer-events: auto; }
+  .seg { display: inline-flex; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-pill); padding: 3px; box-shadow: var(--shadow-soft); }
+  .seg button { appearance: none; border: 0; background: transparent; font: 500 13px/1 var(--font-base); color: var(--color-support); min-height: 38px; padding: 0 14px; border-radius: var(--radius-pill); cursor: pointer; transition: background var(--motion-fast), color var(--motion-fast); }
+  .seg button:hover { color: var(--color-text); background: var(--color-canvas); }
+  .seg button[aria-pressed="true"] { background: var(--color-brand-soft); color: var(--color-text); box-shadow: inset 0 0 0 1px var(--color-brand); }
+  .tools { display: inline-flex; gap: 6px; }
+  .ibtn { appearance: none; width: 44px; height: 44px; border-radius: var(--radius-pill); border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); display: grid; place-items: center; cursor: pointer; box-shadow: var(--shadow-soft); transition: border-color var(--motion-fast), background var(--motion-fast); }
+  .ibtn:hover { border-color: var(--color-border-strong); background: var(--color-surface-soft); }
+  .ibtn:active { background: var(--color-brand-soft); }
+  .ibtn svg { width: 18px; height: 18px; }
+  .status { display: flex; flex-wrap: wrap; gap: var(--space-xs) var(--space-xl); padding: var(--space-md) var(--space-lg); border-top: 1px solid var(--color-border); font-size: var(--type-caption); color: var(--color-support); font-variant-numeric: tabular-nums; }
+  .status b { color: var(--color-text); font-weight: 500; }
+  .panel { border: 1px solid var(--color-border); border-radius: var(--radius-lg); background: var(--color-surface); max-height: calc(min(72vh, 760px) + 48px); overflow: auto; }
+  @media (max-width: 960px) { .panel { max-height: none; } }
+  .panel section { padding: var(--space-lg) var(--space-lg) var(--space-md); border-bottom: 1px solid var(--color-border); display: grid; gap: var(--space-md); }
+  .panel section:last-child { border-bottom: 0; }
+  .panel h2 { margin: 0; font-size: var(--type-eyebrow); letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--color-support); display: flex; align-items: center; gap: var(--space-sm); }
+  .panel h2::before { content: ""; width: 6px; height: 6px; background: var(--color-brand); }
+  .row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 4px var(--space-md); align-items: center; font-size: 14px; }
+  .row label { color: var(--color-text); }
+  .row output { font-size: var(--type-caption); color: var(--color-support); font-variant-numeric: tabular-nums; }
+  .row input[type=range] { grid-column: 1 / -1; width: 100%; accent-color: var(--color-brand); height: 24px; margin: 0; }
+  .row input[type=color] { width: 44px; height: 30px; padding: 0; border: 1px solid var(--color-border); border-radius: 8px; background: none; cursor: pointer; }
+  .row input[type=checkbox] { width: 20px; height: 20px; accent-color: var(--color-brand); margin: 0; }
+  .views { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+  .btn { appearance: none; min-height: 40px; padding: 0 12px; border-radius: var(--radius-sm); border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); font: 500 13px/1.2 var(--font-base); cursor: pointer; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; text-decoration: none; transition: border-color var(--motion-fast), background var(--motion-fast); }
+  .btn:hover { border-color: var(--color-border-strong); background: var(--color-surface-soft); color: var(--color-text); }
+  .btn:active, .btn[aria-pressed="true"] { background: var(--color-brand-soft); border-color: var(--color-brand); }
+  .btn.primary { border-color: var(--color-brand); }
+  .grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .note { font-size: var(--type-caption); color: var(--color-support); line-height: 1.5; margin: 0; text-wrap: pretty; }
+  .report { font: 12px/1.55 ui-monospace, SFMono-Regular, Menlo, monospace; background: var(--color-canvas); border-radius: var(--radius-sm); padding: var(--space-md); white-space: pre-wrap; color: var(--color-text); margin: 0; max-height: 260px; overflow: auto; }
+  .report:empty { display: none; }
+  .ok { color: #1f7a3a; } .bad { color: #a12a12; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .err { position: absolute; inset: auto var(--space-lg) 80px; background: var(--color-warning); border: 1px solid var(--color-border-strong); border-radius: var(--radius-sm); padding: var(--space-md); font-size: 14px; display: none; }
+</style>
+</head>
+<body>
+<div class="shell">
+  <header>
+    <div>
+      <div class="eyebrow"><i></i>HOME-BRAIN-001 · revisão do objeto 3D</div>
+      <h1>Cérebro em camadas</h1>
+      <p class="lede">Superfície pial FreeSurfer (OpenNeuro ds006128, sub-01) com cerebelo e tronco extraídos do aseg da mesma aquisição, partículas na mesma transformação e graticulado discreto.</p>
+    </div>
+    <div class="seg" role="group" aria-label="Camadas" id="modeSeg">
+      <button type="button" data-mode="surface">Superfície</button>
+      <button type="button" data-mode="points">Pontos</button>
+      <button type="button" data-mode="combined">Combinada</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <div>
+      <div class="viewport">
+        <div class="stage-wrap" id="stageWrap">
+          <img class="poster" id="poster" src="assets/brain-poster.png" onerror="this.src='assets/brain-poster-legacy.webp'" alt="Cérebro HOME-BRAIN-001 em vista 3/4: superfície cinza-clara com sulcos e pontos laranja">
+          <three-d-stage name="brain-surface-scene" background="#ffffff" tabindex="0" role="img" aria-label="Cérebro 3D interativo. Arraste para girar; setas giram 22,5°; espaço pausa; R reinicia." id="stage"></three-d-stage>
+          <span class="corner" style="left:16px;top:16px;border-width:2px 0 0 2px"></span>
+          <span class="corner" style="right:16px;top:16px;border-width:2px 2px 0 0"></span>
+          <div class="err" id="err" role="alert"></div>
+          <div class="vbar">
+            <div class="tools">
+              <button class="ibtn" type="button" id="bLeft" aria-label="Girar à esquerda"><svg viewBox="0 0 256 256" fill="currentColor"><path d="M165.66 202.34a8 8 0 0 1-11.32 11.32l-80-80a8 8 0 0 1 0-11.32l80-80a8 8 0 0 1 11.32 11.32L91.31 128Z"/></svg></button>
+              <button class="ibtn" type="button" id="bPause" aria-label="Pausar rotação"><svg viewBox="0 0 256 256" fill="currentColor" id="pauseIcon"><path d="M200 32h-40a16 16 0 0 0-16 16v160a16 16 0 0 0 16 16h40a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16Zm0 176h-40V48h40ZM96 32H56a16 16 0 0 0-16 16v160a16 16 0 0 0 16 16h40a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16Zm0 176H56V48h40Z"/></svg></button>
+              <button class="ibtn" type="button" id="bRight" aria-label="Girar à direita"><svg viewBox="0 0 256 256" fill="currentColor"><path d="m181.66 133.66-80 80a8 8 0 0 1-11.32-11.32L164.69 128 90.34 53.66a8 8 0 0 1 11.32-11.32l80 80a8 8 0 0 1 0 11.32Z"/></svg></button>
+              <button class="ibtn" type="button" id="bReset" aria-label="Restaurar vista inicial"><svg viewBox="0 0 256 256" fill="currentColor"><path d="M224 128a96 96 0 0 1-94.71 96H128a95.38 95.38 0 0 1-65.9-26.2 8 8 0 0 1 11-11.63A80 80 0 1 0 71.43 71.39a3.07 3.07 0 0 1-.26.25L44.59 96H72a8 8 0 0 1 0 16H24a8 8 0 0 1-8-8V56a8 8 0 0 1 16 0v29.8L60.25 60A96 96 0 0 1 224 128Z"/></svg></button>
+            </div>
+            <div class="tools">
+              <button class="ibtn" type="button" id="bOut" aria-label="Afastar câmera"><svg viewBox="0 0 256 256" fill="currentColor"><path d="M224 128a8 8 0 0 1-8 8H40a8 8 0 0 1 0-16h176a8 8 0 0 1 8 8Z"/></svg></button>
+              <button class="ibtn" type="button" id="bIn" aria-label="Aproximar câmera"><svg viewBox="0 0 256 256" fill="currentColor"><path d="M224 128a8 8 0 0 1-8 8h-80v80a8 8 0 0 1-16 0v-80H40a8 8 0 0 1 0-16h80V40a8 8 0 0 1 16 0v80h80a8 8 0 0 1 8 8Z"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="status" aria-live="polite">
+          <span>Triângulos <b id="sTri">—</b></span>
+          <span>Partículas <b id="sPts">—</b></span>
+          <span>GLB <b id="sBytes">—</b></span>
+          <span>FPS observado <b id="sFps">—</b></span>
+          <span>Movimento <b id="sMotion">—</b></span>
+        </div>
+      </div>
+    </div>
+
+    <aside class="panel" id="panel" aria-label="Controles de revisão"></aside>
+  </div>
+</div>
+
+<script src="three-d-stage.js"></script>
+<script type="module">
+import * as THREE from 'three';
+import { DEFAULT_CONFIG, VIEWS, loadBrainAssets, createBrain, inspectGlb } from './brain-scene.js';
+
+const KEY = 'home-brain-001-config';
+const clone = (o) => JSON.parse(JSON.stringify(o));
+const merge = (a, b) => { for (const k in b) a[k] = b[k] && typeof b[k] === 'object' && !Array.isArray(b[k]) ? merge(a[k] ?? {}, b[k]) : b[k]; return a; };
+let cfg = clone(DEFAULT_CONFIG);
+try { const saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved?.version === DEFAULT_CONFIG.version) cfg = merge(cfg, saved); } catch {}
+const prefersReduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (prefersReduced) { cfg.motion.reducedMotion = true; cfg.motion.paused = true; }
+
+const $ = (id) => document.getElementById(id);
+const stage = $('stage'), panel = $('panel');
+
+// ---------- panel schema ----------
+const S = [
+  ['Superfície', [
+    ['range', 'surface.opacity', 'Opacidade', 0.2, 1, 0.01],
+    ['range', 'surface.roughness', 'Rugosidade', 0.3, 1, 0.01],
+    ['range', 'surface.sulcStrength', 'Leitura dos sulcos', 0, 1.6, 0.01],
+    ['range', 'surface.subcortical', 'Tom cerebelo/tronco', 0, 1, 0.01],
+    ['color', 'surface.crown', 'Giros'],
+    ['color', 'surface.fundus', 'Sulcos'],
+    ['check', 'hideBack', 'Ocultar verso no modo pontos'],
+  ]],
+  ['Partículas', [
+    ['range', 'particles.density', 'Densidade', 0.05, 1, 0.01, (v) => Math.round(v * 42000).toLocaleString('pt-BR')],
+    ['range', 'particles.sizePx', 'Raio (px)', 0.5, 4, 0.05],
+    ['range', 'particles.opacity', 'Opacidade', 0.1, 1, 0.01],
+    ['range', 'particles.crownMix', 'Laranja de marca nos giros', 0, 1, 0.01],
+    ['range', 'particles.backFade', 'Esmaecer pontos do fundo', 0, 1, 0.01],
+    ['color', 'particles.color', 'Cor dos pontos'],
+    ['color', 'particles.crownColor', 'Cor nos giros'],
+  ]],
+  ['Linhas', [
+    ['check', 'lines.visible', 'Graticulado visível'],
+    ['range', 'lines.intensity', 'Intensidade', 0, 1, 0.01],
+    ['range', 'lines.spacingUnits', 'Espaçamento (un.)', 0.08, 0.6, 0.01],
+    ['range', 'lines.meridians', 'Meridianos', 6, 48, 1],
+    ['range', 'lines.widthPx', 'Espessura (px)', 0.5, 2.5, 0.05],
+    ['color', 'lines.color', 'Cor'],
+  ]],
+  ['Luz', [
+    ['range', 'light.ambient', 'Ambiente', 0, 3, 0.01],
+    ['range', 'light.key', 'Principal', 0, 4, 0.01],
+    ['range', 'light.fill', 'Preenchimento', 0, 2, 0.01],
+    ['range', 'light.keyAzimuthDeg', 'Azimute principal (°)', -180, 180, 1],
+    ['range', 'light.keyElevationDeg', 'Elevação principal (°)', -10, 85, 1],
+    ['range', 'light.depthFog', 'Profundidade (névoa)', 0, 1, 0.01],
+    ['color', 'background', 'Fundo'],
+  ]],
+  ['Câmera', [
+    ['views'],
+    ['range', 'camera.distanceUnits', 'Distância (un.)', 4.6, 10, 0.05],
+    ['range', 'camera.fovDeg', 'Campo de visão (°)', 20, 50, 1],
+  ]],
+  ['Movimento', [
+    ['range', 'motion.speedRadPerSec', 'Velocidade (rad/s)', 0, 0.6, 0.01],
+    ['check', 'motion.paused', 'Pausado'],
+    ['check', 'motion.reducedMotion', 'Movimento reduzido'],
+  ]],
+];
+const get = (p) => p.split('.').reduce((o, k) => o[k], cfg);
+const set = (p, v) => { const ks = p.split('.'), last = ks.pop(); ks.reduce((o, k) => o[k], cfg)[last] = v; };
+const VIEW_LABELS = { 'three-quarter': '3/4', 'lateral-right': 'Lateral D', 'lateral-left': 'Lateral E', frontal: 'Frontal', posterior: 'Posterior', superior: 'Superior' };
+const inputs = {};
+let uid = 0;
+for (const [title, rows] of S) {
+  const sec = document.createElement('section'); sec.innerHTML = `<h2>${title}</h2>`;
+  for (const [kind, path, label, min, max, step, fmt] of rows) {
+    if (kind === 'views') {
+      const w = document.createElement('div'); w.className = 'views'; w.setAttribute('role', 'group'); w.setAttribute('aria-label', 'Vistas');
+      for (const v in VIEWS) { const b = document.createElement('button'); b.type = 'button'; b.className = 'btn'; b.dataset.view = v; b.textContent = VIEW_LABELS[v]; b.onclick = () => goView(v); w.append(b); }
+      sec.append(w); continue;
+    }
+    const id = 'c' + uid++, row = document.createElement('div'); row.className = 'row';
+    if (kind === 'range') {
+      row.innerHTML = `<label for="${id}">${label}</label><output for="${id}"></output><input id="${id}" type="range" min="${min}" max="${max}" step="${step}">`;
+      const inp = row.querySelector('input'), out = row.querySelector('output');
+      const show = () => { out.textContent = fmt ? fmt(+inp.value) : (+inp.value).toFixed(step >= 1 ? 0 : 2); };
+      inp.oninput = () => { set(path, +inp.value); show(); changed(path); };
+      inputs[path] = { sync: () => { inp.value = get(path); show(); } };
+    } else if (kind === 'color') {
+      row.innerHTML = `<label for="${id}">${label}</label><input id="${id}" type="color">`;
+      const inp = row.querySelector('input'); inp.oninput = () => { set(path, inp.value); changed(path); };
+      inputs[path] = { sync: () => { inp.value = get(path); } };
+    } else {
+      row.innerHTML = `<label for="${id}">${label}</label><input id="${id}" type="checkbox">`;
+      const inp = row.querySelector('input'); inp.onchange = () => { set(path, inp.checked); changed(path); };
+      inputs[path] = { sync: () => { inp.checked = get(path); } };
+    }
+    sec.append(row);
+  }
+  panel.append(sec);
+}
+const ex = document.createElement('section');
+ex.innerHTML = `<h2>Entrega</h2>
+  <div class="grid2">
+    <a class="btn primary" href="assets/brain-surface.glb" download="brain-surface.glb">brain-surface.glb</a>
+    <button class="btn primary" type="button" id="bVerify">Reabrir e verificar GLB</button>
+    <button class="btn" type="button" id="bCfg">Config JSON</button>
+    <button class="btn" type="button" id="bPoster">Pôster PNG</button>
+    <a class="btn" href="assets/brain-particles.bin" download>Partículas .bin</a>
+    <a class="btn" href="assets/brain-particles-attr.bin" download>Atributos .bin</a>
+    <button class="btn" type="button" id="bScene">GLB da cena</button>
+    <button class="btn" type="button" id="bDefaults">Restaurar padrões</button>
+  </div>
+  <p class="note">brain-surface.glb é o arquivo canônico do gerador. “GLB da cena” exporta o que está montado agora pelo GLTFExporter; a verificação reabre os dois a partir dos bytes. Procedência e shaders: <a href="PROVENIENCIA.md">PROVENIENCIA.md</a>, <a href="HANDOFF.md">HANDOFF.md</a>.</p>
+  <pre class="report" id="report"></pre>`;
+panel.append(ex);
+
+// ---------- scene ----------
+let brain, pivot, lights, fog, glbBytes = 0;
+const rot = { x: 0, y: 0, tx: 0, ty: 0, anim: null };
+function changed(path) {
+  localStorage.setItem(KEY, JSON.stringify(cfg));
+  if (path === 'motion.reducedMotion' && cfg.motion.reducedMotion) { cfg.motion.paused = true; inputs['motion.paused'].sync(); }
+  applyAll();
+}
+function syncUI() {
+  for (const k in inputs) inputs[k].sync();
+  document.querySelectorAll('#modeSeg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.mode === cfg.mode)));
+  document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === cfg.camera.view)));
+  $('bPause').setAttribute('aria-label', cfg.motion.paused ? 'Retomar rotação' : 'Pausar rotação');
+  $('pauseIcon').innerHTML = cfg.motion.paused
+    ? '<path d="M232.4 114.49 88.32 26.35a16 16 0 0 0-16.2-.3A15.86 15.86 0 0 0 64 39.87v176.26A15.94 15.94 0 0 0 80 232a16.07 16.07 0 0 0 8.36-2.35l144.04-88.14a15.81 15.81 0 0 0 0-27ZM80 215.94V40l143.83 88Z"/>'
+    : '<path d="M200 32h-40a16 16 0 0 0-16 16v160a16 16 0 0 0 16 16h40a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16Zm0 176h-40V48h40ZM96 32H56a16 16 0 0 0-16 16v160a16 16 0 0 0 16 16h40a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16Zm0 176H56V48h40Z"/>';
+}
+function frameCamera() {
+  const cam = stage._camera, w = stage.clientWidth || 1, h = stage.clientHeight || 1;
+  cam.fov = cfg.camera.fovDeg; cam.aspect = w / h;
+  const fill = w < 620 ? 0.86 : 0.8, t = Math.tan(THREE.MathUtils.degToRad(cam.fov / 2));
+  const fitW = 2.05 / (t * cam.aspect * fill), fitH = 1.55 / (t * 0.86);
+  const d = Math.max(cfg.camera.distanceUnits, fitW, fitH);
+  cam.position.set(0, 0.12, d); cam.lookAt(0, 0, 0); cam.near = 0.1; cam.far = 40; cam.updateProjectionMatrix();
+  stage._controls.target.set(0, 0, 0);
+  if (fog) { fog.near = d - 1.2; fog.far = d + 1.9 + (1 - cfg.light.depthFog) * 40; }
+  return d;
+}
+function applyAll() {
+  if (!brain) { syncUI(); return; }
+  stage.style.setProperty('--stage-bg', cfg.background);
+  stage._scene.fog = cfg.light.depthFog > 0 ? fog : null; fog.color.set(cfg.background);
+  const d = frameCamera();
+  brain.apply({ ...cfg, camera: { ...cfg.camera, distanceUnits: d } }, { dpr: stage._renderer.getPixelRatio() });
+  const L = cfg.light, az = THREE.MathUtils.degToRad(L.keyAzimuthDeg), el = THREE.MathUtils.degToRad(L.keyElevationDeg);
+  lights.hemi.intensity = L.ambient; lights.key.intensity = L.key; lights.fill.intensity = L.fill;
+  lights.key.position.set(Math.sin(az) * Math.cos(el) * 8, Math.sin(el) * 8, Math.cos(az) * Math.cos(el) * 8);
+  syncUI();
+}
+function goView(v, instant) {
+  cfg.camera.view = v; localStorage.setItem(KEY, JSON.stringify(cfg));
+  const [x, y] = VIEWS[v];
+  const dy = ((y - rot.y + Math.PI) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI) - Math.PI;
+  if (instant || cfg.motion.reducedMotion) { rot.x = x; rot.y = rot.y + dy; rot.anim = null; }
+  else rot.anim = { fx: rot.x, fy: rot.y, x, y: rot.y + dy, t: 0 };
+  syncUI();
+}
+function nudge(dir) { cfg.motion.paused = true; rot.anim = null; rot.y += dir * Math.PI / 8; changed('motion.paused'); }
+function reset() { rot.anim = null; cfg.camera.view = DEFAULT_CONFIG.camera.view; cfg.camera.distanceUnits = DEFAULT_CONFIG.camera.distanceUnits; goView(cfg.camera.view, true); changed('camera'); }
+function togglePause() { cfg.motion.paused = !cfg.motion.paused; changed('motion.paused'); }
+
+document.querySelectorAll('#modeSeg button').forEach((b) => b.onclick = () => { cfg.mode = b.dataset.mode; changed('mode'); });
+$('bLeft').onclick = () => nudge(-1); $('bRight').onclick = () => nudge(1);
+$('bPause').onclick = togglePause; $('bReset').onclick = reset;
+$('bIn').onclick = () => { cfg.camera.distanceUnits = Math.max(4.6, cfg.camera.distanceUnits - 0.4); changed('camera'); };
+$('bOut').onclick = () => { cfg.camera.distanceUnits = Math.min(10, cfg.camera.distanceUnits + 0.4); changed('camera'); };
+document.addEventListener('keydown', (e) => {
+  if (e.target.closest('input, textarea, select')) return;
+  const inStage = e.target === stage;
+  if (e.key === '1' || e.key === '2' || e.key === '3') { cfg.mode = ['surface', 'points', 'combined'][+e.key - 1]; changed('mode'); }
+  else if (inStage && e.key === 'ArrowLeft') { e.preventDefault(); nudge(-1); }
+  else if (inStage && e.key === 'ArrowRight') { e.preventDefault(); nudge(1); }
+  else if (inStage && (e.key === ' ' || e.key === 'Enter')) { e.preventDefault(); togglePause(); }
+  else if (inStage && (e.key === 'r' || e.key === 'R')) reset();
+});
+// Drag: horizontal → yaw; vertical → pitch (mouse/pen only). touch-action: pan-y keeps vertical page scroll on mobile.
+let drag = null;
+stage.addEventListener('pointerdown', (e) => {
+  if (!e.isPrimary || e.button !== 0) return;
+  drag = { id: e.pointerId, x: e.clientX, y: e.clientY, type: e.pointerType }; rot.anim = null;
+  stage.setPointerCapture(e.pointerId); stage.classList.add('dragging');
+  if (!cfg.motion.paused) { cfg.motion.paused = true; changed('motion.paused'); }
+});
+stage.addEventListener('pointermove', (e) => {
+  if (!drag || drag.id !== e.pointerId) return;
+  rot.y += (e.clientX - drag.x) * 0.008;
+  if (drag.type !== 'touch') rot.x = THREE.MathUtils.clamp(rot.x + (e.clientY - drag.y) * 0.004, -0.6, 1.5);
+  drag.x = e.clientX; drag.y = e.clientY;
+});
+const end = () => { drag = null; stage.classList.remove('dragging'); };
+['pointerup', 'pointercancel', 'lostpointercapture'].forEach((t) => stage.addEventListener(t, end));
+
+// Exports
+const download = (blob, name) => { const u = URL.createObjectURL(blob), a = document.createElement('a'); a.href = u; a.download = name; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 4000); };
+$('bCfg').onclick = () => download(new Blob([JSON.stringify({ id: 'HOME-BRAIN-001', units: { distance: 'scene units (1 un. ≈ 45.57 mm)', angles: 'deg', speed: 'rad/s', size: 'CSS px at default distance' }, ...cfg }, null, 2)], { type: 'application/json' }), 'brain-visual-config.json');
+$('bPoster').onclick = () => stage._renderer.domElement.toBlob((b) => download(b, 'brain-poster.png'), 'image/png');
+$('bScene').onclick = () => stage._runExport('glb');
+$('bDefaults').onclick = () => { cfg = clone(DEFAULT_CONFIG); localStorage.setItem(KEY, JSON.stringify(cfg)); goView(cfg.camera.view, true); applyAll(); };
+const fmtReport = (title, r) => `${title}\n${r.bytes.toLocaleString('pt-BR')} bytes · ${r.generator || '—'}\n` +
+  r.meshes.map((m) => m.primitives.map((p) => `  ${m.name.padEnd(13)} ${p.mode}  v ${p.vertices.toLocaleString('pt-BR')}  tri ${p.triangles.toLocaleString('pt-BR')}  [${p.attributes.join(', ')}] ${p.material ?? ''}`).join('\n')).join('\n') +
+  `\n  total: ${r.totals.meshes} malhas · ${r.totals.triangles.toLocaleString('pt-BR')} triângulos · ${r.allTriangles ? '✓ todas TRIANGLES' : '✗ há primitivas não triangulares'}`;
+$('bVerify').onclick = async () => {
+  const out = $('report'); out.textContent = 'Verificando…';
+  try {
+    const canon = inspectGlb(await (await fetch('assets/brain-surface.glb', { cache: 'no-store' })).arrayBuffer());
+    const { GLTFExporter } = await import('three/addons/exporters/GLTFExporter.js');
+    const sceneBuf = await new GLTFExporter().parseAsync(stage._object, { binary: true });
+    const live = inspectGlb(sceneBuf);
+    out.textContent = fmtReport('assets/brain-surface.glb (canônico)', canon) + '\n\n' + fmtReport('GLB exportado da cena (GLTFExporter)', live);
+    window.__glbReport = { canon, live };
+  } catch (err) { out.textContent = 'Falha: ' + err.message; }
+};
+
+// FPS + rotation loop
+let last = 0, frames = 0, fpsT = 0;
+function tick(t) {
+  requestAnimationFrame(tick);
+  const dt = last ? Math.min((t - last) / 1000, 0.05) : 0; last = t;
+  if (rot.anim) {
+    rot.anim.t = Math.min(1, rot.anim.t + dt / 0.6); const e = 1 - Math.pow(1 - rot.anim.t, 3);
+    rot.x = rot.anim.fx + (rot.anim.x - rot.anim.fx) * e; rot.y = rot.anim.fy + (rot.anim.y - rot.anim.fy) * e;
+    if (rot.anim.t >= 1) rot.anim = null;
+  } else if (!cfg.motion.paused && !cfg.motion.reducedMotion && !drag && !document.hidden) rot.y += dt * cfg.motion.speedRadPerSec;
+  if (pivot) { pivot.rotation.set(rot.x, rot.y, 0); }
+  frames++; if (t - fpsT > 1000) { $('sFps').textContent = Math.round(frames * 1000 / (t - fpsT)); frames = 0; fpsT = t; }
+  $('sMotion').textContent = drag ? 'arrastando' : rot.anim ? 'transição' : cfg.motion.paused || cfg.motion.reducedMotion ? 'parado' : 'girando';
+  stage.dataset.angle = rot.y.toFixed(4);
+}
+
+syncUI();
+try {
+  const { THREE: T } = await stage.ready;
+  const assets = await loadBrainAssets('assets/');
+  glbBytes = assets.glb.byteLength;
+  brain = createBrain(assets);
+  stage.shadowRoot.querySelector('.note').style.display = 'none';
+  stage.shadowRoot.querySelector('.toolbar').style.display = 'none';
+  stage._controls.disconnect(); stage._renderer.domElement.style.touchAction = 'pan-y';
+  stage._renderer.outputColorSpace = THREE.SRGBColorSpace;
+  stage._scene.children.filter((o) => o.isLight).forEach((l) => stage._scene.remove(l));
+  lights = { hemi: new THREE.HemisphereLight(0xffffff, 0xe9e7e3, 1), key: new THREE.DirectionalLight(0xffffff, 1.7), fill: new THREE.DirectionalLight(0xfff4ea, 0.5) };
+  lights.fill.position.set(-6, -2, -5); stage._scene.add(lights.hemi, lights.key, lights.fill);
+  fog = new THREE.Fog(0xffffff, 5, 9);
+  stage.setObject(brain.surface);           // stage owns export of the named surface group
+  stage._ground.visible = false;
+  brain.surface.traverse((o) => { o.castShadow = false; o.receiveShadow = false; });
+  stage._renderer.shadowMap.enabled = false;
+  pivot = brain.root; stage._scene.add(pivot); pivot.add(brain.surface);
+  goView(cfg.camera.view, true);
+  new ResizeObserver(() => applyAll()).observe(stage);
+  applyAll();
+  const st = brain.stats();
+  $('sTri').textContent = st.triangles.toLocaleString('pt-BR'); $('sPts').textContent = st.particles.toLocaleString('pt-BR');
+  $('sBytes').textContent = (glbBytes / 1048576).toFixed(1) + ' MB';
+  setTimeout(() => $('poster').classList.add('hide'), 120);
+  requestAnimationFrame(tick);
+} catch (err) {
+  $('err').style.display = 'block'; $('err').textContent = 'WebGL ou recursos indisponíveis — exibindo o pôster. ' + (err?.message || err);
+}
+</script>
+</body>
+</html>

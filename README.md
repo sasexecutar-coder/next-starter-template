@@ -20,6 +20,8 @@ Definição curta.
 :::
 ```
 
+O cérebro 3D da Home e de `/mapas` (HOME-BRAIN-001) usa os assets de `docs/design-kit/04-handoff/brain-home/assets/`. `npm run build`, `dev` e `preview` copiam esses arquivos para `public/models/home-brain/` (`npm run sync:brain`) depois de conferir o SHA-256; essa pasta não é versionada.
+
 Conteúdo da Home, de `/mapas` e de `/ferramentas` fica em `src/content/*.ts`. Itens com `status: "GAP"` aparecem como "Em preparação" até terem fonte.
 
 ## Getting Started
