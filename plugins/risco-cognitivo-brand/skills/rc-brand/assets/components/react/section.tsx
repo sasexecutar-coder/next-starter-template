@@ -1,4 +1,4 @@
-import Container from "../container";
+import Container from "./container";
 import { Eyebrow } from "./eyebrow";
 
 // Bloco de página (D-34). Regra: 96 entre blocos (64 no mobile), aplicada como metade em cima e

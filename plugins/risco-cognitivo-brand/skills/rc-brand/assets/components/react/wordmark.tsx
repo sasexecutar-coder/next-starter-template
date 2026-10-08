@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SITE } from "@/lib/site";
+const SITE = { name: "Risco Cognitivo" };
 
 // D-04: wordmark tipográfico oficial até existir símbolo aprovado (symbol: GAP).
 export function Wordmark({ className = "" }: { className?: string }) {

@@ -12,6 +12,7 @@ Etapas (falha em qualquer uma → exit 1, relatório em dist/build-report.json):
   5 struct   frontmatter de skills/agentes/comandos, comandos ↔ commands.md, placeholders {{…}}, JSONs válidos
   6 mcp      initialize, tools/list e 5 tools/call via stdio
   7 hooks    payloads reais nos 3 hooks
+  7b react   tsc --strict nos componentes React portáteis (sem imports do site)
   8 package  dist/risco-cognitivo-brand.plugin (zip) e dist/rc-brand.skill (zip)
 """
 import argparse
@@ -170,6 +171,21 @@ def main():
         step("hooks", ok, "6 payloads")
     else:
         step("hooks", True, "node ausente — pulado")
+
+    # 7b react — componentes portáteis não podem depender de caminhos do site
+    react = SK / "rc-brand/assets/components/react"
+    leaks = [f.name for f in react.glob("*.tsx") if re.search(r'from\s+["\'](\.\./|@/)', f.read_text(encoding="utf-8"))]
+    tsc = REPO / "node_modules/.bin/tsc"
+    if tsc.exists() and not leaks:
+        cfg = DIST / "tsconfig.react.json"
+        cfg.write_text(json.dumps({"compilerOptions": {"strict": True, "noEmit": True, "jsx": "react-jsx", "module": "esnext",
+            "moduleResolution": "bundler", "skipLibCheck": True, "lib": ["dom", "esnext"],
+            "typeRoots": [str(REPO / "node_modules/@types")], "types": ["react"]}, "include": [str(react / "*.tsx")]}))
+        rc, o = sh([str(tsc), "-p", str(cfg)])
+        cfg.unlink()
+        step("react", rc == 0, f"{len(list(react.glob('*.tsx')))} componentes" + (f" · {o[:300]}" if rc else ""))
+    else:
+        step("react", not leaks, f"imports do site: {leaks}" if leaks else "tsc ausente — só checagem de imports")
 
     # 8 package
     def zipdir(src, dest, prefix):
