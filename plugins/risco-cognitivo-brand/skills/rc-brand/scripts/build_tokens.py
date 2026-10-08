@@ -137,6 +137,15 @@ def main():
         dtcg["breakpoints"][mq] = {k[2:]: {"$value": v} for k, v in d.items()}
     (OUT / "tokens.json").write_text(json.dumps(dtcg, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
+    # fonts.css — fora do Next (next/font) as variáveis --font-* não existem: este arquivo as define
+    (OUT / "fonts.css").write_text(
+        "/* Risco Cognitivo — fontes (gerado). Carregue antes do tailwind.preset/components. No Next, prefira next/font\n"
+        "   com as mesmas variáveis. */\n"
+        "@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:opsz,wght@9..40,400..800"
+        "&family=Inter:wght@400;500;600;700&display=swap');\n"
+        ":root {\n  --font-display: \"DM Sans\", system-ui, sans-serif;\n  --font-body: \"Inter\", system-ui, sans-serif;\n"
+        "  --font-mono: \"DM Mono\", ui-monospace, monospace;\n}\n", encoding="utf-8")
+
     # tailwind.preset.cjs
     colors = {
         "canvas": "--surface-page", "subtle": "--surface-subtle", "raised": "--surface-raised", "line": "--border-subtle",
@@ -155,7 +164,7 @@ def main():
         "maxWidth": {"measure": "68ch", "page": "var(--container)"},
     }}}
     (OUT / "tailwind.preset.cjs").write_text(
-        "/* Risco Cognitivo — preset Tailwind (gerado). Requer tokens.css carregado antes. */\nmodule.exports = "
+        "/* Risco Cognitivo — preset Tailwind (gerado). Requer tokens.css e fonts.css carregados antes. */\nmodule.exports = "
         + json.dumps(preset, indent=2) + ";\n", encoding="utf-8")
 
     # tokens.py

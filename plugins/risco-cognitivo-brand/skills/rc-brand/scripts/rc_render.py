@@ -21,6 +21,7 @@ BASE_CSS = """
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 button,input,select,textarea{font:inherit;color:inherit}
+button{background-color:transparent}
 body{margin:0;background:var(--surface-page);color:var(--text-primary);font:400 1rem/1.6 var(--font-body);
   -webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);margin:0;letter-spacing:-0.02em;line-height:1.15}

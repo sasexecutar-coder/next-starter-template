@@ -209,6 +209,7 @@
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 button,input,select,textarea{font:inherit;color:inherit}
+button{background-color:transparent}
 body{margin:0;background:var(--surface-page);color:var(--text-primary);font:400 1rem/1.6 var(--font-body);
   -webkit-font-smoothing:antialiased}
 h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);margin:0;letter-spacing:-0.02em;line-height:1.15}
@@ -224,7 +225,7 @@ code,pre,kbd{font-family:var(--font-mono)}
 
 .eb-top{position:sticky;top:0;z-index:20;background:var(--surface-page);border-bottom:1px solid var(--border-subtle)}
 .eb-top-in{display:flex;align-items:center;gap:var(--space-4);min-height:64px;padding:0 var(--space-6)}
-.eb-mark{display:flex;align-items:center;gap:var(--space-3);font:700 1rem/1 var(--font-display);color:var(--text-primary);text-decoration:none}
+.eb-mark{display:flex;align-items:center;min-height:44px;gap:var(--space-3);font:700 1rem/1 var(--font-display);color:var(--text-primary);text-decoration:none}
 .eb-mark svg{width:28px;height:28px;color:var(--brand-action-blue)}
 .eb-spacer{flex:1}
 .eb-progress{height:4px;background:var(--surface-subtle)}
@@ -311,6 +312,7 @@ pre.code{margin:var(--space-4) 0;padding:var(--space-4);background:var(--surface
   .eb-top-in{padding:0 var(--space-4)}
   .eb-top .segmented{display:none}
 }
+@media (max-width: 480px){.eb-mark span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.eb-top-in{gap:var(--space-2)}}
 @page{size:A4;margin:12mm}
 @media print{
   .eb-top,.eb-side,.copy,.eb-menu{display:none!important}

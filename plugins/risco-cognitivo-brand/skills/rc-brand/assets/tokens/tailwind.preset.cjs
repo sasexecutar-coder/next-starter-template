@@ -1,4 +1,4 @@
-/* Risco Cognitivo — preset Tailwind (gerado). Requer tokens.css carregado antes. */
+/* Risco Cognitivo — preset Tailwind (gerado). Requer tokens.css e fonts.css carregados antes. */
 module.exports = {
   "theme": {
     "extend": {

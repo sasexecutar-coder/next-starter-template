@@ -8,7 +8,8 @@
 <style>
 {{ brand_css | safe }}
 :root{--slide-w:{{ size.w }}px;--slide-h:{{ size.h }}px}
-body{background:var(--surface-subtle);padding:var(--space-8);display:grid;gap:var(--space-8);justify-content:center}
+body{background:var(--surface-subtle);padding:var(--space-8)}
+main{display:grid;gap:var(--space-8);justify-content:center}
 .slide{position:relative;width:var(--slide-w);height:var(--slide-h);overflow:hidden;background:var(--surface-page);color:var(--text-primary);
   padding:var(--space-24) var(--space-24) var(--space-16);display:flex;flex-direction:column}
 .slide.dark{background:var(--brand-dark-indigo);color:var(--text-on-dark)}
@@ -20,7 +21,7 @@ body{background:var(--surface-subtle);padding:var(--space-8);display:grid;gap:va
 .body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:var(--space-12)}
 .rule{width:96px;height:8px;background:var(--brand-action-blue);border-radius:var(--radius-xs)}
 h2{font:800 104px/1.02 var(--font-display);letter-spacing:-0.04em;margin:0}
-.cover h2{font-size:120px}
+.kind-cover h2{font-size:120px}
 .text{font:400 44px/1.35 var(--font-body);color:inherit;max-width:24ch}
 .slide:not(.dark) .text{color:var(--text-secondary)}
 .list{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-8)}
@@ -36,8 +37,10 @@ h2{font:800 104px/1.02 var(--font-display);letter-spacing:-0.04em;margin:0}
 </style>
 </head>
 <body>
+<main aria-label="{{ deck.title }}">
+<h1 class="sr-only">{{ deck.title }}</h1>
 {% for s in deck.slides %}
-<section class="slide {{ s.kind }}{% if s.get('dark') %} dark{% endif %}" id="slide-{{ '%02d' | format(loop.index) }}" aria-label="Slide {{ loop.index }} de {{ deck.slides | length }}">
+<section class="slide kind-{{ s.kind }}{% if s.get('dark') %} dark{% endif %}" id="slide-{{ '%02d' | format(loop.index) }}" aria-label="Slide {{ loop.index }} de {{ deck.slides | length }}">
   <div class="head"><span class="kicker">{{ s.get('kicker', deck.kicker) }}</span><span class="count">{{ '%02d' | format(loop.index) }}/{{ '%02d' | format(deck.slides | length) }}</span></div>
   <div class="body">
     <span class="rule" aria-hidden="true"></span>
@@ -51,5 +54,6 @@ h2{font:800 104px/1.02 var(--font-display);letter-spacing:-0.04em;margin:0}
   <div class="foot"><span>Risco Cognitivo</span><span class="handle">{{ deck.handle }}</span></div>
 </section>
 {% endfor %}
+</main>
 </body>
 </html>

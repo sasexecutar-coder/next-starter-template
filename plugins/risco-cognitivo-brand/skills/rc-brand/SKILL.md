@@ -105,9 +105,9 @@ As três famílias são OFL (Google Fonts). Se indisponíveis, use os fallbacks 
 `scripts/build_tokens.py`; paridade checada por `scripts/validate_tokens.py --site …`.
 **Conversão de cores:** HEX validado → RGB com `tokens.rgb()` (`assets/tokens/tokens.py`); cores com alfa (`rgb(… / 45%)`)
 são compostas sobre o fundo real antes de medir contraste (`scripts/contrast.py`). Não há equivalência CMYK garantida.
-**Fontes:** carregar DM Sans, Inter e DM Mono do Google Fonts (`<link>`), ou instalar/embutir no PDF; sem elas, fallbacks acima.
+**Fontes:** `assets/tokens/fonts.css` (importa DM Sans, Inter e DM Mono do Google Fonts e define `--font-display/-body/-mono`); no Next, `next/font` com as mesmas variáveis; em PDF, embuta as fontes. Sem elas, fallbacks acima.
 **Por formato:**
-- **Web/HTML:** carregue `assets/tokens/tokens.css` e `assets/components/components.css`; use classes `.btn .btn-primary`,
+- **Web/HTML:** carregue `assets/tokens/tokens.css`, `assets/tokens/fonts.css` e `assets/components/components.css`; use classes `.btn .btn-primary`,
   `.panel`, `.callout` (+4 `<i class="bracket">`), `.chip .chip-gap`, `.highlight`, `.eyebrow`, `.page-block`. Tema via
   `data-theme="claro|noite"` em `<html>`.
 - **React/Next:** copie `assets/components/react/*.tsx` (Button, Section, Panel, Callout, Chip, Eyebrow, Highlight,

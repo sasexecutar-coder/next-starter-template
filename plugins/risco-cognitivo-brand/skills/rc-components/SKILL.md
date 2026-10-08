@@ -15,8 +15,8 @@ estados e proibições: `../rc-brand/references/components.md`.
 ## Escolha da stack
 | Projeto | Use |
 |---|---|
-| HTML estático, e-mail-like, CMS | `../rc-brand/assets/tokens/tokens.css` + `../rc-brand/assets/components/components.css` |
-| React/Next + Tailwind | `tailwind.preset.cjs` em `presets`, `tokens.css` no CSS global e os `.tsx` de `../rc-brand/assets/components/react/` |
+| HTML estático, e-mail-like, CMS | `../rc-brand/assets/tokens/tokens.css` + `fonts.css` + `../rc-brand/assets/components/components.css` |
+| React/Next + Tailwind | `tailwind.preset.cjs` em `presets`, `tokens.css` + `fonts.css` (ou `next/font` com as mesmas variáveis) no CSS global e os `.tsx` de `../rc-brand/assets/components/react/` |
 | Outra (Vue, Svelte, Astro) | mesmas classes do `components.css`; markup igual ao HTML de referência |
 Fontes: DM Sans, Inter, DM Mono (Google Fonts ou `next/font`), expostas como `--font-display/-body/-mono`.
 

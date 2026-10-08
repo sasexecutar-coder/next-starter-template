@@ -92,6 +92,9 @@ def main():
                 errors.append(f"contraste {t}: {desc} = {r:.2f}:1 (mínimo {need}:1)")
 
     # 4. arquivos derivados
+    fonts = TOK / "fonts.css"
+    if not fonts.exists() or not all(v in fonts.read_text(encoding="utf-8") for v in ("--font-display", "--font-body", "--font-mono")):
+        errors.append("fonts.css ausente ou sem --font-display/--font-body/--font-mono")
     css = (TOK / "tokens.css").read_text(encoding="utf-8")
     for k in themes["atual"]:
         if f"--{k}:" not in css:

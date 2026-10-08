@@ -33,7 +33,7 @@ for (let i = 0; i < n; i++) {
   files.push({ file: p, width: Math.round(box.width), height: Math.round(box.height), overflow, ok });
 }
 if (opt("--pdf")) {
-  await page.addStyleTag({ content: `@page{size:${W}px ${H}px;margin:0}body{padding:0;gap:0;background:none}.slide{break-after:page}` });
+  await page.addStyleTag({ content: `@page{size:${W}px ${H}px;margin:0}body{padding:0;background:none}main{gap:0}.slide{break-after:page}` });
   await page.emulateMedia({ media: "print" });
   await page.pdf({ path: opt("--pdf"), preferCSSPageSize: true, printBackground: true });
 }

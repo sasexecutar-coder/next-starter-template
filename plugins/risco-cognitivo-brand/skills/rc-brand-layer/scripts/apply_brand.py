@@ -29,7 +29,9 @@ HEX = re.compile(r"#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b")
 
 def token_index():
     t = load_json(SKILLS / "rc-brand" / "assets" / "tokens" / "tokens.json")["theme"]["atual"]
-    prio = ["brand-action-blue", "brand-action-blue-strong", "brand-canvas", "text-primary", "text-secondary",
+    # semânticos/temáticos primeiro: acompanham os temas claro/noite (brand-* são fixos)
+    prio = ["surface-page", "text-primary", "action-text", "text-secondary", "brand-action-blue", "brand-action-blue-strong",
+            "brand-canvas",
             "brand-dark-gray", "brand-light-gray", "brand-light-blue", "brand-dark-indigo", "semantic-risk",
             "semantic-solution", "attention-surface", "attention-ink", "surface-raised", "surface-subtle"]
     idx = {}
