@@ -135,6 +135,9 @@ def main():
     ap.add_argument("--strict", action="store_true", help="avisos também reprovam")
     a = ap.parse_args()
     files = []
+    missing = [p for p in a.paths if not Path(p).exists()]
+    if missing:
+        sys.exit(f"caminho não encontrado: {', '.join(missing)}")
     for p in map(Path, a.paths):
         files += sorted(x for x in (p.rglob("*") if p.is_dir() else [p]) if x.suffix in (".html", ".htm", ".css", ".svg", ".j2", ".jinja"))
     report, blocking, warnings = {}, 0, 0

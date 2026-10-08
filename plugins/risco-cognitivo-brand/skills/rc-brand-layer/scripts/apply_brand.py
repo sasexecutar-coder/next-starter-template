@@ -114,7 +114,13 @@ def main():
         bad = [k for k, v in overrides.items() if not re.fullmatch(r"#[0-9a-fA-F]{6}", v)]
         if bad:
             sys.exit(f"brand_config inválido: {bad}")
-    html, rep = apply(Path(a.src).read_text(encoding="utf-8"), cmap, overrides)
+    raw = Path(a.src).read_bytes()
+    try:
+        src = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        src = raw.decode("latin-1")  # material de terceiros; a saída é sempre UTF-8
+        print("aviso: entrada não era UTF-8 (lida como Latin-1); saída gravada em UTF-8", file=sys.stderr)
+    html, rep = apply(src, cmap, overrides)
     Path(a.out).write_text(html, encoding="utf-8")
     print(f"{a.out}: {len(rep['replaced'])} cores → token · {sum(rep['unmapped'].values())} sem mapa · "
           f"{rep['fonts']} fontes · nomes {rep['names'] or '—'}")

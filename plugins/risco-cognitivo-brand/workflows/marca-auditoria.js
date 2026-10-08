@@ -5,7 +5,7 @@ export const meta = {
 }
 
 // args: { paths: ["dist/"], print: false, pluginRoot: "<caminho do plugin>" } — o comando /marca-auditar passa ${CLAUDE_PLUGIN_ROOT} já expandido
-const PATHS = (args && args.paths && args.paths.length ? args.paths : ['.']).join(' ')
+const PATHS = (args && args.paths && args.paths.length ? args.paths : ['.']).map((p) => JSON.stringify(String(p))).join(' ')
 const PRINT = args && args.print ? ' --print' : ''
 const ROOT = ((args && args.pluginRoot) || 'plugins/risco-cognitivo-brand') + '/skills'
 

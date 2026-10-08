@@ -1,5 +1,5 @@
 id,titulo,caminho,tipo,versao,status,depende_de,aplica_a,fonte,evidencia
-RC-KIT-GOV-001,DECISIONS.md,00-governanca/DECISIONS.md,md,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,c602cb484eac9b819a4789a6e24bfbbf57c3370ff4f4ee4004c808534012f12d
+RC-KIT-GOV-001,DECISIONS.md,00-governanca/DECISIONS.md,md,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,abef31f368506125f4e1d58ec79963225b50a5083df43fed4a0ad09c2737c970
 RC-KIT-GOV-002,MAPPING.json,00-governanca/MAPPING.json,json,1.1.0,GERADO,,00-governanca,gerado na aplicação da Fase 1,AUTORREFERENTE
 RC-KIT-FILE-034,_adherence.oxlintrc.json,01-referencias/design-systems/nocturne/_adherence.oxlintrc.json,json,A DEFINIR,PRESERVADO,,01-referencias,Arquivo.zip/nocturne-02c4ffae-3abc-4626-b190-1a7caf3c77c7/_adherence.oxlintrc.json,06186bb46f06c0fa5afd27543508082248de52d249988265ce294511a684923d
 RC-KIT-FILE-035,_ds_bundle.js,01-referencias/design-systems/nocturne/_ds_bundle.js,js,A DEFINIR,PRESERVADO,,01-referencias,Arquivo.zip/nocturne-02c4ffae-3abc-4626-b190-1a7caf3c77c7/_ds_bundle.js,aceb66bfea8c86f6ebf519525c4669e2d6bda22791fdf24db8f2cff09deabfb0
@@ -79,4 +79,4 @@ RC-KIT-GOV-003,contrast-report.md,07-validacao/contrast-report.md,md,1.1.0,GERAD
 RC-KIT-GOV-007,ds-audit.md,07-validacao/ds-audit.md,md,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,59e7f619d9627205f3fbade6058739b03f7fe372f58310b499320a62971959dc
 RC-KIT-GOV-004,verification.json,07-validacao/verification.json,json,1.1.0,GERADO,,07-validacao,gerado na aplicação da Fase 1,AUTORREFERENTE
 RC-KIT-GOV-005,MASTER-INDEX.csv,MASTER-INDEX.csv,csv,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,AUTORREFERENTE
-RC-KIT-GOV-006,README.md,README.md,md,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,d82948edaf66c18e0a70e528cf920e0a8ff6ba3aa722e90e18ecc9cc2b0803e5
+RC-KIT-GOV-006,README.md,README.md,md,1.1.0,GERADO,,raiz,gerado na aplicação da Fase 1,486dde54ebecbe1c9e27ad50146b73e489d2f75c85814a04b48f7a53a584b5af

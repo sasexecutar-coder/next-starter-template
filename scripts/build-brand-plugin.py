@@ -155,6 +155,16 @@ def main():
     tools = next((len(x["result"]["tools"]) for x in res if x["id"] == 2), 0)
     step("mcp", len(res) == len(calls) and not bad and tools == 5, f"{len(res)} respostas · {tools} tools · erros {bad or '—'}")
 
+    def symlink_case(hook):
+        """.handoff/x.md apontando para fora do projeto não pode ser auto-aprovado."""
+        import tempfile
+        with tempfile.TemporaryDirectory() as t:
+            proj, outside = Path(t, "proj"), Path(t, "secret")
+            (proj / ".handoff").mkdir(parents=True)
+            outside.write_text("x")
+            (proj / ".handoff/evil.md").symlink_to(outside)
+            return hook("approve-handoff.mjs", {"cwd": str(proj), "tool_input": {"file_path": ".handoff/evil.md"}}) == ""
+
     # 7 hooks
     node = shutil.which("node")
     if node:
@@ -165,10 +175,11 @@ def main():
             '"allow"' in hook("approve-handoff.mjs", {"cwd": str(REPO), "tool_input": {"file_path": ".handoff/plan.md"}}),
             hook("approve-handoff.mjs", {"cwd": str(REPO), "tool_input": {"file_path": ".handoff/../x.md"}}) == "",
             hook("approve-handoff.mjs", {"cwd": str(REPO), "tool_input": {"file_path": "src/app/page.tsx"}}) == "",
+            symlink_case(hook),
             "bloqueante" in hook("brand-guard.mjs", {"cwd": str(REPO), "tool_input": {"file_path": str(SK / "rc-brand-layer/examples/foreign.html")}}),
             hook("brand-guard.mjs", {"cwd": str(REPO), "tool_input": {"file_path": str(PLUGIN / "ONBOARDING.html")}}) == "",
         ])
-        step("hooks", ok, "6 payloads")
+        step("hooks", ok, "7 payloads (inclui symlink para fora do projeto)")
     else:
         step("hooks", True, "node ausente — pulado")
 

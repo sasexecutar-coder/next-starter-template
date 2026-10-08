@@ -76,21 +76,23 @@ def call(name, a):
         p = Path(a["path"]).expanduser()
         if not p.exists():
             raise ValueError(f"caminho não encontrado: {p}")
-        return run([str(SK / "rc-audit" / "scripts" / "audit_html.py"), str(p), "--json"] + (["--print"] if a.get("print") else []))
+        return run([str(SK / "rc-audit" / "scripts" / "audit_html.py"), "--json"] + (["--print"] if a.get("print") else []) + ["--", str(p)])
     if name == "list_commands":
         return commands()
     raise ValueError(f"ferramenta desconhecida: {name}")
 
 
 def handle(msg):
+    if not isinstance(msg, dict):
+        return {"jsonrpc": "2.0", "id": None, "error": {"code": -32600, "message": "requisição inválida"}}
     m, mid = msg.get("method"), msg.get("id")
     if m == "initialize":
-        res = {"protocolVersion": msg.get("params", {}).get("protocolVersion", "2025-06-18"),
+        res = {"protocolVersion": (msg.get("params") or {}).get("protocolVersion", "2025-06-18"),
                "capabilities": {"tools": {}}, "serverInfo": {"name": "rc-brand", "version": VERSION}}
     elif m == "tools/list":
         res = {"tools": TOOLS}
     elif m == "tools/call":
-        p = msg.get("params", {})
+        p = msg.get("params") or {}
         try:
             res = {"content": [{"type": "text", "text": call(p.get("name"), p.get("arguments") or {})}]}
         except Exception as e:  # erro de ferramenta vai para o modelo, não derruba o servidor
@@ -111,7 +113,7 @@ def main():
             continue
         try:
             out = handle(json.loads(line))
-        except json.JSONDecodeError:
+        except (json.JSONDecodeError, RecursionError):
             out = {"jsonrpc": "2.0", "id": None, "error": {"code": -32700, "message": "JSON inválido"}}
         if out is not None:
             sys.stdout.write(json.dumps(out, ensure_ascii=False) + "\n")

@@ -68,7 +68,10 @@ def main():
     ap.add_argument("--png", action="store_true", help="exporta PNG por slide (Playwright)")
     ap.add_argument("--pdf", action="store_true", help="exporta PDF 1 slide/página (LinkedIn documento)")
     a = ap.parse_args()
-    deck = load_json(a.deck)["deck"]
+    data = load_json(a.deck)
+    if not isinstance(data, dict) or not isinstance(data.get("deck"), dict):
+        sys.exit("deck inválido: o JSON precisa de um objeto \"deck\" no topo (veja examples/)")
+    deck = data["deck"]
     errs = validate(deck)
     if errs:
         sys.exit("deck inválido:\n  " + "\n  ".join(errs))

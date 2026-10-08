@@ -52,7 +52,10 @@ def main():
     ap.add_argument("--brand-config")
     ap.add_argument("--theme", choices=("atual", "claro", "noite"))
     a = ap.parse_args()
-    doc = load_json(a.doc)["doc"]
+    data = load_json(a.doc)
+    if not isinstance(data, dict) or not isinstance(data.get("doc"), dict):
+        sys.exit("conteúdo inválido: o JSON precisa de um objeto \"doc\" no topo (veja examples/)")
+    doc = data["doc"]
     errs = validate(doc)
     if errs:
         sys.exit("conteúdo inválido:\n  " + "\n  ".join(errs))
