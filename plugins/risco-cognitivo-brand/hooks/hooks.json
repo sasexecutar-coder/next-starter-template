@@ -1,0 +1,14 @@
+{
+  "description": "Risco Cognitivo: aviso de marca ao salvar HTML/CSS/SVG, auto-aprovação de estado .handoff/ e resumo da marca no início da sessão",
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [ { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/session-start.mjs\"", "timeout": 10 } ] }
+    ],
+    "PreToolUse": [
+      { "matcher": "Write|Edit|MultiEdit", "hooks": [ { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/approve-handoff.mjs\"", "timeout": 5 } ] }
+    ],
+    "PostToolUse": [
+      { "matcher": "Write|Edit|MultiEdit", "hooks": [ { "type": "command", "command": "node \"${CLAUDE_PLUGIN_ROOT}/hooks/brand-guard.mjs\"", "timeout": 30 } ] }
+    ]
+  }
+}

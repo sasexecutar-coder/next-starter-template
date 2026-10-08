@@ -1,0 +1,469 @@
+{
+  "doc": {
+    "id": "RC-ONBOARDING",
+    "version": "1.0.0",
+    "lang": "pt-BR",
+    "title": "Ativação da marca · Risco Cognitivo",
+    "description": "Onboarding de ativação do plugin risco-cognitivo-brand: comandos, regras e checklist de controle.",
+    "brand_name": "Risco Cognitivo",
+    "nav_label": "Ativação",
+    "eyebrow": "CV-MARCA-001 · /marca-ativar",
+    "headline": "Sua marca em qualquer projeto, com 3 comandos.",
+    "lead": "Este arquivo é o seu painel de controle da marca: o que o plugin faz, os comandos por função, as regras que ele segue e quando ele deve parar. Abra no navegador, marque o checklist e guarde como PDF.",
+    "chips": [
+      "12 comandos",
+      "10 skills",
+      "4 agentes",
+      "3 temas",
+      "WCAG 2.1 AA"
+    ],
+    "footer": "Risco Cognitivo · plugin risco-cognitivo-brand · fonte de verdade: tokens.json (D-01…D-36)",
+    "sections": [
+      {
+        "id": "o-que-e",
+        "title": "O que é o plugin",
+        "nav": "O que é",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Um conjunto de skills, agentes, comandos, hooks e um servidor MCP que carregam o design system do Risco Cognitivo para fora do site: tokens, componentes, regras editoriais, formatos de canal e auditoria."
+          },
+          {
+            "type": "grid",
+            "items": [
+              {
+                "kicker": "Skills",
+                "title": "Conhecimento",
+                "text": "rc-brand é o núcleo; as outras 9 produzem um tipo de asset cada."
+              },
+              {
+                "kicker": "Agentes",
+                "title": "Funções",
+                "text": "Orquestrador resolve o pedido, produtor gera, auditor e revisor de acessibilidade verificam."
+              },
+              {
+                "kicker": "Comandos",
+                "title": "Atalhos",
+                "text": "/marca-* com ID verbal e numérico estável. Um comando = uma ação."
+              },
+              {
+                "kicker": "Hooks + MCP",
+                "title": "Guarda",
+                "text": "Aviso automático ao salvar HTML/CSS/SVG fora da marca; tokens e specs via MCP em outros sistemas de IA."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "primeiro-acesso",
+        "title": "Primeiro acesso",
+        "nav": "Primeiro acesso",
+        "blocks": [
+          {
+            "type": "steps",
+            "items": [
+              {
+                "title": "Instale o plugin",
+                "text": "No Claude Code: /plugin marketplace add <pasta ou repositório> e /plugin install risco-cognitivo-brand."
+              },
+              {
+                "title": "Ative",
+                "text": "Rode /marca-ativar. O orquestrador confere as fontes (tokens, specs, regras) e entrega este arquivo."
+              },
+              {
+                "title": "Só a skill?",
+                "text": "No claude.ai, envie rc-brand.skill em Configurações → Capabilities → Skills."
+              }
+            ]
+          },
+          {
+            "type": "code",
+            "text": "/plugin marketplace add sasexecutar-coder/next-starter-template\n/plugin install risco-cognitivo-brand@risco-cognitivo\n/marca-ativar"
+          }
+        ]
+      },
+      {
+        "id": "primeiro-teste",
+        "title": "Seu primeiro teste em 3 mensagens",
+        "nav": "Primeiro teste",
+        "blocks": [
+          {
+            "type": "timeline",
+            "items": [
+              {
+                "when": "Mensagem 1",
+                "title": "“Ativa minha marca”",
+                "text": "Recebe o relatório de fontes e este onboarding."
+              },
+              {
+                "when": "Mensagem 2",
+                "title": "“Faz o carrossel sobre viés de confirmação”",
+                "text": "Recebe HTML + PNGs 1080×1350 com a marca."
+              },
+              {
+                "when": "Mensagem 3",
+                "title": "“Confere a marca”",
+                "text": "Recebe o review: bloqueantes, avisos e o que fazer."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "rotina",
+        "title": "A rotina mínima",
+        "nav": "Rotina mínima",
+        "blocks": [
+          {
+            "type": "p",
+            "text": "Você vive com estes três. O resto aparece quando a tarefa pede (revelação progressiva)."
+          },
+          {
+            "type": "commands",
+            "items": [
+              {
+                "id": "CV-MARCA-001",
+                "slash": "/marca-ativar",
+                "does": "Verificar fontes da marca e entregar o ONBOARDING.html de ativação",
+                "say": "Ativa minha marca",
+                "tag": "rotina mínima"
+              },
+              {
+                "id": "CV-MARCA-002",
+                "slash": "/marca-aplicar",
+                "does": "Aplicar a camada de marca a um artefato existente e rodar o checklist",
+                "say": "Aplica a marca",
+                "tag": "rotina mínima"
+              },
+              {
+                "id": "CV-MARCA-003",
+                "slash": "/marca-auditar",
+                "does": "Auditar tokens, usos, formatos, diagramação, @page e vetores e emitir review",
+                "say": "Confere a marca",
+                "tag": "rotina mínima"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "comandos",
+        "title": "Comandos por função",
+        "nav": "Comandos",
+        "blocks": [
+          {
+            "type": "commands",
+            "items": [
+              {
+                "id": "CV-MARCA-004",
+                "slash": "/marca-tokens",
+                "does": "Exportar tokens (CSS, JSON DTCG, Tailwind, Python) para outro projeto",
+                "say": "Me dá os tokens"
+              },
+              {
+                "id": "CV-MARCA-005",
+                "slash": "/marca-formato",
+                "does": "Mostrar a spec técnica de um canal/peça e o que está A DEFINIR",
+                "say": "Qual o formato do Reels?"
+              },
+              {
+                "id": "CV-MARCA-006",
+                "slash": "/marca-card",
+                "does": "Converter conteúdo em card de prompt A4 (tutorial · mockup · prompt)",
+                "say": "Transforma em card"
+              },
+              {
+                "id": "CV-MARCA-007",
+                "slash": "/marca-ebook",
+                "does": "Gerar ebook, one-page ou onboarding standalone com a marca",
+                "say": "Faz o ebook"
+              },
+              {
+                "id": "CV-MARCA-008",
+                "slash": "/marca-carrossel",
+                "does": "Gerar carrossel 4:5 (HTML + PNG 1080×1350) ou post/story",
+                "say": "Faz o carrossel"
+              },
+              {
+                "id": "CV-MARCA-009",
+                "slash": "/marca-infografico",
+                "does": "Gerar prompts de infográfico/vetor por perfil (isometric, editorial, flat)",
+                "say": "Prompt de infográfico"
+              },
+              {
+                "id": "CV-MARCA-010",
+                "slash": "/marca-componente",
+                "does": "Gerar componente de UI em HTML ou React com os primitivos",
+                "say": "Cria o componente"
+              },
+              {
+                "id": "CV-MARCA-011",
+                "slash": "/marca-editorial",
+                "does": "Formatar artigo/MDX/newsletter com blocos e regras de leitura",
+                "say": "Formata o artigo"
+              },
+              {
+                "id": "CV-MARCA-012",
+                "slash": "/marca-campanha",
+                "does": "Montar o pacote de assets de um ciclo (plan → execute → verify por asset)",
+                "say": "Monta o pacote do ciclo"
+              }
+            ]
+          },
+          {
+            "type": "callout",
+            "title": "Regra",
+            "text": "IDs nunca são removidos nem renomeados. Se um comando mudar de nome, o antigo vira alias."
+          }
+        ]
+      },
+      {
+        "id": "marca",
+        "title": "A marca em uma tela",
+        "nav": "A marca",
+        "blocks": [
+          {
+            "type": "swatches",
+            "items": [
+              {
+                "name": "Canvas",
+                "token": "brand-canvas",
+                "value": "#fffdfa"
+              },
+              {
+                "name": "Texto",
+                "token": "text-primary",
+                "value": "#000000"
+              },
+              {
+                "name": "Cinza escuro",
+                "token": "brand-dark-gray",
+                "value": "#545454"
+              },
+              {
+                "name": "Azul de ação (D-01)",
+                "token": "brand-action-blue",
+                "value": "#2d5ce6"
+              },
+              {
+                "name": "Azul de ação forte",
+                "token": "brand-action-blue-strong",
+                "value": "#1f46bf"
+              },
+              {
+                "name": "Azul claro",
+                "token": "brand-light-blue",
+                "value": "#cbd4ff"
+              },
+              {
+                "name": "Índigo",
+                "token": "brand-dark-indigo",
+                "value": "#0e025d"
+              },
+              {
+                "name": "Risco",
+                "token": "semantic-risk",
+                "value": "#ff0000"
+              },
+              {
+                "name": "Solução",
+                "token": "semantic-solution",
+                "value": "#00bf63"
+              },
+              {
+                "name": "Atenção",
+                "token": "attention-surface",
+                "value": "#ffe659"
+              },
+              {
+                "name": "Cérebro",
+                "token": "brain-accent",
+                "value": "#6e72f0"
+              },
+              {
+                "name": "Cinza claro",
+                "token": "brand-light-gray",
+                "value": "#ececec"
+              }
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Tipografia",
+            "head": [
+              "Papel",
+              "Família",
+              "Uso"
+            ],
+            "rows": [
+              [
+                "Display",
+                "DM Sans 700–800",
+                "títulos, números, wordmark"
+              ],
+              [
+                "Texto",
+                "Inter 400–600",
+                "corpo, interface, tabelas"
+              ],
+              [
+                "Mono",
+                "DM Mono 400–500",
+                "IDs, código, metadados"
+              ]
+            ]
+          },
+          {
+            "type": "list",
+            "items": [
+              "Azul de ação (D-01) é o único azul de interação; laranja e azuis de outras marcas não entram.",
+              "Vermelho = risco e verde = solução: nunca decorativos.",
+              "Espaço só na escala 4/8/12/16/24/32/48/64/96; raios 2/4/8/12/16.",
+              "Contraste mínimo 4,5:1 em texto e 3:1 em controles, nos 3 temas."
+            ]
+          }
+        ]
+      },
+      {
+        "id": "limites",
+        "title": "O que ele pode fazer e quando deve parar",
+        "nav": "Limites",
+        "blocks": [
+          {
+            "type": "rules",
+            "yes": [
+              "Gerar assets com os tokens da marca",
+              "Converter artefatos existentes para a marca",
+              "Auditar e apontar o que falta, com evidência",
+              "Mostrar specs verificadas de canal"
+            ],
+            "no": [
+              "Inventar cor, fonte, número ou spec que não esteja nas fontes",
+              "Preencher o que está A DEFINIR (safe areas, símbolo, owner)",
+              "Aprovar a própria produção: quem verifica é o auditor, em contexto limpo",
+              "Publicar ou enviar para fora sem a sua aprovação"
+            ]
+          },
+          {
+            "type": "table",
+            "caption": "Estados",
+            "head": [
+              "Estado",
+              "Quando"
+            ],
+            "rows": [
+              [
+                "BLOCKED",
+                "falta fonte ou entrada obrigatória"
+              ],
+              [
+                "EVIDENCE REQUIRED",
+                "claim ou valor sem fonte"
+              ],
+              [
+                "REWORK",
+                "auditoria reprovou"
+              ],
+              [
+                "USER ACTION REQUIRED",
+                "precisa da sua decisão ou aprovação"
+              ],
+              [
+                "VERIFIED",
+                "auditor aprovou com evidência"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "outros-sistemas",
+        "title": "Em outros projetos e sistemas de IA",
+        "nav": "Outros sistemas",
+        "blocks": [
+          {
+            "type": "table",
+            "caption": "Portabilidade",
+            "head": [
+              "Destino",
+              "Use"
+            ],
+            "rows": [
+              [
+                "Site / app web",
+                "tokens.css + components.css ou tailwind.preset.cjs"
+              ],
+              [
+                "React",
+                "componentes em rc-brand/assets/components/react"
+              ],
+              [
+                "Python (PPTX, DOCX, PDF)",
+                "tokens.py → rgb()"
+              ],
+              [
+                "Figma / Style Dictionary",
+                "tokens.json (DTCG)"
+              ],
+              [
+                "Outro agente / IDE",
+                "servidor MCP rc-brand: get_tokens, get_spec, check_contrast, audit_html"
+              ]
+            ]
+          }
+        ]
+      },
+      {
+        "id": "faq",
+        "title": "Perguntas comuns",
+        "nav": "Perguntas",
+        "blocks": [
+          {
+            "type": "faq",
+            "items": [
+              {
+                "q": "Preciso decorar os comandos?",
+                "a": "Não. Fale normalmente; o orquestrador resolve a frase para o ID."
+              },
+              {
+                "q": "Posso mudar uma cor?",
+                "a": "Só no site (globals.css). O build regenera os tokens e a paridade é testada."
+              },
+              {
+                "q": "E se a spec de um canal estiver A DEFINIR?",
+                "a": "O plugin mostra o que é verificado e lista o resto; não chuta valor típico."
+              },
+              {
+                "q": "O hook bloqueia meu trabalho?",
+                "a": "Não. Ele só avisa quando um HTML/CSS/SVG salvo foge da marca."
+              },
+              {
+                "q": "Funciona sem internet?",
+                "a": "Os HTMLs são standalone; só as fontes vêm do Google Fonts, com fallback de sistema."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "pronto",
+        "title": "Você está pronto quando…",
+        "nav": "Checklist",
+        "blocks": [
+          {
+            "type": "checklist",
+            "items": [
+              "Rodei /marca-ativar e recebi este arquivo",
+              "Gerei um asset com /marca-carrossel ou /marca-ebook",
+              "Rodei /marca-auditar e entendi o review",
+              "Exportei os tokens com /marca-tokens para outro projeto",
+              "Sei o que o plugin não deve fingir",
+              "Salvei este onboarding em PDF"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

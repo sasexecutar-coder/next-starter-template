@@ -204,3 +204,7 @@ next-env.d.ts
 
 ### Assets do cérebro (copiados do design kit por scripts/sync-brain-assets.mjs) ###
 public/models/
+.handoff/
+plugins/risco-cognitivo-brand/**/dist/
+*.skill
+*.plugin

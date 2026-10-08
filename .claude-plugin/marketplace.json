@@ -1,0 +1,11 @@
+{
+  "name": "risco-cognitivo",
+  "owner": { "name": "Risco Cognitivo" },
+  "plugins": [
+    {
+      "name": "risco-cognitivo-brand",
+      "source": "./plugins/risco-cognitivo-brand",
+      "description": "Marca e design system do Risco Cognitivo: skills, agentes, comandos /marca-*, workflows, hooks e MCP."
+    }
+  ]
+}
