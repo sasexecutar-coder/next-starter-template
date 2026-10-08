@@ -1,0 +1,17 @@
+{
+  "deck": {
+    "title": "Viés de confirmação com IA",
+    "slug": "rc-carrossel-vies-confirmacao",
+    "format": "carousel-4x5",
+    "lang": "pt-BR",
+    "kicker": "Risco cognitivo",
+    "handle": "riscocognitivo",
+    "slides": [
+      {"kind": "cover", "title": "A IA concorda com você. Esse é o risco.", "text": "Como o viés de confirmação entra no seu prompt sem você perceber."},
+      {"kind": "idea", "title": "O prompt já carrega a resposta", "text": "Quando você pergunta “por que X é melhor?”, a resposta vem pronta para confirmar X."},
+      {"kind": "list", "title": "3 sinais de alerta", "items": ["A resposta repete suas palavras", "Nenhum contra-argumento aparece", "Você parou de pesquisar"]},
+      {"kind": "idea", "title": "Peça o lado contrário", "text": "Antes de decidir, pergunte: “qual é o melhor argumento contra isso?”", "dark": true},
+      {"kind": "cta", "title": "Teste no próximo prompt", "action": "Salve este carrossel e use o checklist completo no site."}
+    ]
+  }
+}

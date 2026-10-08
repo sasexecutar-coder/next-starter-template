@@ -96,3 +96,8 @@ Estão listadas em [DECISIONS → Pendências](00-governanca/DECISIONS.md#pendê
 - [ ] Símbolo do logo aprovado (GAP-005).
 
 Para regenerar o índice e a verificação: `python3 scripts/build-kit-index.py`. Para o contraste: `python3 scripts/contrast-report.py`. Para a auditoria de componentes: `npm run audit:ds`.
+
+## Portabilidade (plugin)
+Este kit é empacotado para outros projetos e sistemas de IA em `plugins/risco-cognitivo-brand/` (skills, agentes,
+comandos `/marca-*`, hooks e MCP). Depois de mudar `src/app/globals.css`, rode `python3 scripts/build-brand-plugin.py`
+para sincronizar tokens, validar e reempacotar.

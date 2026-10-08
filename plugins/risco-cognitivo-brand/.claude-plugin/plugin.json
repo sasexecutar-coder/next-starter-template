@@ -1,0 +1,10 @@
+{
+  "name": "risco-cognitivo-brand",
+  "displayName": "Risco Cognitivo · Marca e Design System",
+  "version": "1.0.0",
+  "description": "Brand guidelines e design system do Risco Cognitivo em plugin full stack: 10 skills (núcleo de marca, camada de marca, auditoria, formatos de canal, ebook/onboarding, cards de prompt, carrossel/post/story, infográfico, componentes, editorial), 4 agentes (orquestrador, produtor, auditor, revisor de acessibilidade), 12 comandos /marca-* com IDs verbais CV-MARCA, 2 workflows, hooks de guarda e servidor MCP de tokens/specs/auditoria.",
+  "author": { "name": "Risco Cognitivo", "url": "https://github.com/sasexecutar-coder" },
+  "homepage": "https://github.com/sasexecutar-coder/next-starter-template/tree/main/plugins/risco-cognitivo-brand",
+  "repository": "https://github.com/sasexecutar-coder/next-starter-template",
+  "keywords": ["brand", "design-system", "tokens", "risco-cognitivo", "pt-BR", "carrossel", "ebook", "auditoria", "wcag", "mcp"]
+}

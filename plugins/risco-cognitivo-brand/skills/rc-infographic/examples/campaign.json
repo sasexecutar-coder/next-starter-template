@@ -1,0 +1,210 @@
+{
+  "id": "RC-CAMPAIGN-001",
+  "version": "1.0.0",
+  "source_id": "RC-BPM-SCHEMA-001",
+  "source_version": "1.0.0",
+  "area": "Risco Cognitivo × Banco de conteúdo",
+  "owner": "A DEFINIR",
+  "status": "PREPARED",
+  "automation_level": "A1",
+  "workflow": "Modelar cenas → Renderizar → Verificar → Arquivar",
+  "assumptions": [
+    "diferentes tipo iOS interpretado como diferentes tipos de infográfico",
+    "Público proposto: pessoas e equipes que trabalham, estudam ou gerenciam projetos"
+  ],
+  "output": {
+    "count": 10,
+    "width": 1920,
+    "height": 1080,
+    "aspect_ratio": "16:9",
+    "formats": [
+      "png"
+    ],
+    "images_only": true
+  },
+  "depends_on": [
+    "Gerador/renderizador escolhido",
+    "Render dos dez assets"
+  ],
+  "blocks": [
+    "Declaração de imagens entregues antes do render"
+  ],
+  "principle": "Neurodivergência não determina déficit; pessoa não é o risco.",
+  "quantitative_policy": "18%, 6%, 70%, RCI e RCR são exemplos fornecidos, não resultados verificados. Não representá-los como dados reais. Fórmula é proposta heurística, não instrumento validado; confiança de evidência deve permanecer separada da magnitude para não confundir baixa evidência com baixo risco.",
+  "slides": [
+    {
+      "id": "C01-S01",
+      "slug": "contexto",
+      "type": "Cena panorâmica",
+      "profile": "isometric",
+      "message": "Contexto determina a demanda",
+      "scene": "Três ilhas conectadas: mesa de trabalho com ferramentas, projeto com peças encadeadas e estudo com livro aberto. A mesma personagem transita entre elas, sem sinais clínicos ou identidade diagnóstica.",
+      "source_fields": [
+        "contexto",
+        "processo",
+        "atividade"
+      ],
+      "status": "PREPARED",
+      "output_name": "C01-S01__contexto__v1.0.0.png",
+      "evidence": null
+    },
+    {
+      "id": "C01-S02",
+      "slug": "demanda-capacidade",
+      "type": "Comparação em dois painéis",
+      "profile": "editorial",
+      "message": "A mesma pessoa enfrenta demandas diferentes",
+      "scene": "Dois painéis de mesmo tamanho e mesma personagem. À esquerda, objetos de tarefas competem simultaneamente ao redor da mesa. À direita, uma única tarefa visível e as demais armazenadas em bandeja externa. Nenhuma mudança na anatomia, competência ou expressão de valor da pessoa.",
+      "source_fields": [
+        "capacidade_exigida",
+        "vulnerabilidade_associada"
+      ],
+      "status": "PREPARED",
+      "output_name": "C01-S02__demanda-capacidade__v1.0.0.png",
+      "evidence": null
+    },
+    {
+      "id": "C01-S03",
+      "slug": "evidencia",
+      "type": "Sequência de observação",
+      "profile": "flat",
+      "message": "Observar o processo antes de atribuir risco",
+      "scene": "Três vinhetas horizontais: tarefa iniciada, interrupção por campainha, retorno com uma peça de processo esquecida fora da sequência. Um pequeno registro externo acompanha os eventos. Não mostrar causa diagnóstica nem frequência numérica.",
+      "source_fields": [
+        "evidencia",
+        "risco_cognitivo_antecedente"
+      ],
+      "status": "PREPARED",
+      "output_name": "C01-S03__evidencia__v1.0.0.png",
+      "evidence": null
+    },
+    {
+      "id": "C01-S04",
+      "slug": "evento-impacto",
+      "type": "Cadeia de dependências",
+      "profile": "isometric",
+      "message": "Uma dependência ausente pode bloquear a entrega",
+      "scene": "Quatro módulos conectados; uma peça ausente no segundo interrompe a conexão até o pacote final. Mostrar o ponto de bloqueio no processo com um espaço vazio claramente visível, não com uma pessoa defeituosa.",
+      "source_fields": [
+        "evento_risco",
+        "impacto_operacional",
+        "consequencia"
+      ],
+      "status": "PREPARED",
+      "output_name": "C01-S04__evento-impacto__v1.0.0.png",
+      "evidence": null
+    },
+    {
+      "id": "C01-S05",
+      "slug": "externalizacao",
+      "type": "Vista explodida funcional",
+      "profile": "isometric",
+      "message": "O sistema conserva estado e contexto",
+      "scene": "Mesa central e quatro elementos externos em vista explodida: bandeja de tarefa ativa, arquivo de tarefas restantes, trilha de histórico e suporte para checklist sem escrita. Conectar cada elemento à mesa. Não usar cérebro partido ou símbolo de doença.",
+      "source_fields": [
+        "compensacao_sistema",
+        "design_solucao_compensatorio"
+      ],
+      "status": "PREPARED",
+      "output_name": "C01-S05__externalizacao__v1.0.0.png",
+      "evidence": null
+    },
+    {
+      "id": "C01-S06",
+      "slug": "proxima-acao",
+      "type": "Funil de priorização",
+      "profile": "flat",
+      "message": "Muitas possibilidades se tornam uma próxima ação explícita",
+      "scene": "Diversas fichas geométricas entram numa bandeja organizadora; apenas uma ficha azul sai para uma área de execução; as demais ficam visíveis em espera. Representar organização e WIP igual a uma tarefa por geometria, sem números.",
+      "source_fields": [
+        "planejamento",
+        "priorizacao",
+        "iniciacao",
+        "design_solucao_compensatorio"
+      ],
+      "status": "PREPARED",
+      "output_name": "C01-S06__proxima-acao__v1.0.0.png",
+      "evidence": null
+    },
+    {
+      "id": "C01-S07",
+      "slug": "controles",
+      "type": "Tríptico operacional",
+      "profile": "isometric",
+      "message": "Prevenir, detectar e corrigir são funções diferentes",
+      "scene": "Três cenas separadas: um gabarito impede encaixe incorreto; uma lupa encontra lacuna numa sequência; uma rota alternativa reconecta os módulos ao destino. Repetir a mesma peça e sistema nos três painéis.",
+      "source_fields": [
+        "controle_preventivo",
+        "controle_detectivo",
+        "controle_corretivo"
+      ],
+      "status": "PREPARED",
+      "output_name": "C01-S07__controles__v1.0.0.png",
+      "evidence": null
+    },
+    {
+      "id": "C01-S08",
+      "slug": "interrupcao-retomada",
+      "type": "Ciclo de recuperação",
+      "profile": "editorial",
+      "message": "Estado persistido ajuda a retomar após interrupções",
+      "scene": "Composição circular com três cenas da mesma personagem: executar na mesa, sair temporariamente, retornar e recuperar a ficha ativa guardada num suporte. Conectores discretos mostram o ciclo; nenhuma escrita no suporte.",
+      "source_fields": [
+        "compensacao_sistema",
+        "controle_corretivo",
+        "resultado_observavel_potencial"
+      ],
+      "status": "PREPARED",
+      "output_name": "C01-S08__interrupcao-retomada__v1.0.0.png",
+      "evidence": null
+    },
+    {
+      "id": "C01-S09",
+      "slug": "medicao",
+      "type": "Comparação qualitativa observável",
+      "profile": "flat",
+      "message": "Verificar o processo depois da compensação",
+      "scene": "Dois grupos de fichas com igual escala visual. Primeiro grupo com fichas fora de sequência; segundo com organizador externo e fichas alinhadas. Uma lupa observa ambos. Não usar barras, percentuais, quantidades codificadas ou sinais de resultado comprovado. Comparação ilustrativa hipotética.",
+      "source_fields": [
+        "metrica",
+        "baseline",
+        "target",
+        "resultado_observado",
+        "progresso"
+      ],
+      "status": "PREPARED",
+      "output_name": "C01-S09__medicao__v1.0.0.png",
+      "evidence": null
+    },
+    {
+      "id": "C01-S10",
+      "slug": "sistema-integrado",
+      "type": "Mapa de ecossistema",
+      "profile": "isometric",
+      "message": "Pessoa, processo e suporte atuam em conjunto",
+      "scene": "Pessoa preservada no centro de uma mesa, cercada por três módulos externos: estado/contexto, próxima ação e revisão/recuperação. Conectar o conjunto a três pequenas ilhas de trabalho, projeto e estudo, retomando a composição inicial. Sem aura de cura, cérebro idealizado ou promessa de ausência de risco.",
+      "source_fields": [
+        "contexto",
+        "processo",
+        "compensacao_sistema",
+        "status_risco"
+      ],
+      "status": "PREPARED",
+      "output_name": "C01-S10__sistema-integrado__v1.0.0.png",
+      "evidence": null
+    }
+  ],
+  "acceptance": [
+    "10 arquivos únicos",
+    "1920×1080 verificado",
+    "Nenhuma escrita",
+    "Paleta consistente por perfil",
+    "Nenhum resultado quantitativo inventado",
+    "Pessoa não representada como falha",
+    "Revisão visual individual e do conjunto"
+  ],
+  "handoff": "Gerar C01-S01, S02 e S03 como referências de perfil; revisar; gerar os demais com referência do mesmo perfil; inspecionar dimensões e conteúdo; arquivar prompts, parâmetros e hashes.",
+  "brand": "Risco Cognitivo",
+  "title": "Campanha 01 — O sistema apoia a execução",
+  "palette_source": "rc-brand/assets/tokens/tokens.json (tema atual) — paleta anterior #2563EB/#CBD5F5/#99B0F4/#111827 substituída (CF-02)"
+}

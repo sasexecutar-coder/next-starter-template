@@ -1,0 +1,8 @@
+{
+  "skill_name": "rc-brand",
+  "evals": [
+    {"id": 0, "prompt": "Crie um carrossel de 5 slides para o Instagram sobre o viés de ancoragem com a minha marca Risco Cognitivo. Quero as imagens prontas para postar.", "expected_output": "HTML + 5 PNGs 1080x1350 com tokens da marca (azul #2D5CE6, canvas #FFFDFA, DM Sans/Inter/DM Mono), sem número inventado", "files": []},
+    {"id": 1, "prompt": "Preciso levar a marca Risco Cognitivo para um projeto novo em Tailwind. Me passa os tokens de cor e tipografia e me diz o tamanho exato em pixels e a safe area de um Story do Instagram.", "expected_output": "tokens reais (preset/tokens.css), fontes corretas; story: só 9:16 verificado, px e safe area declarados A DEFINIR em vez de chutar", "files": []},
+    {"id": 2, "prompt": "Aplica a marca Risco Cognitivo neste HTML antigo (input-foreign.html) e me devolve o arquivo convertido.", "expected_output": "HTML com var(--token), laranja/azul estrangeiro remapeado para D-01, fontes da marca, nome Custo Cognitivo trocado, audit_html sem bloqueantes", "files": ["input-foreign.html"]}
+  ]
+}

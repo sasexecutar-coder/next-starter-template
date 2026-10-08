@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="{{ doc.lang | default('pt-BR') }}" data-theme="{{ doc.theme | default('atual') }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="{{ doc.description }}">
+<meta name="generator" content="rc-ebook · Risco Cognitivo">
+<title>{{ doc.title }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{{ fonts_url }}" rel="stylesheet">
+<style>
+{{ brand_css | safe }}
+{% if doc.get('brand_override') %}
+/* brand layer (rc-brand-layer): só tokens declarados em brand_config */
+:root{ {% for k, v in doc.brand_override.items() %}--{{ k }}: {{ v }}; {% endfor %}}
+{% endif %}
+.eb-top{position:sticky;top:0;z-index:20;background:var(--surface-page);border-bottom:1px solid var(--border-subtle)}
+.eb-top-in{display:flex;align-items:center;gap:var(--space-4);min-height:64px;padding:0 var(--space-6)}
+.eb-mark{display:flex;align-items:center;min-height:44px;gap:var(--space-3);font:700 1rem/1 var(--font-display);color:var(--text-primary);text-decoration:none}
+.eb-mark svg{width:28px;height:28px;color:var(--brand-action-blue)}
+.eb-spacer{flex:1}
+.eb-progress{height:4px;background:var(--surface-subtle)}
+.eb-progress i{display:block;height:100%;width:0;background:var(--brand-action-blue);transition:width var(--dur-menu) var(--ease-standard)}
+.eb-menu{display:none}
+.eb-shell{display:grid;grid-template-columns:280px minmax(0,1fr)}
+.eb-side{position:sticky;top:68px;align-self:start;height:calc(100vh - 68px);overflow:auto;padding:var(--space-8) var(--space-6);border-right:1px solid var(--border-subtle)}
+.eb-side ol{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-1)}
+.eb-side a{display:flex;gap:var(--space-3);align-items:center;min-height:44px;padding:0 var(--space-3);border-radius:var(--radius-md);color:var(--text-secondary);text-decoration:none;font-size:.9375rem}
+.eb-side a:hover{background:var(--surface-subtle);color:var(--text-primary)}
+.eb-side a[aria-current="true"]{background:var(--surface-subtle);color:var(--action-text);font-weight:600}
+.eb-side .no{font:500 .75rem/1 var(--font-mono);color:var(--text-secondary);min-width:24px}
+.eb-main{min-width:0;padding:var(--space-16) var(--space-12) var(--space-24)}
+.eb-col{max-width:760px}
+.eb-hero{padding-bottom:var(--space-16);border-bottom:1px solid var(--border-subtle);margin-bottom:var(--space-16)}
+.eb-hero h1{font-size:var(--ed-fs-title);font-weight:800;letter-spacing:-0.035em;margin-top:var(--space-4)}
+.eb-hero .lead{margin-top:var(--space-6);font-size:1.1875rem;line-height:1.55;color:var(--text-secondary);max-width:var(--ed-measure)}
+.eb-hero .meta-row{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:var(--space-8)}
+.eb-sec{padding-top:var(--space-12);margin-bottom:var(--space-16);scroll-margin-top:calc(var(--header-h) + var(--space-2));break-inside:avoid-page}
+.eb-sec-head{display:flex;gap:var(--space-4);align-items:baseline;margin-bottom:var(--space-6)}
+.eb-sec-head .no{font:500 .875rem/1 var(--font-mono);color:var(--action-text)}
+.eb-sec h2{font-size:var(--ed-fs-h2);font-weight:700}
+.eb-sec h3{font-size:var(--ed-fs-h3);font-weight:700;margin:var(--space-8) 0 var(--space-3)}
+.eb-sec p{max-width:var(--ed-measure);margin-bottom:var(--space-4)}
+.eb-sec ul.list{max-width:var(--ed-measure);margin:0 0 var(--space-4);padding-left:var(--space-6)}
+.eb-sec ul.list li{margin-bottom:var(--space-2)}
+.eb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--space-4);margin:var(--space-6) 0}
+.eb-grid .panel h3{margin:0 0 var(--space-2);font-size:1rem}
+.eb-grid .panel p{font-size:.9375rem;color:var(--text-secondary);margin:0}
+.eb-steps{list-style:none;margin:var(--space-6) 0;padding:0;display:grid;gap:var(--space-4)}
+.eb-steps li{display:grid;grid-template-columns:40px 1fr;gap:var(--space-4);align-items:start}
+.eb-steps .n{display:grid;place-items:center;width:40px;height:40px;border-radius:999px;background:var(--brand-action-blue);color:var(--text-on-dark);font:700 1rem/1 var(--font-display)}
+.eb-steps strong{display:block;font-family:var(--font-display)}
+.eb-steps span{color:var(--text-secondary);font-size:.9375rem}
+.cmd{display:grid;gap:var(--space-2);padding:var(--space-4);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);background:var(--surface-raised);margin-bottom:var(--space-3);break-inside:avoid}
+.cmd-head{display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:center}
+.cmd-id{font:500 .75rem/1 var(--font-mono);color:var(--text-secondary)}
+.cmd-slash{font:600 1rem/1.2 var(--font-mono);color:var(--action-text)}
+.cmd-say{font-size:.9375rem;color:var(--text-secondary)}
+.cmd-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-3);align-items:center}
+.copy{min-height:44px;padding:0 var(--space-4);border:1px solid var(--border-control);border-radius:var(--radius-md);background:var(--surface-raised);color:var(--text-primary);font:500 .875rem/1 var(--font-body);cursor:pointer}
+.copy:hover{border-color:var(--brand-action-blue);color:var(--action-text)}
+.copy[data-done="1"]{border-color:var(--semantic-solution)}
+pre.code{margin:var(--space-4) 0;padding:var(--space-4);background:var(--surface-subtle);border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:auto;font-size:.875rem;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.eb-table{width:100%;border-collapse:collapse;margin:var(--space-6) 0;font-size:.9375rem}
+.eb-table th,.eb-table td{text-align:left;vertical-align:top;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--border-subtle)}
+.eb-table th{font:600 .75rem/1.3 var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--text-secondary)}
+.eb-table-wrap{overflow-x:auto}
+.check{list-style:none;margin:var(--space-6) 0;padding:0;display:grid;gap:var(--space-2)}
+.check label{display:flex;gap:var(--space-3);align-items:center;min-height:44px;padding:0 var(--space-4);border:1px solid var(--border-subtle);border-radius:var(--radius-md);cursor:pointer;background:var(--surface-raised)}
+.check input{width:20px;height:20px;accent-color:var(--brand-action-blue)}
+.check input:checked+span{color:var(--text-secondary);text-decoration:line-through}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin:var(--space-6) 0}
+.rules .panel h3{margin:0 0 var(--space-3);font-size:1rem}
+.rules ul{margin:0;padding-left:var(--space-6)}
+.rules .dot{display:inline-block;width:8px;height:8px;border-radius:999px;margin-right:var(--space-2);vertical-align:middle}
+.rules .yes .dot{background:var(--semantic-solution)}
+.rules .no .dot{background:var(--semantic-risk)}
+.faq details{border-bottom:1px solid var(--border-subtle)}
+.faq summary{min-height:44px;display:flex;align-items:center;padding:var(--space-3) 0;font:600 1rem/1.4 var(--font-display);cursor:pointer}
+.faq details p{padding-bottom:var(--space-4);color:var(--text-secondary)}
+.timeline{list-style:none;margin:var(--space-6) 0;padding:0;border-left:2px solid var(--border-subtle)}
+.timeline li{position:relative;padding:0 0 var(--space-6) var(--space-6)}
+.timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:999px;background:var(--brand-action-blue)}
+.timeline .when{font:500 .75rem/1 var(--font-mono);color:var(--text-secondary)}
+.timeline strong{display:block;font-family:var(--font-display);margin-top:var(--space-1)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:var(--space-3);margin:var(--space-6) 0}
+.sw{border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--surface-raised)}
+.sw i{display:block;height:64px;border-bottom:1px solid var(--border-subtle)}
+.sw div{padding:var(--space-3);font-size:.8125rem}
+.sw code{display:block;color:var(--text-secondary);font-size:.75rem}
+.form{display:grid;gap:var(--space-4);margin:var(--space-6) 0;max-width:560px}
+.form label{display:grid;gap:var(--space-2);font-weight:600;font-size:.9375rem}
+.form input,.form select{min-height:44px;padding:0 var(--space-3);border:1px solid var(--border-control);border-radius:var(--radius-md);background:var(--surface-raised);color:var(--text-primary);font:400 1rem/1 var(--font-body)}
+.form .hint{font-weight:400;color:var(--text-secondary);font-size:.8125rem}
+.eb-foot{margin-top:var(--space-24);padding-top:var(--space-8);border-top:1px solid var(--border-subtle);color:var(--text-secondary);font-size:.875rem;display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:space-between}
+@media (max-width: 960px){
+  .eb-shell{grid-template-columns:1fr}
+  .eb-menu{display:inline-flex}
+  .eb-side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--border-subtle);display:none}
+  .eb-side[data-open="true"]{display:block}
+  .eb-main{padding:var(--space-12) var(--space-4) var(--space-24)}
+  .rules{grid-template-columns:1fr}
+  .eb-top-in{padding:0 var(--space-4)}
+  .eb-top .segmented{display:none}
+}
+@media (max-width: 480px){.eb-mark span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.eb-top-in{gap:var(--space-2)}}
+@page{size:A4;margin:12mm}
+@media print{
+  .eb-top,.eb-side,.copy,.eb-menu{display:none!important}
+  .eb-shell{display:block}
+  .eb-main{padding:0}
+  body{font-size:10.5pt;background:var(--surface-raised)}
+  .eb-sec{break-inside:auto;padding-top:0}
+  .eb-sec h2,.eb-sec h3{break-after:avoid}
+  .cmd,.panel,.sw,.eb-table tr,.check label{break-inside:avoid}
+  a{color:var(--text-primary)}
+}
+</style>
+</head>
+<body data-surface="{{ doc.surface | default('screen') }}">
+<header class="eb-top">
+  <div class="eb-top-in">
+    <a class="eb-mark" href="#top" aria-label="{{ doc.brand_name }} — início">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="4" width="56" height="56" rx="12" fill="currentColor"/><text x="32" y="41" text-anchor="middle" font-family="DM Sans, system-ui, sans-serif" font-weight="800" font-size="24" style="fill:var(--text-on-dark)">RC</text></svg>
+      <span>{{ doc.brand_name }}</span>
+    </a>
+    <button class="btn btn-secondary btn-md eb-menu" type="button" aria-controls="eb-nav" aria-expanded="false">Seções</button>
+    <span class="eb-spacer"></span>
+    <div class="segmented" role="group" aria-label="Tema">
+      <button type="button" data-set-theme="atual" aria-pressed="true">Atual</button>
+      <button type="button" data-set-theme="claro" aria-pressed="false">Claro</button>
+      <button type="button" data-set-theme="noite" aria-pressed="false">Noite</button>
+    </div>
+    <button class="btn btn-primary btn-md" type="button" data-print>Baixar PDF</button>
+  </div>
+  <div class="eb-progress" aria-hidden="true"><i></i></div>
+</header>
+<div class="eb-shell" id="top">
+  <nav class="eb-side" id="eb-nav" aria-label="Seções">
+    <p class="eyebrow">{{ doc.nav_label | default('Roteiro') }}</p>
+    <ol>
+    {% for s in doc.sections %}
+      <li><a href="#{{ s.id }}"><span class="no">{{ '%02d' | format(loop.index) }}</span>{{ s.nav | default(s.title) }}</a></li>
+    {% endfor %}
+    </ol>
+  </nav>
+  <main class="eb-main">
+    <div class="eb-col">
+      <section class="eb-hero">
+        <p class="eyebrow">{{ doc.eyebrow }}</p>
+        <h1>{{ doc.headline }}</h1>
+        <p class="lead">{{ doc.lead }}</p>
+        {% if doc.get('chips') %}<div class="meta-row">{% for c in doc.chips %}<span class="chip chip-soon">{{ c }}</span>{% endfor %}</div>{% endif %}
+      </section>
+      {% for s in doc.sections %}
+      <section class="eb-sec" id="{{ s.id }}" aria-labelledby="{{ s.id }}-h">
+        <div class="eb-sec-head"><span class="no">{{ '%02d' | format(loop.index) }}</span><h2 id="{{ s.id }}-h">{{ s.title }}</h2></div>
+        {% for b in s.blocks %}{% include "blocks.html.j2" %}{% endfor %}
+      </section>
+      {% endfor %}
+      <footer class="eb-foot">
+        <span>{{ doc.footer }}</span>
+        <span class="meta">{{ doc.id }} · v{{ doc.version }}</span>
+      </footer>
+    </div>
+  </main>
+</div>
+<script>
+(function(){
+  var root=document.documentElement, KEY="rc-theme", CK="rc-check:{{ doc.id }}";
+  function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function theme(t){root.setAttribute("data-theme",t);set(KEY,t);
+    document.querySelectorAll("[data-set-theme]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.setTheme===t))})}
+  var saved=get(KEY); if(saved==="atual"||saved==="claro"||saved==="noite") theme(saved);
+  document.querySelectorAll("[data-set-theme]").forEach(function(b){b.addEventListener("click",function(){theme(b.dataset.setTheme)})});
+  document.querySelectorAll("[data-print]").forEach(function(b){b.addEventListener("click",function(){window.print()})});
+  var menu=document.querySelector(".eb-menu"), nav=document.getElementById("eb-nav");
+  if(menu){menu.addEventListener("click",function(){var o=nav.getAttribute("data-open")==="true";nav.setAttribute("data-open",String(!o));menu.setAttribute("aria-expanded",String(!o))})}
+  document.querySelectorAll("[data-copy]").forEach(function(b){b.addEventListener("click",function(){
+    var src=document.getElementById(b.dataset.copy), txt=src?src.innerText:b.dataset.text||"";
+    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(function(){b.dataset.done="1";b.textContent="Copiado"},function(){b.textContent="Selecione e copie"})})});
+  var state={}; try{state=JSON.parse(get(CK)||"{}")}catch(e){}
+  document.querySelectorAll(".check input[data-key]").forEach(function(i){i.checked=!!state[i.dataset.key];
+    i.addEventListener("change",function(){state[i.dataset.key]=i.checked;set(CK,JSON.stringify(state))})});
+  var bar=document.querySelector(".eb-progress i"), links=[].slice.call(document.querySelectorAll(".eb-side a"));
+  function onScroll(){var h=document.documentElement.scrollHeight-innerHeight;bar.style.width=(h>0?Math.min(100,scrollY/h*100):0)+"%";
+    var cur=null;document.querySelectorAll(".eb-sec").forEach(function(s){if(s.getBoundingClientRect().top<140)cur=s.id});
+    links.forEach(function(a){a.setAttribute("aria-current",String(a.getAttribute("href")==="#"+cur))})}
+  addEventListener("scroll",onScroll,{passive:true}); onScroll();
+  var form=document.querySelector("form[data-brand-config]");
+  if(form){form.addEventListener("submit",function(ev){ev.preventDefault();var d={};new FormData(form).forEach(function(v,k){if(String(v).trim())d[k]=String(v).trim()});
+    var out=document.getElementById("brand-config-out");out.textContent=JSON.stringify({brand:d},null,2);
+    var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([out.textContent],{type:"application/json"}));a.download="brand_config.json";a.click()})}
+})();
+</script>
+</body>
+</html>

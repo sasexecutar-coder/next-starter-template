@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="{{ card.meta.lang }}">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="{{ card.meta.description }}"><meta name="card-id" content="{{ card.id }}">
+<meta property="og:title" content="{{ card.meta.og_title }}"><meta property="og:description" content="{{ card.meta.og_description }}">
+{% if card.meta.get('canonical') %}<link rel="canonical" href="{{ card.meta.canonical }}">{% endif %}
+<title>{{ card.meta.title }}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{{ fonts_url }}" rel="stylesheet">
+<style>
+{{ brand_css | safe }}
+body{background:var(--surface-subtle)}
+.page{width:210mm;min-height:297mm;margin:0 auto;padding:var(--space-8);display:grid;place-items:center;background:var(--surface-page)}
+.card{width:100%;max-width:720px;background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xl);overflow:hidden;box-shadow:var(--shadow-card-raised)}
+.top{padding:var(--space-6) var(--space-6) var(--space-4);border-bottom:1px solid var(--border-subtle)}
+.top .meta{display:flex;justify-content:space-between;gap:var(--space-3)}
+.top .eyebrow{margin-top:var(--space-2)}
+h1{margin-top:var(--space-2);white-space:pre-line;font-size:2rem;font-weight:800;line-height:1.05;letter-spacing:-0.04em}
+.sub{margin-top:var(--space-2);color:var(--text-secondary);font-size:.875rem}
+.tutorial{padding:var(--space-4) var(--space-6)}
+.label{font:500 .75rem/1 var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--text-secondary);margin-bottom:var(--space-3)}
+.steps{display:grid;grid-template-columns:repeat({{ card.content.steps | length }},minmax(0,1fr));gap:var(--space-2);list-style:none;margin:0;padding:0}
+.step{min-width:0;padding:var(--space-3);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);background:var(--surface-subtle);break-inside:avoid}
+.n{display:grid;place-items:center;width:24px;height:24px;border-radius:999px;background:var(--brand-action-blue);color:var(--text-on-dark);font:700 .75rem/1 var(--font-display)}
+.step strong{display:block;margin-top:var(--space-2);font:700 .8125rem/1.25 var(--font-display)}
+.step p{margin-top:var(--space-1);color:var(--text-secondary);font-size:.75rem;line-height:1.4}
+.mockup{margin:0 var(--space-6) var(--space-4);padding:var(--space-3);border:1px solid var(--brand-light-blue);border-radius:var(--radius-lg);background:var(--surface-subtle);break-inside:avoid}
+.mockup-top{display:flex;justify-content:space-between;gap:var(--space-2);font:600 .75rem/1 var(--font-mono);color:var(--action-text)}
+.visual{height:64px;margin:var(--space-2) 0;overflow:hidden;border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:var(--surface-raised)}
+.calendar{display:grid;grid-template-columns:56px repeat(6,1fr);grid-template-rows:16px repeat(2,1fr)}
+.calendar span{border-right:1px solid var(--border-subtle);border-bottom:1px solid var(--border-subtle)}
+.calendar span:first-child{grid-row:1/4;background:var(--brand-action-blue)}
+.report{padding:var(--space-2) var(--space-3)}
+.report b,.report i{display:block;height:6px;margin-bottom:var(--space-2);border-radius:var(--radius-sm);background:var(--brand-light-gray)}
+.report b{width:35%;background:var(--brand-action-blue)}
+.report i:nth-child(3){width:72%}.report i:nth-child(4){width:48%}.report i:nth-child(5){width:86%}
+.callouts{padding:var(--space-2)}
+.callouts i{display:block;height:8px;margin-bottom:var(--space-1);border-radius:var(--radius-sm);border-left:4px solid var(--brand-action-blue);background:var(--brand-light-blue-soft)}
+.caption{color:var(--text-secondary);font-size:.75rem;line-height:1.35}
+.prompt{border-top:2px solid var(--brand-action-blue);padding:var(--space-4) var(--space-6);background:var(--surface-raised)}
+.prompt-head{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3);margin-bottom:var(--space-2)}
+.prompt-head strong{font:600 .75rem/1 var(--font-mono);letter-spacing:.06em;color:var(--action-text)}
+.copy{min-height:44px;padding:0 var(--space-4);border:1px solid var(--border-control);border-radius:var(--radius-md);background:var(--surface-raised);cursor:pointer}
+.prompt pre{margin:0;padding:var(--space-3);border:1px solid var(--border-subtle);border-radius:var(--radius-md);background:var(--surface-subtle);white-space:pre-wrap;overflow-wrap:anywhere;font:400 .75rem/1.45 var(--font-mono)}
+.footer{padding:var(--space-2) var(--space-6);border-top:1px solid var(--border-subtle);display:flex;justify-content:space-between;gap:var(--space-2);flex-wrap:wrap}
+.tag{font:400 .625rem/1.4 var(--font-mono);color:var(--text-secondary)}
+@page{size:A4 portrait;margin:0}
+@media (max-width:760px){.page{width:100%;min-height:0;padding:var(--space-3)}.steps{grid-template-columns:1fr}.prompt pre{font-size:.75rem}}
+@media print{body{background:var(--surface-page)}.copy{display:none}.card{box-shadow:none}.prompt pre{font-size:7pt}}
+</style>
+</head>
+<body data-surface="print">
+<main class="page"><article class="card" aria-labelledby="t">
+  <header class="top">
+    <div class="meta"><span>{{ card.content.number }} · {{ project.brand }}</span><span>tutorial humano</span></div>
+    <p class="eyebrow">{{ card.content.eyebrow }}</p>
+    <h1 id="t">{{ card.content.headline }}</h1>
+    <p class="sub">{{ card.content.subheadline }}</p>
+  </header>
+  <section class="tutorial" aria-label="Como usar">
+    <p class="label">Como usar · leitura humana</p>
+    <ol class="steps">{% for step in card.content.steps %}<li class="step"><span class="n" aria-hidden="true">{{ step.n }}</span><strong>{{ step.title }}</strong><p>{{ step.desc }}</p></li>{% endfor %}</ol>
+  </section>
+  <section class="mockup" aria-label="Mockup do entregável">
+    <div class="mockup-top"><span>{{ card.mockup.title }}</span><span>ENTREGÁVEL</span></div>
+    <div class="visual {{ card.mockup.type }}" aria-hidden="true">{% if card.mockup.type == 'calendar' %}<span></span>{% for _ in range(18) %}<span></span>{% endfor %}{% elif card.mockup.type == 'report' %}<b></b><i></i><i></i><i></i><i></i>{% else %}{% for _ in range(5) %}<i></i>{% endfor %}{% endif %}</div>
+    <p class="caption">{{ card.mockup.caption }}</p>
+  </section>
+  <section class="prompt" aria-label="Prompt completo">
+    <div class="prompt-head"><strong>PROMPT COMPLETO PARA IA</strong><button class="copy" type="button" data-copy>Copiar prompt</button></div>
+    <pre id="prompt">{{ card.prompt_full }}</pre>
+  </section>
+  <footer class="footer"><span class="tag">{{ card.id }} · v{{ card.version }} · {{ card.source_evidence['class'] }}</span><span class="tag">{{ card.tags | join(' · ') }}</span></footer>
+</article></main>
+<script>document.querySelector("[data-copy]").addEventListener("click",function(e){var b=e.currentTarget;
+(navigator.clipboard?navigator.clipboard.writeText(document.getElementById("prompt").innerText):Promise.reject()).then(function(){b.textContent="Copiado"},function(){b.textContent="Selecione e copie"})});</script>
+</body>
+</html>

@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="atual">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Onboarding de ativação do plugin risco-cognitivo-brand: comandos, regras e checklist de controle.">
+<meta name="generator" content="rc-ebook · Risco Cognitivo">
+<title>Ativação da marca · Risco Cognitivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=DM+Sans:opsz,wght@9..40,400..800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+/* Risco Cognitivo — tokens. Gerado por scripts/build_tokens.py a partir de src/app/globals.css (D-01…D-36). Não editar à mão. */
+:root {
+  --brand-canvas: #fffdfa;
+  --brand-dark-gray: #545454;
+  --brand-light-gray: #ececec;
+  --brand-light-blue: #cbd4ff;
+  --brand-light-blue-soft: rgb(203 212 255 / 48%);
+  --brand-dark-indigo: #0e025d;
+  --brand-action-blue: #2d5ce6;
+  --brand-action-blue-strong: #1f46bf;
+  --semantic-risk: #ff0000;
+  --semantic-solution: #00bf63;
+  --attention-surface: #ffe659;
+  --attention-ink: #8a5a00;
+  --on-attention: #000000;
+  --brain-accent: #6e72f0;
+  --brain-accent-strong: #4f53d9;
+  --brain-accent-soft: #e4e6ff;
+  --brain-accent-line: #a3a8f5;
+  --brain-accent-text: #4f53d9;
+  --brain-border-strong: #cbcbcb;
+  --text-primary: #000000;
+  --text-secondary: #545454;
+  --text-on-dark: #ffffff;
+  --surface-page: var(--brand-canvas);
+  --surface-subtle: #f4f3f0;
+  --surface-raised: #ffffff;
+  --line-subtle: var(--brand-light-gray);
+  --border-subtle: var(--brand-light-gray);
+  --border-control: #85847f;
+  --border-strong: #cbcbcb;
+  --action-text: var(--brand-action-blue);
+  --action-line: rgb(45 92 230 / 45%);
+  --dot-grid: #d9d9de;
+  --selection: var(--brand-light-blue);
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --block-y: var(--space-8);
+  --stack-section: var(--space-8);
+  --stack-items: var(--space-8);
+  --stack-inner: var(--space-6);
+  --gutter: 32px;
+  --container: 1120px;
+  --header-h: 72px;
+  --subnav-h: 52px;
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --shadow-sm: 0 0 0 1px var(--border-subtle);
+  --shadow-md: 0 0 0 1px var(--border-subtle), 0 6px 18px rgb(0 0 0 / 6%);
+  --shadow-card-raised: 0 4px 16px rgb(20 20 19 / 8%);
+  --scrim: rgb(20 20 19 / 20%);
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --dur-menu: 320ms;
+  --ed-paper: var(--surface-page);
+  --ed-ink: var(--text-primary);
+  --ed-heading: var(--text-primary);
+  --ed-label: var(--text-secondary);
+  --ed-link: var(--action-text);
+  --ed-strong: var(--action-text);
+  --ed-callout-head: var(--brand-dark-indigo);
+  --ed-callout-head-text: var(--text-on-dark);
+  --ed-callout-bg: var(--brand-light-blue-soft);
+  --ed-callout-text: var(--text-primary);
+  --ed-rule: var(--line-subtle);
+  --ed-fs-body: 1.0625rem;
+  --ed-lh-body: 1.6;
+  --ed-fs-h3: 1.2rem;
+  --ed-fs-h2: clamp(1.4rem, 1.1rem + 1.2vw, 1.75rem);
+  --ed-fs-title: clamp(2.25rem, 1.2rem + 4.5vw, 3.75rem);
+  --ed-lh: calc(var(--ed-fs-body) * var(--ed-lh-body));
+  --ed-measure: 68ch;
+  --ed-sp-title-to-body: calc(var(--ed-lh) * 2.5);
+  --ed-sp-h-before: calc(var(--ed-lh) * 2);
+  --ed-sp-h2-after: calc(var(--ed-lh) * 0.75);
+  --ed-sp-h3-after: calc(var(--ed-lh) * 0.5);
+  --ed-sp-paragraph: calc(var(--ed-lh) * 0.75);
+  --ed-sp-callout-before: var(--ed-lh);
+  --ed-sp-callout-after: calc(var(--ed-lh) * 1.5);
+}
+:root[data-theme="claro"] {
+  --text-primary: #171717;
+  --text-secondary: #333333;
+  --surface-page: #ffffff;
+  --surface-subtle: #fafafa;
+  --surface-raised: #ffffff;
+  --line-subtle: #eaeaea;
+  --border-subtle: #eaeaea;
+  --border-strong: #cccccc;
+  --dot-grid: #e5e5e5;
+}
+:root[data-theme="noite"] {
+  --text-primary: #ededed;
+  --text-secondary: #94a3b8;
+  --surface-page: #0f172a;
+  --surface-subtle: #1e293b;
+  --surface-raised: #1e293b;
+  --line-subtle: #334155;
+  --border-subtle: #334155;
+  --border-control: #94a3b8;
+  --border-strong: #475569;
+  --action-text: #8fa9ff;
+  --action-line: rgb(143 169 255 / 50%);
+  --dot-grid: #263248;
+  --selection: #1f46bf;
+  --brain-accent-soft: #272a5c;
+  --brain-accent-text: #a3a8f5;
+  --brain-border-strong: #475569;
+  --shadow-card-raised: 0 4px 16px rgb(0 0 0 / 40%);
+  --scrim: rgb(0 0 0 / 50%);
+  --ed-callout-bg: rgb(45 92 230 / 18%);
+}
+@media (min-width: 640px) {
+  :root {
+    --gutter: 48px;
+    --stack-section: var(--space-12);
+    --ed-fs-body: 1.125rem;
+    --ed-lh-body: 1.65;
+    --ed-sp-title-to-body: calc(var(--ed-lh) * 3.5);
+    --ed-sp-h-before: calc(var(--ed-lh) * 2.4);
+  }
+}
+@media (min-width: 768px) {
+  :root {
+    --block-y: var(--space-12);
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --ed-sp-title-to-body: calc(var(--ed-lh) * 4.8);
+    --ed-sp-h-before: calc(var(--ed-lh) * 2.6);
+  }
+}
+
+:root{--font-display:"DM Sans",system-ui,sans-serif;--font-body:"Inter",system-ui,sans-serif;
+  --font-mono:"DM Mono",ui-monospace,monospace}
+/* Risco Cognitivo — primitivos sem framework (extraídos do CSS compilado do site por build_tokens.py).
+   Carregue tokens.css antes. Classes: container-page, page-block, stack-section, stack-items, btn, btn-md, btn-primary, btn-secondary, btn-icon, meta, eyebrow, eyebrow-bars, chip, chip-gap, chip-soon, chip-tag, panel, panel-subtle, panel-compact, panel-interactive, callout, bracket, highlight, brand-strong, segmented, fx-edge-01 */
+.container-page { width:100%;max-width:calc(var(--container) + 2*var(--gutter));padding-inline:var(--gutter);margin-inline:auto }
+.page-block { padding-block:var(--block-y) }
+.stack-section { margin-top:var(--stack-section) }
+.btn { font-family:var(--font-body),system-ui,sans-serif;height:40px;padding:0 var(--space-4);border-radius:var(--radius-md);white-space:nowrap;border:1px solid transparent;justify-content:center;align-items:center;gap:.5rem;font-size:18px;font-weight:500;line-height:24px;transition:background-color .15s,border-color .15s,transform .15s;display:inline-flex;position:relative }
+.btn:before { content:"";position:absolute;inset:-2px 0 }
+.btn:active:not([aria-disabled=true]):not(:disabled) { transform:scale(.98) }
+.btn:disabled, .btn[aria-disabled=true] { opacity:.4;cursor:not-allowed;transform:none }
+.btn[aria-busy=true] { cursor:progress }
+.btn-md { height:36px;font-size:16px }
+.btn-md:before { inset:-4px 0 }
+.btn-primary { background:var(--brand-action-blue);color:var(--text-on-dark) }
+.btn-primary:hover:not(:disabled):not([aria-disabled=true]) { background:var(--brand-action-blue-strong) }
+.btn-secondary { background:var(--surface-raised);border-color:var(--border-control);color:var(--text-primary) }
+.btn-secondary:hover:not(:disabled):not([aria-disabled=true]) { background:var(--surface-subtle) }
+.btn-icon { border-radius:var(--radius-lg);border:1px solid var(--border-control);width:40px;height:40px;color:var(--text-primary);background:0 0;place-items:center;display:inline-grid;position:relative }
+.btn-icon:before { content:"";position:absolute;inset:-2px }
+.btn-icon:hover:not(:disabled) { background:var(--surface-subtle) }
+.btn-icon:disabled { opacity:.4;cursor:not-allowed }
+.meta { font-family:var(--font-body),system-ui,sans-serif;color:var(--text-secondary);font-size:14px;line-height:20px }
+.eyebrow { font-family:var(--font-mono),ui-monospace,monospace;text-transform:uppercase;letter-spacing:.05em;color:var(--action-text);font-size:.75rem;font-weight:500;line-height:1rem;display:inline-block }
+.eyebrow-bars { font-family:var(--font-body),system-ui,sans-serif;text-transform:uppercase;letter-spacing:.28em;color:var(--text-secondary);align-items:center;gap:18px;font-size:13px;font-weight:500;display:inline-flex }
+.eyebrow-bars:before, .eyebrow-bars:after { content:"";background:var(--brain-accent);width:3px;height:30px }
+.chip { white-space:nowrap;font-family:var(--font-mono),ui-monospace,monospace;padding:2px var(--space-2);border-radius:var(--radius-sm);flex-shrink:0;align-items:center;font-size:.75rem;font-weight:500;line-height:1rem;display:inline-flex }
+.chip-gap { background:var(--attention-surface);color:var(--on-attention) }
+.chip-soon { background:var(--surface-subtle);color:var(--text-secondary);font-family:var(--font-body) }
+.chip-tag { border:1px solid var(--border-control);color:var(--text-primary) }
+.chip-tag[aria-pressed=true], .chip-tag[aria-current] { border-color:var(--action-text);color:var(--action-text) }
+.panel { background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:var(--radius-xs);padding:var(--space-6);position:relative }
+.panel-subtle { background:var(--surface-subtle) }
+.panel-compact { padding:var(--space-3)var(--space-4) }
+.panel-interactive { transition:border-color .15s,box-shadow .15s,transform .15s }
+.panel-interactive:hover, .panel-interactive:focus-within { border-color:var(--action-text);box-shadow:var(--shadow-card-raised) }
+.callout { background:color-mix(in srgb,var(--surface-raised)90%,transparent);border:1px dashed var(--action-line);border-radius:var(--radius-xs);padding:var(--space-4)var(--space-6);position:relative }
+.callout>.bracket { border:0 solid var(--action-text);pointer-events:none;width:12px;height:12px;position:absolute }
+.callout>.bracket:first-of-type { border-top-width:2px;border-left-width:2px;top:-1px;left:-1px }
+.callout>.bracket:nth-of-type(2) { border-top-width:2px;border-right-width:2px;top:-1px;right:-1px }
+.callout>.bracket:nth-of-type(3) { border-bottom-width:2px;border-left-width:2px;bottom:-1px;left:-1px }
+.callout>.bracket:nth-of-type(4) { border-bottom-width:2px;border-right-width:2px;bottom:-1px;right:-1px }
+.highlight { padding-block:var(--space-6);border-block:1px solid var(--border-strong);font-family:var(--font-display);letter-spacing:-.01em;color:var(--text-primary);text-wrap:balance;font-size:clamp(1.25rem,1rem + 1vw,1.625rem);font-weight:700;line-height:1.3;position:relative }
+.highlight:before, .highlight:after { content:"";background:var(--action-text);width:48px;height:4px;position:absolute;left:50%;transform:translate(-50%,-50%) }
+.highlight:before { top:-.5px }
+.highlight:after { top:calc(100% + .5px) }
+.highlight cite { font-family:var(--font-body),system-ui,sans-serif;color:var(--text-secondary);margin-top:.75rem;font-size:.875rem;font-style:normal;font-weight:400;line-height:1.25rem;display:block }
+.brand-strong { color:var(--action-text);font-weight:700 }
+.segmented { border:1px solid var(--border-control);border-radius:var(--radius-md);display:inline-flex;overflow:hidden }
+.segmented button { min-height:44px;padding:0 var(--space-4);color:var(--text-secondary);background:var(--surface-raised);font-size:14px }
+.segmented button+button { border-left:1px solid var(--border-subtle) }
+.segmented button[aria-pressed=true] { color:var(--action-text);background:var(--surface-subtle);font-weight:600 }
+
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+button{background-color:transparent}
+body{margin:0;background:var(--surface-page);color:var(--text-primary);font:400 1rem/1.6 var(--font-body);
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:var(--font-display);color:var(--text-primary);margin:0;letter-spacing:-0.02em;line-height:1.15}
+p{margin:0}
+a{color:var(--action-text);text-underline-offset:3px}
+a.btn,a.btn-icon,a.chip{text-decoration:none}
+.btn-primary,.btn-primary:visited{color:var(--text-on-dark)}
+code,pre,kbd{font-family:var(--font-mono)}
+::selection{background:var(--selection)}
+:focus-visible{outline:2px solid var(--brand-action-blue);outline-offset:2px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
+
+.eb-top{position:sticky;top:0;z-index:20;background:var(--surface-page);border-bottom:1px solid var(--border-subtle)}
+.eb-top-in{display:flex;align-items:center;gap:var(--space-4);min-height:64px;padding:0 var(--space-6)}
+.eb-mark{display:flex;align-items:center;min-height:44px;gap:var(--space-3);font:700 1rem/1 var(--font-display);color:var(--text-primary);text-decoration:none}
+.eb-mark svg{width:28px;height:28px;color:var(--brand-action-blue)}
+.eb-spacer{flex:1}
+.eb-progress{height:4px;background:var(--surface-subtle)}
+.eb-progress i{display:block;height:100%;width:0;background:var(--brand-action-blue);transition:width var(--dur-menu) var(--ease-standard)}
+.eb-menu{display:none}
+.eb-shell{display:grid;grid-template-columns:280px minmax(0,1fr)}
+.eb-side{position:sticky;top:68px;align-self:start;height:calc(100vh - 68px);overflow:auto;padding:var(--space-8) var(--space-6);border-right:1px solid var(--border-subtle)}
+.eb-side ol{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-1)}
+.eb-side a{display:flex;gap:var(--space-3);align-items:center;min-height:44px;padding:0 var(--space-3);border-radius:var(--radius-md);color:var(--text-secondary);text-decoration:none;font-size:.9375rem}
+.eb-side a:hover{background:var(--surface-subtle);color:var(--text-primary)}
+.eb-side a[aria-current="true"]{background:var(--surface-subtle);color:var(--action-text);font-weight:600}
+.eb-side .no{font:500 .75rem/1 var(--font-mono);color:var(--text-secondary);min-width:24px}
+.eb-main{min-width:0;padding:var(--space-16) var(--space-12) var(--space-24)}
+.eb-col{max-width:760px}
+.eb-hero{padding-bottom:var(--space-16);border-bottom:1px solid var(--border-subtle);margin-bottom:var(--space-16)}
+.eb-hero h1{font-size:var(--ed-fs-title);font-weight:800;letter-spacing:-0.035em;margin-top:var(--space-4)}
+.eb-hero .lead{margin-top:var(--space-6);font-size:1.1875rem;line-height:1.55;color:var(--text-secondary);max-width:var(--ed-measure)}
+.eb-hero .meta-row{display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:var(--space-8)}
+.eb-sec{padding-top:var(--space-12);margin-bottom:var(--space-16);scroll-margin-top:calc(var(--header-h) + var(--space-2));break-inside:avoid-page}
+.eb-sec-head{display:flex;gap:var(--space-4);align-items:baseline;margin-bottom:var(--space-6)}
+.eb-sec-head .no{font:500 .875rem/1 var(--font-mono);color:var(--action-text)}
+.eb-sec h2{font-size:var(--ed-fs-h2);font-weight:700}
+.eb-sec h3{font-size:var(--ed-fs-h3);font-weight:700;margin:var(--space-8) 0 var(--space-3)}
+.eb-sec p{max-width:var(--ed-measure);margin-bottom:var(--space-4)}
+.eb-sec ul.list{max-width:var(--ed-measure);margin:0 0 var(--space-4);padding-left:var(--space-6)}
+.eb-sec ul.list li{margin-bottom:var(--space-2)}
+.eb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:var(--space-4);margin:var(--space-6) 0}
+.eb-grid .panel h3{margin:0 0 var(--space-2);font-size:1rem}
+.eb-grid .panel p{font-size:.9375rem;color:var(--text-secondary);margin:0}
+.eb-steps{list-style:none;margin:var(--space-6) 0;padding:0;display:grid;gap:var(--space-4)}
+.eb-steps li{display:grid;grid-template-columns:40px 1fr;gap:var(--space-4);align-items:start}
+.eb-steps .n{display:grid;place-items:center;width:40px;height:40px;border-radius:999px;background:var(--brand-action-blue);color:var(--text-on-dark);font:700 1rem/1 var(--font-display)}
+.eb-steps strong{display:block;font-family:var(--font-display)}
+.eb-steps span{color:var(--text-secondary);font-size:.9375rem}
+.cmd{display:grid;gap:var(--space-2);padding:var(--space-4);border:1px solid var(--border-subtle);border-radius:var(--radius-lg);background:var(--surface-raised);margin-bottom:var(--space-3);break-inside:avoid}
+.cmd-head{display:flex;flex-wrap:wrap;gap:var(--space-3);align-items:center}
+.cmd-id{font:500 .75rem/1 var(--font-mono);color:var(--text-secondary)}
+.cmd-slash{font:600 1rem/1.2 var(--font-mono);color:var(--action-text)}
+.cmd-say{font-size:.9375rem;color:var(--text-secondary)}
+.cmd-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-3);align-items:center}
+.copy{min-height:44px;padding:0 var(--space-4);border:1px solid var(--border-control);border-radius:var(--radius-md);background:var(--surface-raised);color:var(--text-primary);font:500 .875rem/1 var(--font-body);cursor:pointer}
+.copy:hover{border-color:var(--brand-action-blue);color:var(--action-text)}
+.copy[data-done="1"]{border-color:var(--semantic-solution)}
+pre.code{margin:var(--space-4) 0;padding:var(--space-4);background:var(--surface-subtle);border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:auto;font-size:.875rem;line-height:1.55;white-space:pre-wrap;overflow-wrap:anywhere}
+.eb-table{width:100%;border-collapse:collapse;margin:var(--space-6) 0;font-size:.9375rem}
+.eb-table th,.eb-table td{text-align:left;vertical-align:top;padding:var(--space-3) var(--space-4);border-bottom:1px solid var(--border-subtle)}
+.eb-table th{font:600 .75rem/1.3 var(--font-mono);text-transform:uppercase;letter-spacing:.06em;color:var(--text-secondary)}
+.eb-table-wrap{overflow-x:auto}
+.check{list-style:none;margin:var(--space-6) 0;padding:0;display:grid;gap:var(--space-2)}
+.check label{display:flex;gap:var(--space-3);align-items:center;min-height:44px;padding:0 var(--space-4);border:1px solid var(--border-subtle);border-radius:var(--radius-md);cursor:pointer;background:var(--surface-raised)}
+.check input{width:20px;height:20px;accent-color:var(--brand-action-blue)}
+.check input:checked+span{color:var(--text-secondary);text-decoration:line-through}
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);margin:var(--space-6) 0}
+.rules .panel h3{margin:0 0 var(--space-3);font-size:1rem}
+.rules ul{margin:0;padding-left:var(--space-6)}
+.rules .dot{display:inline-block;width:8px;height:8px;border-radius:999px;margin-right:var(--space-2);vertical-align:middle}
+.rules .yes .dot{background:var(--semantic-solution)}
+.rules .no .dot{background:var(--semantic-risk)}
+.faq details{border-bottom:1px solid var(--border-subtle)}
+.faq summary{min-height:44px;display:flex;align-items:center;padding:var(--space-3) 0;font:600 1rem/1.4 var(--font-display);cursor:pointer}
+.faq details p{padding-bottom:var(--space-4);color:var(--text-secondary)}
+.timeline{list-style:none;margin:var(--space-6) 0;padding:0;border-left:2px solid var(--border-subtle)}
+.timeline li{position:relative;padding:0 0 var(--space-6) var(--space-6)}
+.timeline li::before{content:"";position:absolute;left:-7px;top:4px;width:12px;height:12px;border-radius:999px;background:var(--brand-action-blue)}
+.timeline .when{font:500 .75rem/1 var(--font-mono);color:var(--text-secondary)}
+.timeline strong{display:block;font-family:var(--font-display);margin-top:var(--space-1)}
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:var(--space-3);margin:var(--space-6) 0}
+.sw{border:1px solid var(--border-subtle);border-radius:var(--radius-md);overflow:hidden;background:var(--surface-raised)}
+.sw i{display:block;height:64px;border-bottom:1px solid var(--border-subtle)}
+.sw div{padding:var(--space-3);font-size:.8125rem}
+.sw code{display:block;color:var(--text-secondary);font-size:.75rem}
+.form{display:grid;gap:var(--space-4);margin:var(--space-6) 0;max-width:560px}
+.form label{display:grid;gap:var(--space-2);font-weight:600;font-size:.9375rem}
+.form input,.form select{min-height:44px;padding:0 var(--space-3);border:1px solid var(--border-control);border-radius:var(--radius-md);background:var(--surface-raised);color:var(--text-primary);font:400 1rem/1 var(--font-body)}
+.form .hint{font-weight:400;color:var(--text-secondary);font-size:.8125rem}
+.eb-foot{margin-top:var(--space-24);padding-top:var(--space-8);border-top:1px solid var(--border-subtle);color:var(--text-secondary);font-size:.875rem;display:flex;flex-wrap:wrap;gap:var(--space-4);justify-content:space-between}
+@media (max-width: 960px){
+  .eb-shell{grid-template-columns:1fr}
+  .eb-menu{display:inline-flex}
+  .eb-side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--border-subtle);display:none}
+  .eb-side[data-open="true"]{display:block}
+  .eb-main{padding:var(--space-12) var(--space-4) var(--space-24)}
+  .rules{grid-template-columns:1fr}
+  .eb-top-in{padding:0 var(--space-4)}
+  .eb-top .segmented{display:none}
+}
+@media (max-width: 480px){.eb-mark span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}.eb-top-in{gap:var(--space-2)}}
+@page{size:A4;margin:12mm}
+@media print{
+  .eb-top,.eb-side,.copy,.eb-menu{display:none!important}
+  .eb-shell{display:block}
+  .eb-main{padding:0}
+  body{font-size:10.5pt;background:var(--surface-raised)}
+  .eb-sec{break-inside:auto;padding-top:0}
+  .eb-sec h2,.eb-sec h3{break-after:avoid}
+  .cmd,.panel,.sw,.eb-table tr,.check label{break-inside:avoid}
+  a{color:var(--text-primary)}
+}
+</style>
+</head>
+<body data-surface="screen">
+<header class="eb-top">
+  <div class="eb-top-in">
+    <a class="eb-mark" href="#top" aria-label="Risco Cognitivo — início">
+      <svg viewBox="0 0 64 64" aria-hidden="true"><rect x="4" y="4" width="56" height="56" rx="12" fill="currentColor"/><text x="32" y="41" text-anchor="middle" font-family="DM Sans, system-ui, sans-serif" font-weight="800" font-size="24" style="fill:var(--text-on-dark)">RC</text></svg>
+      <span>Risco Cognitivo</span>
+    </a>
+    <button class="btn btn-secondary btn-md eb-menu" type="button" aria-controls="eb-nav" aria-expanded="false">Seções</button>
+    <span class="eb-spacer"></span>
+    <div class="segmented" role="group" aria-label="Tema">
+      <button type="button" data-set-theme="atual" aria-pressed="true">Atual</button>
+      <button type="button" data-set-theme="claro" aria-pressed="false">Claro</button>
+      <button type="button" data-set-theme="noite" aria-pressed="false">Noite</button>
+    </div>
+    <button class="btn btn-primary btn-md" type="button" data-print>Baixar PDF</button>
+  </div>
+  <div class="eb-progress" aria-hidden="true"><i></i></div>
+</header>
+<div class="eb-shell" id="top">
+  <nav class="eb-side" id="eb-nav" aria-label="Seções">
+    <p class="eyebrow">Ativação</p>
+    <ol>
+      <li><a href="#o-que-e"><span class="no">01</span>O que é</a></li>
+      <li><a href="#primeiro-acesso"><span class="no">02</span>Primeiro acesso</a></li>
+      <li><a href="#primeiro-teste"><span class="no">03</span>Primeiro teste</a></li>
+      <li><a href="#rotina"><span class="no">04</span>Rotina mínima</a></li>
+      <li><a href="#comandos"><span class="no">05</span>Comandos</a></li>
+      <li><a href="#marca"><span class="no">06</span>A marca</a></li>
+      <li><a href="#limites"><span class="no">07</span>Limites</a></li>
+      <li><a href="#outros-sistemas"><span class="no">08</span>Outros sistemas</a></li>
+      <li><a href="#faq"><span class="no">09</span>Perguntas</a></li>
+      <li><a href="#pronto"><span class="no">10</span>Checklist</a></li>
+    </ol>
+  </nav>
+  <main class="eb-main">
+    <div class="eb-col">
+      <section class="eb-hero">
+        <p class="eyebrow">CV-MARCA-001 · /marca-ativar</p>
+        <h1>Sua marca em qualquer projeto, com 3 comandos.</h1>
+        <p class="lead">Este arquivo é o seu painel de controle da marca: o que o plugin faz, os comandos por função, as regras que ele segue e quando ele deve parar. Abra no navegador, marque o checklist e guarde como PDF.</p>
+<div class="meta-row"><span class="chip chip-soon">12 comandos</span><span class="chip chip-soon">10 skills</span><span class="chip chip-soon">4 agentes</span><span class="chip chip-soon">3 temas</span><span class="chip chip-soon">WCAG 2.1 AA</span></div>      </section>
+      <section class="eb-sec" id="o-que-e" aria-labelledby="o-que-e-h">
+        <div class="eb-sec-head"><span class="no">01</span><h2 id="o-que-e-h">O que é o plugin</h2></div>
+<p>Um conjunto de skills, agentes, comandos, hooks e um servidor MCP que carregam o design system do Risco Cognitivo para fora do site: tokens, componentes, regras editoriais, formatos de canal e auditoria.</p>
+<div class="eb-grid"><div class="panel"><p class="meta">Skills</p><h3>Conhecimento</h3><p>rc-brand é o núcleo; as outras 9 produzem um tipo de asset cada.</p></div><div class="panel"><p class="meta">Agentes</p><h3>Funções</h3><p>Orquestrador resolve o pedido, produtor gera, auditor e revisor de acessibilidade verificam.</p></div><div class="panel"><p class="meta">Comandos</p><h3>Atalhos</h3><p>/marca-* com ID verbal e numérico estável. Um comando = uma ação.</p></div><div class="panel"><p class="meta">Hooks + MCP</p><h3>Guarda</h3><p>Aviso automático ao salvar HTML/CSS/SVG fora da marca; tokens e specs via MCP em outros sistemas de IA.</p></div></div>
+      </section>
+      <section class="eb-sec" id="primeiro-acesso" aria-labelledby="primeiro-acesso-h">
+        <div class="eb-sec-head"><span class="no">02</span><h2 id="primeiro-acesso-h">Primeiro acesso</h2></div>
+<ol class="eb-steps"><li><span class="n" aria-hidden="true">1</span><div><strong>Instale o plugin</strong><span>No Claude Code: /plugin marketplace add &lt;pasta ou repositório&gt; e /plugin install risco-cognitivo-brand.</span></div></li><li><span class="n" aria-hidden="true">2</span><div><strong>Ative</strong><span>Rode /marca-ativar. O orquestrador confere as fontes (tokens, specs, regras) e entrega este arquivo.</span></div></li><li><span class="n" aria-hidden="true">3</span><div><strong>Só a skill?</strong><span>No claude.ai, envie rc-brand.skill em Configurações → Capabilities → Skills.</span></div></li></ol>
+<pre class="code" id="primeiro-acesso-2">/plugin marketplace add sasexecutar-coder/next-starter-template
+/plugin install risco-cognitivo-brand@risco-cognitivo
+/marca-ativar</pre><button class="copy" type="button" data-copy="primeiro-acesso-2">Copiar</button>
+      </section>
+      <section class="eb-sec" id="primeiro-teste" aria-labelledby="primeiro-teste-h">
+        <div class="eb-sec-head"><span class="no">03</span><h2 id="primeiro-teste-h">Seu primeiro teste em 3 mensagens</h2></div>
+<ol class="timeline"><li><span class="when">Mensagem 1</span><strong>“Ativa minha marca”</strong><span>Recebe o relatório de fontes e este onboarding.</span></li><li><span class="when">Mensagem 2</span><strong>“Faz o carrossel sobre viés de confirmação”</strong><span>Recebe HTML + PNGs 1080×1350 com a marca.</span></li><li><span class="when">Mensagem 3</span><strong>“Confere a marca”</strong><span>Recebe o review: bloqueantes, avisos e o que fazer.</span></li></ol>
+      </section>
+      <section class="eb-sec" id="rotina" aria-labelledby="rotina-h">
+        <div class="eb-sec-head"><span class="no">04</span><h2 id="rotina-h">A rotina mínima</h2></div>
+<p>Você vive com estes três. O resto aparece quando a tarefa pede (revelação progressiva).</p>
+<div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-001</span><code class="cmd-slash" id="rotina-4-c1">/marca-ativar</code><span class="chip chip-gap">rotina mínima</span></div><div class="cmd-row"><span class="cmd-say">Verificar fontes da marca e entregar o ONBOARDING.html de ativação · diga: “Ativa minha marca”</span><button class="copy" type="button" data-copy="rotina-4-c1">Copiar</button></div></div><div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-002</span><code class="cmd-slash" id="rotina-4-c2">/marca-aplicar</code><span class="chip chip-gap">rotina mínima</span></div><div class="cmd-row"><span class="cmd-say">Aplicar a camada de marca a um artefato existente e rodar o checklist · diga: “Aplica a marca”</span><button class="copy" type="button" data-copy="rotina-4-c2">Copiar</button></div></div><div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-003</span><code class="cmd-slash" id="rotina-4-c3">/marca-auditar</code><span class="chip chip-gap">rotina mínima</span></div><div class="cmd-row"><span class="cmd-say">Auditar tokens, usos, formatos, diagramação, @page e vetores e emitir review · diga: “Confere a marca”</span><button class="copy" type="button" data-copy="rotina-4-c3">Copiar</button></div></div>      </section>
+      <section class="eb-sec" id="comandos" aria-labelledby="comandos-h">
+        <div class="eb-sec-head"><span class="no">05</span><h2 id="comandos-h">Comandos por função</h2></div>
+<div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-004</span><code class="cmd-slash" id="comandos-5-c1">/marca-tokens</code></div><div class="cmd-row"><span class="cmd-say">Exportar tokens (CSS, JSON DTCG, Tailwind, Python) para outro projeto · diga: “Me dá os tokens”</span><button class="copy" type="button" data-copy="comandos-5-c1">Copiar</button></div></div><div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-005</span><code class="cmd-slash" id="comandos-5-c2">/marca-formato</code></div><div class="cmd-row"><span class="cmd-say">Mostrar a spec técnica de um canal/peça e o que está A DEFINIR · diga: “Qual o formato do Reels?”</span><button class="copy" type="button" data-copy="comandos-5-c2">Copiar</button></div></div><div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-006</span><code class="cmd-slash" id="comandos-5-c3">/marca-card</code></div><div class="cmd-row"><span class="cmd-say">Converter conteúdo em card de prompt A4 (tutorial · mockup · prompt) · diga: “Transforma em card”</span><button class="copy" type="button" data-copy="comandos-5-c3">Copiar</button></div></div><div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-007</span><code class="cmd-slash" id="comandos-5-c4">/marca-ebook</code></div><div class="cmd-row"><span class="cmd-say">Gerar ebook, one-page ou onboarding standalone com a marca · diga: “Faz o ebook”</span><button class="copy" type="button" data-copy="comandos-5-c4">Copiar</button></div></div><div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-008</span><code class="cmd-slash" id="comandos-5-c5">/marca-carrossel</code></div><div class="cmd-row"><span class="cmd-say">Gerar carrossel 4:5 (HTML + PNG 1080×1350) ou post/story · diga: “Faz o carrossel”</span><button class="copy" type="button" data-copy="comandos-5-c5">Copiar</button></div></div><div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-009</span><code class="cmd-slash" id="comandos-5-c6">/marca-infografico</code></div><div class="cmd-row"><span class="cmd-say">Gerar prompts de infográfico/vetor por perfil (isometric, editorial, flat) · diga: “Prompt de infográfico”</span><button class="copy" type="button" data-copy="comandos-5-c6">Copiar</button></div></div><div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-010</span><code class="cmd-slash" id="comandos-5-c7">/marca-componente</code></div><div class="cmd-row"><span class="cmd-say">Gerar componente de UI em HTML ou React com os primitivos · diga: “Cria o componente”</span><button class="copy" type="button" data-copy="comandos-5-c7">Copiar</button></div></div><div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-011</span><code class="cmd-slash" id="comandos-5-c8">/marca-editorial</code></div><div class="cmd-row"><span class="cmd-say">Formatar artigo/MDX/newsletter com blocos e regras de leitura · diga: “Formata o artigo”</span><button class="copy" type="button" data-copy="comandos-5-c8">Copiar</button></div></div><div class="cmd"><div class="cmd-head"><span class="cmd-id">CV-MARCA-012</span><code class="cmd-slash" id="comandos-5-c9">/marca-campanha</code></div><div class="cmd-row"><span class="cmd-say">Montar o pacote de assets de um ciclo (plan → execute → verify por asset) · diga: “Monta o pacote do ciclo”</span><button class="copy" type="button" data-copy="comandos-5-c9">Copiar</button></div></div><aside class="callout"><span class="bracket"></span><span class="bracket"></span><span class="bracket"></span><span class="bracket"></span><p class="eyebrow">Regra</p><p>IDs nunca são removidos nem renomeados. Se um comando mudar de nome, o antigo vira alias.</p></aside>
+      </section>
+      <section class="eb-sec" id="marca" aria-labelledby="marca-h">
+        <div class="eb-sec-head"><span class="no">06</span><h2 id="marca-h">A marca em uma tela</h2></div>
+<div class="swatches"><div class="sw"><i style="background:var(--brand-canvas)"></i><div><strong>Canvas</strong><code>--brand-canvas</code><code>#fffdfa</code></div></div><div class="sw"><i style="background:var(--text-primary)"></i><div><strong>Texto</strong><code>--text-primary</code><code>#000000</code></div></div><div class="sw"><i style="background:var(--brand-dark-gray)"></i><div><strong>Cinza escuro</strong><code>--brand-dark-gray</code><code>#545454</code></div></div><div class="sw"><i style="background:var(--brand-action-blue)"></i><div><strong>Azul de ação (D-01)</strong><code>--brand-action-blue</code><code>#2d5ce6</code></div></div><div class="sw"><i style="background:var(--brand-action-blue-strong)"></i><div><strong>Azul de ação forte</strong><code>--brand-action-blue-strong</code><code>#1f46bf</code></div></div><div class="sw"><i style="background:var(--brand-light-blue)"></i><div><strong>Azul claro</strong><code>--brand-light-blue</code><code>#cbd4ff</code></div></div><div class="sw"><i style="background:var(--brand-dark-indigo)"></i><div><strong>Índigo</strong><code>--brand-dark-indigo</code><code>#0e025d</code></div></div><div class="sw"><i style="background:var(--semantic-risk)"></i><div><strong>Risco</strong><code>--semantic-risk</code><code>#ff0000</code></div></div><div class="sw"><i style="background:var(--semantic-solution)"></i><div><strong>Solução</strong><code>--semantic-solution</code><code>#00bf63</code></div></div><div class="sw"><i style="background:var(--attention-surface)"></i><div><strong>Atenção</strong><code>--attention-surface</code><code>#ffe659</code></div></div><div class="sw"><i style="background:var(--brain-accent)"></i><div><strong>Cérebro</strong><code>--brain-accent</code><code>#6e72f0</code></div></div><div class="sw"><i style="background:var(--brand-light-gray)"></i><div><strong>Cinza claro</strong><code>--brand-light-gray</code><code>#ececec</code></div></div></div>
+<div class="eb-table-wrap"><table class="eb-table"><caption class="sr-only">Tipografia</caption><thead><tr><th scope="col">Papel</th><th scope="col">Família</th><th scope="col">Uso</th></tr></thead><tbody><tr><td>Display</td><td>DM Sans 700–800</td><td>títulos, números, wordmark</td></tr><tr><td>Texto</td><td>Inter 400–600</td><td>corpo, interface, tabelas</td></tr><tr><td>Mono</td><td>DM Mono 400–500</td><td>IDs, código, metadados</td></tr></tbody></table></div>
+<ul class="list"><li>Azul de ação (D-01) é o único azul de interação; laranja e azuis de outras marcas não entram.</li><li>Vermelho = risco e verde = solução: nunca decorativos.</li><li>Espaço só na escala 4/8/12/16/24/32/48/64/96; raios 2/4/8/12/16.</li><li>Contraste mínimo 4,5:1 em texto e 3:1 em controles, nos 3 temas.</li></ul>
+      </section>
+      <section class="eb-sec" id="limites" aria-labelledby="limites-h">
+        <div class="eb-sec-head"><span class="no">07</span><h2 id="limites-h">O que ele pode fazer e quando deve parar</h2></div>
+<div class="rules"><div class="panel yes"><h3><span class="dot" aria-hidden="true"></span>Pode</h3><ul><li>Gerar assets com os tokens da marca</li><li>Converter artefatos existentes para a marca</li><li>Auditar e apontar o que falta, com evidência</li><li>Mostrar specs verificadas de canal</li></ul></div><div class="panel no"><h3><span class="dot" aria-hidden="true"></span>Não deve fingir</h3><ul><li>Inventar cor, fonte, número ou spec que não esteja nas fontes</li><li>Preencher o que está A DEFINIR (safe areas, símbolo, owner)</li><li>Aprovar a própria produção: quem verifica é o auditor, em contexto limpo</li><li>Publicar ou enviar para fora sem a sua aprovação</li></ul></div></div>
+<div class="eb-table-wrap"><table class="eb-table"><caption class="sr-only">Estados</caption><thead><tr><th scope="col">Estado</th><th scope="col">Quando</th></tr></thead><tbody><tr><td>BLOCKED</td><td>falta fonte ou entrada obrigatória</td></tr><tr><td>EVIDENCE REQUIRED</td><td>claim ou valor sem fonte</td></tr><tr><td>REWORK</td><td>auditoria reprovou</td></tr><tr><td>USER ACTION REQUIRED</td><td>precisa da sua decisão ou aprovação</td></tr><tr><td>VERIFIED</td><td>auditor aprovou com evidência</td></tr></tbody></table></div>
+      </section>
+      <section class="eb-sec" id="outros-sistemas" aria-labelledby="outros-sistemas-h">
+        <div class="eb-sec-head"><span class="no">08</span><h2 id="outros-sistemas-h">Em outros projetos e sistemas de IA</h2></div>
+<div class="eb-table-wrap"><table class="eb-table"><caption class="sr-only">Portabilidade</caption><thead><tr><th scope="col">Destino</th><th scope="col">Use</th></tr></thead><tbody><tr><td>Site / app web</td><td>tokens.css + components.css ou tailwind.preset.cjs</td></tr><tr><td>React</td><td>componentes em rc-brand/assets/components/react</td></tr><tr><td>Python (PPTX, DOCX, PDF)</td><td>tokens.py → rgb()</td></tr><tr><td>Figma / Style Dictionary</td><td>tokens.json (DTCG)</td></tr><tr><td>Outro agente / IDE</td><td>servidor MCP rc-brand: get_tokens, get_spec, check_contrast, audit_html</td></tr></tbody></table></div>
+      </section>
+      <section class="eb-sec" id="faq" aria-labelledby="faq-h">
+        <div class="eb-sec-head"><span class="no">09</span><h2 id="faq-h">Perguntas comuns</h2></div>
+<div class="faq"><details><summary>Preciso decorar os comandos?</summary><p>Não. Fale normalmente; o orquestrador resolve a frase para o ID.</p></details><details><summary>Posso mudar uma cor?</summary><p>Só no site (globals.css). O build regenera os tokens e a paridade é testada.</p></details><details><summary>E se a spec de um canal estiver A DEFINIR?</summary><p>O plugin mostra o que é verificado e lista o resto; não chuta valor típico.</p></details><details><summary>O hook bloqueia meu trabalho?</summary><p>Não. Ele só avisa quando um HTML/CSS/SVG salvo foge da marca.</p></details><details><summary>Funciona sem internet?</summary><p>Os HTMLs são standalone; só as fontes vêm do Google Fonts, com fallback de sistema.</p></details></div>
+      </section>
+      <section class="eb-sec" id="pronto" aria-labelledby="pronto-h">
+        <div class="eb-sec-head"><span class="no">10</span><h2 id="pronto-h">Você está pronto quando…</h2></div>
+<ul class="check"><li><label><input type="checkbox" data-key="pronto-10-1"><span>Rodei /marca-ativar e recebi este arquivo</span></label></li><li><label><input type="checkbox" data-key="pronto-10-2"><span>Gerei um asset com /marca-carrossel ou /marca-ebook</span></label></li><li><label><input type="checkbox" data-key="pronto-10-3"><span>Rodei /marca-auditar e entendi o review</span></label></li><li><label><input type="checkbox" data-key="pronto-10-4"><span>Exportei os tokens com /marca-tokens para outro projeto</span></label></li><li><label><input type="checkbox" data-key="pronto-10-5"><span>Sei o que o plugin não deve fingir</span></label></li><li><label><input type="checkbox" data-key="pronto-10-6"><span>Salvei este onboarding em PDF</span></label></li></ul>
+      </section>
+      <footer class="eb-foot">
+        <span>Risco Cognitivo · plugin risco-cognitivo-brand · fonte de verdade: tokens.json (D-01…D-36)</span>
+        <span class="meta">RC-ONBOARDING · v1.0.0</span>
+      </footer>
+    </div>
+  </main>
+</div>
+<script>
+(function(){
+  var root=document.documentElement, KEY="rc-theme", CK="rc-check:RC-ONBOARDING";
+  function get(k){try{return localStorage.getItem(k)}catch(e){return null}}
+  function set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+  function theme(t){root.setAttribute("data-theme",t);set(KEY,t);
+    document.querySelectorAll("[data-set-theme]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.setTheme===t))})}
+  var saved=get(KEY); if(saved==="atual"||saved==="claro"||saved==="noite") theme(saved);
+  document.querySelectorAll("[data-set-theme]").forEach(function(b){b.addEventListener("click",function(){theme(b.dataset.setTheme)})});
+  document.querySelectorAll("[data-print]").forEach(function(b){b.addEventListener("click",function(){window.print()})});
+  var menu=document.querySelector(".eb-menu"), nav=document.getElementById("eb-nav");
+  if(menu){menu.addEventListener("click",function(){var o=nav.getAttribute("data-open")==="true";nav.setAttribute("data-open",String(!o));menu.setAttribute("aria-expanded",String(!o))})}
+  document.querySelectorAll("[data-copy]").forEach(function(b){b.addEventListener("click",function(){
+    var src=document.getElementById(b.dataset.copy), txt=src?src.innerText:b.dataset.text||"";
+    (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(function(){b.dataset.done="1";b.textContent="Copiado"},function(){b.textContent="Selecione e copie"})})});
+  var state={}; try{state=JSON.parse(get(CK)||"{}")}catch(e){}
+  document.querySelectorAll(".check input[data-key]").forEach(function(i){i.checked=!!state[i.dataset.key];
+    i.addEventListener("change",function(){state[i.dataset.key]=i.checked;set(CK,JSON.stringify(state))})});
+  var bar=document.querySelector(".eb-progress i"), links=[].slice.call(document.querySelectorAll(".eb-side a"));
+  function onScroll(){var h=document.documentElement.scrollHeight-innerHeight;bar.style.width=(h>0?Math.min(100,scrollY/h*100):0)+"%";
+    var cur=null;document.querySelectorAll(".eb-sec").forEach(function(s){if(s.getBoundingClientRect().top<140)cur=s.id});
+    links.forEach(function(a){a.setAttribute("aria-current",String(a.getAttribute("href")==="#"+cur))})}
+  addEventListener("scroll",onScroll,{passive:true}); onScroll();
+  var form=document.querySelector("form[data-brand-config]");
+  if(form){form.addEventListener("submit",function(ev){ev.preventDefault();var d={};new FormData(form).forEach(function(v,k){if(String(v).trim())d[k]=String(v).trim()});
+    var out=document.getElementById("brand-config-out");out.textContent=JSON.stringify({brand:d},null,2);
+    var a=document.createElement("a");a.href=URL.createObjectURL(new Blob([out.textContent],{type:"application/json"}));a.download="brand_config.json";a.click()})}
+})();
+</script>
+</body>
+</html>

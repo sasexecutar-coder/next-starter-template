@@ -1,0 +1,276 @@
+{
+  "project": {
+    "name": "Risco Cognitivo · Cards de prompt",
+    "brand": "Risco Cognitivo",
+    "version": "1.0.0",
+    "author": "Risco Cognitivo",
+    "palette": "tokens rc-brand (D-01)",
+    "design_system": "rc-brand · A4 mobile-first",
+    "source_assets": [
+      "FC5DAB55-1D6B-4793-BEA0-BD1ECD5B0640.png",
+      "IMG_0809.png",
+      "10225125-3E74-4880-B285-1643972FD087.png"
+    ],
+    "migrated_from": "conversor de cards de projeto anterior: nome, paleta, URL e numeração corrigidos"
+  },
+  "cards": [
+    {
+      "id": "CARD-001",
+      "slug": "calendario-prisma-qr-codes",
+      "version": "1.0.0",
+      "status": "active",
+      "created_at": "2026-09-10",
+      "updated_at": "2026-09-10",
+      "tags": [
+        "#calendario",
+        "#qrcode",
+        "#impressao"
+      ],
+      "source_evidence": {
+        "class": "A · Observado",
+        "asset": "FC5DAB55-1D6B-4793-BEA0-BD1ECD5B0640.png",
+        "note": "Conteúdo convertido de um prompt visual de calendário Prisma. Migrado para Risco Cognitivo."
+      },
+      "meta": {
+        "title": "Calendário Prisma com QR Codes",
+        "description": "Transforme eventos, prioridades e links em um calendário Prisma A4 com QR Codes funcionais.",
+        "og_title": "Calendário Prisma com QR Codes | Risco Cognitivo",
+        "og_description": "Um FotoPrompt para montar calendário operacional A4, com atalhos escaneáveis.",
+        "twitter_card": "summary_large_image",
+        "canonical": null,
+        "lang": "pt-BR",
+        "keywords": [
+          "calendário",
+          "Prisma",
+          "QR Code",
+          "A4",
+          "planejamento"
+        ]
+      },
+      "design": {
+        "layout": "mobile-first",
+        "print": "a4-portrait"
+      },
+      "content": {
+        "number": "01 / 03",
+        "eyebrow": "PROMPT PARA IA",
+        "headline": "Calendário Prisma\ncom QR Codes",
+        "subheadline": "Painel operacional pronto para impressão A4.",
+        "steps": [
+          {
+            "n": 1,
+            "title": "Envie os insumos",
+            "desc": "Datas, tarefas ou eventos, títulos curtos, URLs e prioridades."
+          },
+          {
+            "n": 2,
+            "title": "Conecte QR Codes",
+            "desc": "Associe cada URL ao evento ou atalho correspondente."
+          },
+          {
+            "n": 3,
+            "title": "Organize o painel",
+            "desc": "Estruture A1 Agora, A2 Processo e A3 Referências em ordem cronológica."
+          },
+          {
+            "n": 4,
+            "title": "Valide para impressão",
+            "desc": "Mantenha contraste alto, margens seguras e QR Codes testáveis."
+          }
+        ],
+        "formula": "eventos + links / calendário A4 + QR Codes",
+        "callout": "Não use URLs longas no calendário: o QR Code é o atalho operacional.",
+        "cta": "Fotografe e gere seu painel"
+      },
+      "mockup": {
+        "title": "Mockup · calendário Prisma",
+        "type": "calendar",
+        "caption": "Resultado esperado: mês, prioridades, atalhos QR e sequência de ações."
+      },
+      "prompt_full": "prompt:\n  objetivo: >\n    Converter links em QR Codes e formatar\n    meu calendário com esses QR Codes como\n    atalhos no formato Prisma para impressão.\n\n  entrada:\n    - datas, tarefas ou eventos\n    - títulos curtos\n    - URLs correspondentes\n    - opcionalmente categoria, prioridade\n      e observações\n\n  instrucoes:\n    1. Converter cada URL em um QR Code funcional e testável.\n    2. Associar cada QR Code ao evento correto.\n    3. Organizar os eventos cronologicamente em um calendário visual.\n    4. Aplicar o layout PRISMA A4, preparado para impressão física.\n    5. Dividir o conteúdo em três áreas:\n       - A1 — AGORA: calendário, prioridades e atalhos principais\n       - A2 — PROCESSO: sequência de ações, rotina ou próximos passos\n       - A3 — REFERÊNCIAS: QR Codes, links, IDs e notas operacionais\n    6. Cada QR Code deve possuir título curto e legenda que explique seu destino.\n    7. Nunca imprimir URLs longas quando o QR Code for suficiente.\n    8. Manter alto contraste, baixa carga cognitiva, hierarquia visual clara e margens seguras.\n    9. Evitar elementos decorativos sem função.\n    10. Validar se todos os QR Codes correspondem exatamente às URLs fornecidas.\n\n  saída:\n    - HTML A4 pronto para impressão\n    - QR Codes incorporados\n    - calendário formatado\n    - botão “Imprimir / Exportar PDF”\n    - escala de impressão 100%\n    - nenhuma informação inventada\n\n  regras:\n    Priorize legibilidade física, escaneamento rápido e uso do papipe como painel operacional.",
+      "fotoprompt": {
+        "id": "FOTOPROMPT_CARD_001",
+        "objetivo": "Criar um calendário Prisma para planejamento e impressão.",
+        "comando": "Converta [datas, tarefas e eventos] com [títulos curtos] e [URLs] em um calendário Prisma A4. Gere QR Codes funcionais, associe cada código ao item correto e organize: A1 Agora, A2 Processo e A3 Referências. Preserve alto contraste, leitura rápida e margens seguras.",
+        "use_quando": "Você precisa transformar um conjunto de compromissos e links em um painel físico navegável.",
+        "output_esperado": "HTML A4 imprimível com calendário cronológico, prioridades, sequência de ações e QR Codes."
+      },
+      "post": {
+        "linkedin": "Seu calendário pode ser um painel operacional.\n\nConverta datas, prioridades e links em um Prisma A4 com QR Codes — pronto para imprimir, escanear e executar.\n\n#Planejamento #QRCode #Produtividade",
+        "twitter": "Eventos + links → calendário Prisma A4 com QR Codes.\n\n#Planejamento #QRCode"
+      }
+    },
+    {
+      "id": "CARD-002",
+      "slug": "relatorio-para-html-navegavel",
+      "version": "1.0.0",
+      "status": "active",
+      "created_at": "2026-09-10",
+      "updated_at": "2026-09-10",
+      "tags": [
+        "#relatorio",
+        "#html",
+        "#clareza"
+      ],
+      "source_evidence": {
+        "class": "A · Observado",
+        "asset": "IMG_0809.png",
+        "note": "Pedido visual para aplicar o conversor de cards a um relatório. Migrado para Risco Cognitivo."
+      },
+      "meta": {
+        "title": "Converta relatórios em HTML navegável",
+        "description": "Preserve o conteúdo de um relatório e transforme sua leitura em uma experiência clara e navegável.",
+        "og_title": "Relatório para HTML navegável | Risco Cognitivo",
+        "og_description": "Um FotoPrompt para melhorar a leitura de relatórios sem alterar o conteúdo original.",
+        "twitter_card": "summary_large_image",
+        "canonical": null,
+        "lang": "pt-BR",
+        "keywords": [
+          "relatório",
+          "HTML",
+          "navegação",
+          "documento",
+          "clareza"
+        ]
+      },
+      "design": {
+        "layout": "mobile-first",
+        "print": "a4-portrait"
+      },
+      "content": {
+        "number": "02 / 03",
+        "eyebrow": "CONVERSOR COGNITIVO",
+        "headline": "Do relatório\nà leitura navegável",
+        "subheadline": "Mais clareza, sem alterar o conteúdo-fonte.",
+        "steps": [
+          {
+            "n": 1,
+            "title": "Receba o relatório",
+            "desc": "Use PDF, DOCX, TXT, Markdown ou texto colado."
+          },
+          {
+            "n": 2,
+            "title": "Mapeie a estrutura",
+            "desc": "Identifique seções, decisões, dados, riscos e referências."
+          },
+          {
+            "n": 3,
+            "title": "Reestruture a leitura",
+            "desc": "Aplique hierarquia, sumário, blocos semânticos e navegação."
+          },
+          {
+            "n": 4,
+            "title": "Preserve a evidência",
+            "desc": "Mantenha conteúdo original, fontes e distinção entre fato e inferência."
+          }
+        ],
+        "formula": "relatório-fonte / estrutura / HTML navegável",
+        "callout": "Converter o formato não autoriza modificar conclusões, dados ou fontes.",
+        "cta": "Anexe o relatório e converta"
+      },
+      "mockup": {
+        "title": "Mockup · relatório navegável",
+        "type": "report",
+        "caption": "Resultado esperado: sumário clicável, seções claras, decisões, riscos e evidências."
+      },
+      "prompt_full": "Siga as instruções da imagem. Aplique o conversor Risco Cognitivo no meu relatório.",
+      "fotoprompt": {
+        "id": "FOTOPROMPT_CARD_002",
+        "objetivo": "Converter um relatório em HTML claro e navegável, preservando o conteúdo original.",
+        "comando": "Converta o relatório anexado em HTML navegável. Preserve integralmente conteúdo, números, citações e referências. Crie hierarquia de títulos, sumário com âncoras, blocos para decisões, riscos e evidências, e indique explicitamente qualquer inferência editorial como E · Inferido.",
+        "use_quando": "Um relatório extenso precisa ser mais fácil de ler, revisar e compartilhar.",
+        "output_esperado": "Arquivo HTML responsivo com navegação interna e rastreabilidade de conteúdo."
+      },
+      "post": {
+        "linkedin": "Um relatório não precisa ser difícil de navegar.\n\nConverta-o em HTML estruturado, preservando conteúdo, evidências e referências.\n\n#Documentação #HTML #Clareza",
+        "twitter": "Relatório-fonte → estrutura → HTML navegável.\n\n#Documentação #HTML"
+      }
+    },
+    {
+      "id": "CARD-003",
+      "slug": "callouts-obsidian-com-significado",
+      "version": "1.0.0",
+      "status": "active",
+      "created_at": "2026-09-10",
+      "updated_at": "2026-09-10",
+      "tags": [
+        "#obsidian",
+        "#callouts",
+        "#markdown"
+      ],
+      "source_evidence": {
+        "class": "A · Observado",
+        "asset": "10225125-3E74-4880-B285-1643972FD087.png",
+        "note": "Exemplo visual de especificação YAML e resultado de callouts. Migrado para Risco Cognitivo."
+      },
+      "meta": {
+        "title": "Callouts Obsidian com significado",
+        "description": "Use blocos semânticos em Markdown para tornar projetos e decisões mais fáceis de escanear.",
+        "og_title": "Callouts Obsidian | Risco Cognitivo",
+        "og_description": "Um FotoPrompt para transformar conteúdo em callouts consistentes e semanticamente corretos.",
+        "twitter_card": "summary_large_image",
+        "canonical": null,
+        "lang": "pt-BR",
+        "keywords": [
+          "Obsidian",
+          "Markdown",
+          "callouts",
+          "documentação",
+          "semântica"
+        ]
+      },
+      "design": {
+        "layout": "mobile-first",
+        "print": "a4-portrait"
+      },
+      "content": {
+        "number": "03 / 03",
+        "eyebrow": "PROMPT (YAML)",
+        "headline": "Callouts que\ncarregam significado",
+        "subheadline": "Markdown estruturado para leitura rápida e decisões claras.",
+        "steps": [
+          {
+            "n": 1,
+            "title": "Classifique a mensagem",
+            "desc": "Diferencie contexto, dica, resultado, atenção, risco, decisão e nota."
+          },
+          {
+            "n": 2,
+            "title": "Escolha o callout",
+            "desc": "Use INFO, TIP, SUCCESS, WARNING, DANGER, QUESTION, EXAMPLE ou NOTE."
+          },
+          {
+            "n": 3,
+            "title": "Escreva para escanear",
+            "desc": "Dê título curto, uma ideia por bloco e linguagem acionável."
+          },
+          {
+            "n": 4,
+            "title": "Mantenha consistência",
+            "desc": "Aplique o mesmo vocabulário visual em todo o projeto."
+          }
+        ],
+        "formula": "significado / callout / ação",
+        "callout": "A cor deve comunicar uma função; ela não é decoração.",
+        "cta": "Copie o YAML e aplique"
+      },
+      "mockup": {
+        "title": "Mockup · callouts no Obsidian",
+        "type": "callouts",
+        "caption": "Resultado esperado: blocos de informação, dica, resultado, atenção e risco."
+      },
+      "prompt_full": "prompt:\n  role: \"Especialista em comunicação estruturada para Obsidian\"\n  objective: \"Entregar textos sempre formatados com Callouts do Obsidian\"\n  rules:\n    - \"Usar Markdown compatível com callouts\"\n    - \"Aplicar hierarquia visual e semântica\"\n    - \"Usar diferentes tipos de callout\"\n    - \"Escolher a cor pelo significado\"\n    - \"Priorizar leitura rápida e clareza\"\n  callout_types:\n    info:\n      label: \"INFO\"\n      use_for: \"Contexto, definição, explicação\"\n      color: \"azul\"\n    tip:\n      label: \"TIP\"\n      use_for: \"Dicas, recomendações, boas práticas\"\n      color: \"verde\"\n    success:\n      label: \"SUCCESS\"\n      use_for: \"Resultados, conclusões, entregas\"\n      color: \"verde\"\n    warning:\n      label: \"WARNING\"\n      use_for: \"Atenção, restrições, cuidados\"\n      color: \"amarelo\"\n    danger:\n      label: \"DANGER\"\n      use_for: \"Riscos, problemas críticos, bloqueios\"",
+      "fotoprompt": {
+        "id": "FOTOPROMPT_CARD_003",
+        "objetivo": "Formatar um conteúdo em Markdown compatível com callouts do Obsidian.",
+        "comando": "Atue como especialista em comunicação estruturada para Obsidian. Reescreva [conteúdo] em Markdown com callouts. Use INFO para contexto, TIP para recomendação, SUCCESS para resultado, WARNING para atenção, DANGER para risco, QUESTION para decisão, EXAMPLE para exemplo e NOTE para referência. Priorize hierarquia visual, uma ideia por bloco e clareza de leitura.",
+        "use_quando": "Você precisa transformar anotações, projetos ou relatórios em conteúdo escaneável no Obsidian.",
+        "output_esperado": "Markdown pronto para Obsidian, com callouts semanticamente consistentes."
+      },
+      "post": {
+        "linkedin": "Callouts não são decoração: são linguagem visual.\n\nClassifique a informação, escolha o bloco certo e deixe a próxima ação evidente.\n\n#Obsidian #Markdown #Documentação",
+        "twitter": "significado → callout → ação\n\nUse Markdown com semântica, não só cor.\n\n#Obsidian #Markdown"
+      }
+    }
+  ]
+}

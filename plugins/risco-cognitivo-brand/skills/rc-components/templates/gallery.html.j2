@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Primitivos · Risco Cognitivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="{{ fonts_url }}" rel="stylesheet">
+<style>
+{{ brand_css | safe }}
+.g-head{display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:center;justify-content:space-between}
+.g-row{display:flex;flex-wrap:wrap;gap:var(--space-4);align-items:center}
+.g-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4)}
+.g-spec{font:400 .8125rem/1.5 var(--font-mono);color:var(--text-secondary)}
+.g-sec{border-top:1px solid var(--border-subtle);padding-top:var(--space-8)}
+.g-sec h2{font-size:var(--ed-fs-h2);margin:var(--space-2) 0 var(--space-6)}
+.lead{color:var(--text-secondary);max-width:var(--ed-measure);margin-top:var(--space-4)}
+</style>
+</head>
+<body>
+<header class="page-block"><div class="container-page g-head">
+  <div><p class="eyebrow">Design system · primitivos</p><h1 style="font-size:var(--ed-fs-title)">Risco Cognitivo</h1>
+  <p class="lead">Galeria portátil dos primitivos do site. Mesmo CSS que vai para outros projetos: tokens.css + components.css.</p></div>
+  <div class="segmented" role="group" aria-label="Tema">
+    <button type="button" data-set-theme="atual" aria-pressed="true">Atual</button>
+    <button type="button" data-set-theme="claro" aria-pressed="false">Claro</button>
+    <button type="button" data-set-theme="noite" aria-pressed="false">Noite</button>
+  </div>
+</div></header>
+<main class="container-page">
+  <section class="page-block g-sec" aria-labelledby="h-btn"><p class="eyebrow">01</p><h2 id="h-btn">Button</h2>
+    <div class="g-row">
+      <a class="btn btn-primary" href="#h-btn">Começar agora</a>
+      <button class="btn btn-secondary" type="button">Limpar filtros</button>
+      <button class="btn btn-primary btn-md" type="button">Primário md</button>
+      <button class="btn btn-primary" type="button" disabled>Desabilitado</button>
+      <button class="btn-icon" type="button" aria-label="Próximo"><svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+    </div>
+    <p class="g-spec">.btn .btn-primary | .btn-secondary | .btn-md | .btn-icon — alvo ≥ 44 via ::before</p>
+  </section>
+  <section class="page-block g-sec" aria-labelledby="h-panel"><p class="eyebrow">02</p><h2 id="h-panel">Panel</h2>
+    <div class="g-grid">
+      <article class="panel"><p class="meta">Padrão</p><h3>Viés de confirmação</h3><p class="lead">Fundo raised, borda subtle, raio 2.</p></article>
+      <article class="panel panel-subtle"><p class="meta">Subtle</p><h3>Ancoragem</h3><p class="lead">Fundo sutil para agrupar.</p></article>
+      <article class="panel panel-interactive" tabindex="0"><p class="meta">Interativo</p><h3>Excesso de confiança</h3><p class="lead">Hover/foco: borda de ação.</p></article>
+    </div>
+  </section>
+  <section class="page-block g-sec" aria-labelledby="h-call"><p class="eyebrow">03</p><h2 id="h-call">Callout · Highlight</h2>
+    <aside class="callout"><span class="bracket"></span><span class="bracket"></span><span class="bracket"></span><span class="bracket"></span><p class="eyebrow">Leitura</p><p>Uma frase que o leitor deve lembrar.</p></aside>
+    <blockquote class="highlight" style="margin-top:var(--space-8)"><p>Decidir rápido não é o problema. Decidir sem perceber é.</p><cite>Risco Cognitivo</cite></blockquote>
+  </section>
+  <section class="page-block g-sec" aria-labelledby="h-chip"><p class="eyebrow">04</p><h2 id="h-chip">Chip · Eyebrow · Meta</h2>
+    <div class="g-row"><span class="chip chip-gap">GAP</span><span class="chip chip-soon">Em breve</span><button class="chip chip-tag" type="button" aria-pressed="true">Selecionado</button><button class="chip chip-tag" type="button" aria-pressed="false">Filtro</button></div>
+    <div class="g-row" style="margin-top:var(--space-6)"><p class="eyebrow">Eyebrow</p><p class="eyebrow eyebrow-bars">Eyebrow com barras</p><p class="meta">Meta · DM Mono</p></div>
+  </section>
+  <section class="page-block g-sec" aria-labelledby="h-type"><p class="eyebrow">05</p><h2 id="h-type">Tipografia e destaque de marca</h2>
+    <p style="max-width:var(--ed-measure)">Texto em Inter com <strong class="brand-strong">destaque de marca</strong> e <a href="#h-type">link de ação</a>. Títulos em DM Sans; IDs em <code>DM Mono</code>.</p>
+  </section>
+</main>
+<script>
+(function(){var r=document.documentElement;function t(v){if(v==="atual")r.removeAttribute("data-theme");else r.setAttribute("data-theme",v);
+document.querySelectorAll("[data-set-theme]").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.setTheme===v))});try{localStorage.setItem("rc-theme",v)}catch(e){}}
+var s=null;try{s=localStorage.getItem("rc-theme")}catch(e){} if(s)t(s);
+document.querySelectorAll("[data-set-theme]").forEach(function(b){b.addEventListener("click",function(){t(b.dataset.setTheme)})})})();
+</script>
+</body>
+</html>

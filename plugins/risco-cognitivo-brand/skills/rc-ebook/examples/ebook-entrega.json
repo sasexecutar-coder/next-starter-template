@@ -1,0 +1,37 @@
+{
+  "doc": {
+    "id": "RC-EBOOK-EX-001",
+    "version": "1.0.0",
+    "lang": "pt-BR",
+    "title": "Risco cognitivo no trabalho com IA · Guia de entrega",
+    "description": "Exemplo da rota de entrega: diagnóstico, plano, acompanhamento e próximos passos, em HTML standalone.",
+    "brand_name": "Risco Cognitivo",
+    "nav_label": "Guia",
+    "eyebrow": "Ebook · rota de entrega",
+    "headline": "Onde a IA aumenta o seu risco de decidir errado.",
+    "lead": "Um guia curto para quem já usa IA no trabalho: os três pontos em que o julgamento costuma falhar, o que fazer em cada um e como acompanhar a mudança.",
+    "chips": ["leitura de 12 min", "3 riscos", "plano de 4 semanas"],
+    "footer": "Risco Cognitivo · exemplo de ebook gerado por rc-ebook",
+    "sections": [
+      {"id": "diagnostico", "title": "Seu diagnóstico", "nav": "Diagnóstico", "blocks": [
+        {"type": "p", "text": "Este exemplo mostra a estrutura; em uso real, o conteúdo vem do material do caso e nenhum número é inventado."},
+        {"type": "grid", "items": [
+          {"kicker": "Risco 1", "title": "Confiança automática", "text": "Aceitar a primeira resposta por ela soar segura."},
+          {"kicker": "Risco 2", "title": "Âncora no rascunho", "text": "Editar o texto da IA em vez de pensar o problema."},
+          {"kicker": "Risco 3", "title": "Fonte invisível", "text": "Usar um dado sem saber de onde ele veio."}]},
+        {"type": "callout", "title": "Leitura", "text": "Os três riscos têm a mesma raiz: delegar o julgamento junto com a tarefa."}]},
+      {"id": "plano", "title": "Seu plano de ação", "nav": "Plano", "blocks": [
+        {"type": "timeline", "items": [
+          {"when": "Semana 1", "title": "Pergunte antes de pedir", "text": "Escreva a sua hipótese antes de abrir a IA."},
+          {"when": "Semana 2", "title": "Peça a fonte", "text": "Todo dado usado em decisão precisa de origem verificável."},
+          {"when": "Semana 3", "title": "Compare versões", "text": "Gere duas respostas e explique por que escolheu uma."},
+          {"when": "Semana 4", "title": "Revise o processo", "text": "Marque onde o julgamento ainda foi delegado."}]}]},
+      {"id": "progresso", "title": "Acompanhar progresso", "nav": "Progresso", "blocks": [
+        {"type": "checklist", "items": ["Escrevi a hipótese antes do prompt", "Toda decisão tem fonte", "Comparei duas versões", "Revisei o processo da semana"]}]},
+      {"id": "proximos", "title": "Próximos passos", "nav": "Próximos passos", "blocks": [
+        {"type": "steps", "items": [
+          {"title": "Leia o artigo completo", "text": "O guia resume; o artigo traz evidências e exemplos."},
+          {"title": "Use a ferramenta", "text": "O checklist interativo está disponível no site."}]}]}
+    ]
+  }
+}
